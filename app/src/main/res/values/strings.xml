@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">1595 Scouting App</string>
+    <string name="settings">Settings</string>
+    <string name="startScout">Scout new team</string>
+    <string name="footer">1595 Scouting app version v0.2.1</string>
+    <string name="back">◀ Back</string>
+    <string name="phoneID"> %s </string>
+    <string name="autoHeaderText">Autonomous:</string>
+    <string name="teamNumberHeader">Enter team number:</string>
+    <string name="teamNumberPlaceholder">0000</string>
+    <string name="hasAuto">This team has an auto</string>
+    <string name="teleHeaderText">Teleop:</string>
+    <string name="hasTelePlaceholder">Does tele-stuff</string>
+    <string name="endGamePlaceholder">Does end game crap</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Submit">Submit</string>
+    <string name="commentHeader">Comments:</string>
+    <string name="comment"> </string>
+    <string name="datapending">Sending data over bluetooth…</string>
+</resources>
