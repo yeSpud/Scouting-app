@@ -31,7 +31,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="60dp"
         android:fontFamily="sans-serif"
-        android:text="@string/phoneID"
+        android:text="Avalible devices:"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:typeface="normal"
@@ -54,4 +54,5 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneID"
         android:layout_marginTop="150dp" />
-    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

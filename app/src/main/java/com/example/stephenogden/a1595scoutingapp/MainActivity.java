@@ -9,6 +9,8 @@ import android.widget.Button;
 
 /**
  * Created by Stephen Ogden on 3/23/17.
+ * FTC 6128 | 7935
+ * FRC 1595
  */
 
 public class MainActivity extends AppCompatActivity {

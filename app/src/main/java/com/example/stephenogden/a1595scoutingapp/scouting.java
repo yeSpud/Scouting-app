@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 /**
  * Created by Stephen Ogden on 5/27/17.
+ * FTC 6128 | 7935
+ * FRC 1595
  */
 
 public class scouting extends AppCompatActivity {
