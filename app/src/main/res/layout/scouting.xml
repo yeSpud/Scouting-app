@@ -11,188 +11,176 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true">
 
         <android.support.constraint.ConstraintLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <Space
-            android:id="@+id/AutonomousPad"
-            android:layout_width="50dp"
-            android:layout_height="25dp"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp" />
+            <Space
+                android:id="@+id/AutonomousPad"
+                android:layout_width="50dp"
+                android:layout_height="25dp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp" />
 
-        <Space
-            android:id="@+id/TeleOpPad"
-            android:layout_width="50dp"
-            android:layout_height="220dp"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp" />
+            <Space
+                android:id="@+id/TeleOpPad"
+                android:layout_width="50dp"
+                android:layout_height="220dp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp" />
 
-        <Space
-            android:id="@+id/ButtonsPad"
-            android:layout_width="5dp"
-            android:layout_height="500dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Space
+                android:id="@+id/ButtonsPad"
+                android:layout_width="5dp"
+                android:layout_height="640dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/autoHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/autoHeaderText"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/AutonomousPad" />
+            <TextView
+                android:id="@+id/autoHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/autoHeaderText"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintHorizontal_bias="0.502"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/AutonomousPad" />
 
-        <CheckBox
-            android:id="@+id/autoCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:theme="@style/customBox"
-            android:text="@string/hasAuto"
-            android:textColor="@color/white"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/autoHeader" />
+            <CheckBox
+                android:id="@+id/autoCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/hasAuto"
+                android:textColor="@color/white"
+                android:theme="@style/customBox"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/autoHeader" />
 
-        <CheckBox
-            android:id="@+id/autoBalanceCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:theme="@style/customBox"
-            android:text="@string/autoBalance"
-            android:textColor="@color/white"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/autoCheck" />
+            <CheckBox
+                android:id="@+id/autoBalanceCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/autoBalance"
+                android:textColor="@color/white"
+                android:theme="@style/customBox"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/autoCheck" />
 
-        <CheckBox
-            android:id="@+id/autoScaleCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:theme="@style/customBox"
-            android:text="@string/autoScale"
-            android:textColor="@color/white"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/autoBalanceCheck" />
+            <CheckBox
+                android:id="@+id/autoScaleCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/autoScale"
+                android:textColor="@color/white"
+                android:theme="@style/customBox"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/autoBalanceCheck" />
 
-        <TextView
-            android:id="@+id/teleHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/teleHeaderText"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TeleOpPad" />
+            <TextView
+                android:id="@+id/teleHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/teleHeaderText"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TeleOpPad" />
 
-        <CheckBox
-            android:id="@+id/teleCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:theme="@style/customBox"
-            android:text="@string/teleBalance"
-            android:textColor="@color/white"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teleHeader" />
+            <CheckBox
+                android:id="@+id/teleCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/teleBalance"
+                android:textColor="@color/white"
+                android:theme="@style/customBox"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/teleHeader" />
 
-        <CheckBox
-            android:id="@+id/teleCheckScale"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:theme="@style/customBox"
-            android:text="@string/teleScale"
-            android:textColor="@color/white"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teleCheck" />
+            <NumberPicker
+                android:id="@+id/numberPicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/teleCheckScale" />
 
-        <TextView
-            android:id="@+id/numberOFCubes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/numberOfCubes"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/Number"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teleCheckScale" />
+            <CheckBox
+                android:id="@+id/teleCheckScale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/teleScale"
+                android:textColor="@color/white"
+                android:theme="@style/customBox"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/teleCheck" />
 
-        <EditText
-            android:id="@+id/Number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:inputType="numberSigned"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teleCheckScale" />
+            <CheckBox
+                android:id="@+id/endGameCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/endGameClimb"
+                android:textColor="@color/white"
+                android:theme="@style/customBox"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/numberPicker" />
 
-        <CheckBox
-            android:id="@+id/endGameCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:theme="@style/customBox"
-            android:text="@string/endGameClimb"
-            android:textColor="@color/white"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Number" />
+            <CheckBox
+                android:id="@+id/endGameCheckAssist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/endGameClimbAssist"
+                android:textColor="@color/white"
+                android:theme="@style/customBox"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/endGameCheck" />
 
-        <CheckBox
-            android:id="@+id/endGameCheckAssist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:theme="@style/customBox"
-            android:text="@string/endGameClimbAssist"
-            android:textColor="@color/white"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/endGameCheck" />
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/redbutton"
+                android:text="@string/Cancel"
+                android:textColor="@color/white"
+                app:layout_constraintRight_toLeftOf="@+id/ButtonsPad"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonsPad" />
 
-        <Button
-            android:id="@+id/cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/redbutton"
-            android:text="@string/Cancel"
-            android:textColor="@color/white"
-            app:layout_constraintRight_toLeftOf="@+id/ButtonsPad"
-            app:layout_constraintTop_toBottomOf="@+id/ButtonsPad" />
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/greenbutton"
+                android:text="@string/Submit"
+                android:textColor="@color/white"
+                app:layout_constraintLeft_toRightOf="@+id/ButtonsPad"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonsPad" />
 
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/greenbutton"
-            android:text="@string/Submit"
-            android:textColor="@color/white"
-            app:layout_constraintLeft_toRightOf="@+id/ButtonsPad"
-            app:layout_constraintTop_toBottomOf="@+id/ButtonsPad" />
 
         </android.support.constraint.ConstraintLayout>
 

@@ -31,27 +31,31 @@ End game:
 
 public class scouting extends AppCompatActivity {
 
-    // <Keep>
+    public static boolean hasAuto;
+    public static boolean autoSwitch;
+    public static boolean autoScale;
+    public static boolean teleSwitch;
+    public static boolean teleScale;
+    public static int cubeNumber;
+    public static boolean endClimb;
+    public static boolean endClimbAssist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scouting);
         setTitle(getResources().getString(R.string.teamToScout) + MainActivity.number);
-        // </Keep>
 
         Button back_btn = (Button) findViewById(R.id.cancel);
-
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(scouting.this, MainActivity.class));
-                Toast.makeText(scouting.this, "Scouting canceled.",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(scouting.this, "Scouting canceled.", Toast.LENGTH_LONG).show();
             }
         });
 
         Button send_btn = (Button) findViewById(R.id.submit);
-
         send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
