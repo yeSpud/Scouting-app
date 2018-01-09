@@ -22,10 +22,11 @@ import java.util.UUID;
 
 public class Settings extends AppCompatActivity {
 
-    public static BluetoothService service;
+    //public static BluetoothService service;
 
     protected void onCreate(Bundle savedInstanceState) {
 
+        /*
         BluetoothConfiguration config = new BluetoothConfiguration();
         config.context = getApplicationContext();
         config.bluetoothServiceClass = BluetoothClassicService.class; // BluetoothClassicService.class or BluetoothLeService.class
@@ -58,6 +59,7 @@ public class Settings extends AppCompatActivity {
         });
 
         service.startScan(); // See also service.stopScan();
+        */
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
