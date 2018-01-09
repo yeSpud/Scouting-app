@@ -14,6 +14,21 @@ import android.widget.Toast;
  * FRC 1595
  */
 
+/*
+Auto:
+    Has auto
+    Can place cube on balance
+    Can place cube on scale
+Teleop:
+    Can place cube on balance
+    Can place cube on scale
+    Number of cubes placed in match
+End game:
+    Can climb
+    Can assist others on climb
+
+ */
+
 public class scouting extends AppCompatActivity {
 
     // <Keep>
@@ -21,6 +36,7 @@ public class scouting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scouting);
+        setTitle(getResources().getString(R.string.teamToScout) + MainActivity.number);
         // </Keep>
 
         Button back_btn = (Button) findViewById(R.id.cancel);

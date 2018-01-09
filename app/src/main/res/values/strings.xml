@@ -7,9 +7,8 @@
     <string name="phoneID"> %s </string>
     <string name="autoHeaderText">Autonomous:</string>
     <string name="teamNumberHeader">Enter team number to scout: </string>
-    <string name="teamNumberPlaceholder">0000</string>
     <string name="teamToScout">Team to scout: </string>
-    <string name="hasAuto">This team has an auto (Can cross baseline)</string>
+    <string name="hasAuto">This team has an auto\n(Can cross baseline)</string>
     <string name="autoBalance">Team can place a cube on switch</string>
     <string name="autoScale">Team can place cube on scale</string>
     <string name="teleHeaderText">TeleOp:</string>
@@ -21,7 +20,5 @@
     <string name="numberOfCubes">Number of cubes placed: </string>
     <string name="Cancel">Cancel</string>
     <string name="Submit">Submit</string>
-    <string name="commentHeader">Comments:</string>
-    <string name="comment"> </string>
     <string name="datapending">Sending data over bluetooth…</string>
 </resources>
