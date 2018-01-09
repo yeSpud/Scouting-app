@@ -8,6 +8,7 @@
     <string name="autoHeaderText">Autonomous:</string>
     <string name="teamNumberHeader">Enter team number to scout: </string>
     <string name="teamNumberPlaceholder">0000</string>
+    <string name="teamToScout">Team to scout: </string>
     <string name="hasAuto">This team has an auto (Can cross baseline)</string>
     <string name="autoBalance">Team can place a cube on switch</string>
     <string name="autoScale">Team can place cube on scale</string>
