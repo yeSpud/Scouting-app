@@ -61,6 +61,7 @@ public class scouting extends AppCompatActivity {
         });
 
         NumberOfCubes = (TextView) findViewById(R.id.cubeNumber);
+        NumberOfCubes.setText("Number of cubes placed: ");
         bar = (SeekBar) findViewById(R.id.numberPicker);
         bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
