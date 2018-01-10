@@ -65,6 +65,18 @@ public class bluetoothTransmiter extends AppCompatActivity {
         progress.setProgress(80);
 
         field.setText("Connecting to PC...");
+        // BluTooth connection to desktop
+        progress.setProgress(90);
+
+        field.setText("Compiling data...");
+        // Make file in ram, do not actually store it
+        progress.setProgress(95);
+
+        field.setText("Sending data...");
+        // Send that to the receiver
+        progress.setProgress(100);
+
+        // Close the window, and report success
 
 
         Button back_btn = (Button) findViewById(R.id.cancel);
@@ -75,9 +87,5 @@ public class bluetoothTransmiter extends AppCompatActivity {
                 Toast.makeText(bluetoothTransmiter.this, "Scouting canceled.", Toast.LENGTH_LONG).show();
             }
         });
-
-        //BluetoothWriter writer = new BluetoothWriter(Settings.service);
-
-        //writer.writeln("Your text here");
     }
 }

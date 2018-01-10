@@ -9,8 +9,6 @@
 bin/
 gen/
 1595-Scouting/
-.*
-!/.gitignore
 
 # Local configuration file (sdk path, etc)
 local.properties

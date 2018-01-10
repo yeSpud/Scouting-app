@@ -20,7 +20,8 @@
         android:textColor="@color/white"
         tools:layout_editor_absoluteY="30dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/phoneID"
@@ -31,7 +32,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="60dp"
         android:fontFamily="sans-serif"
-        android:text="Avalible devices:"
+        android:text="You will need to pair this device wiht the laptop that has the reciever first :P"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:typeface="normal"
