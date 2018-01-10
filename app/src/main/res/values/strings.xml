@@ -15,10 +15,9 @@
     <string name="teleHeaderText">TeleOp:</string>
     <string name="teleBalance">Can place cube on switch</string>
     <string name="teleScale">Can place cube on scale</string>
-    <string name="numberCube">Number of cubes placed</string>
+    <string name="numberCube">Number of cubes placed: </string>
     <string name="endGameClimb">Can climb</string>
     <string name="endGameClimbAssist">Can help others climb</string>
-    <string name="numberOfCubes">Number of cubes placed: </string>
     <string name="Cancel">Cancel</string>
     <string name="Submit">Submit</string>
     <string name="datapending">Sending data over bluetooth…</string>

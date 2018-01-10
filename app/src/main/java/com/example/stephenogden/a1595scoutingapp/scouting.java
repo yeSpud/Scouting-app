@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -40,6 +42,9 @@ public class scouting extends AppCompatActivity {
     public static boolean endClimb;
     public static boolean endClimbAssist;
 
+    TextView NumberOfCubes;
+    SeekBar bar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +60,29 @@ public class scouting extends AppCompatActivity {
             }
         });
 
+        NumberOfCubes = (TextView) findViewById(R.id.cubeNumber);
+        bar = (SeekBar) findViewById(R.id.numberPicker);
+        bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                NumberOfCubes.setText("Number of cubes placed: " + String.valueOf((int) Math.round(progress/2)));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
         Button send_btn = (Button) findViewById(R.id.submit);
         send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cubeNumber = (int) Math.round(bar.getProgress()/2);
                 startActivity(new Intent(scouting.this, bluetoothTransmiter.class));
             }
         });
