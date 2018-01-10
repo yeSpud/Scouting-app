@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by Stephen Ogden on 3/23/17.
@@ -43,29 +44,36 @@ public class MainActivity extends AppCompatActivity {
         start_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LayoutInflater li = LayoutInflater.from(context);
-                View promptsView = li.inflate(R.layout.teamselection, null);
+                try {
+                    if (Settings.MACADDR.isEmpty()) {
+                        Toast.makeText(MainActivity.this, "Please enter a MAC address first!", Toast.LENGTH_LONG).show();
+                    } else {
+                        LayoutInflater li = LayoutInflater.from(context);
+                        View promptsView = li.inflate(R.layout.teamselection, null);
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                alertDialogBuilder.setView(promptsView);
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                        alertDialogBuilder.setView(promptsView);
 
-                final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
+                        final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
 
-                alertDialogBuilder.setCancelable(false).setPositiveButton("Start scouting!", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        number = Integer.parseInt(userInput.getText().toString());
+                        alertDialogBuilder.setCancelable(false).setPositiveButton("Start scouting!", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                number = Integer.parseInt(userInput.getText().toString());
 
-                        startActivity(new Intent(MainActivity.this, scouting.class));
+                                startActivity(new Intent(MainActivity.this, scouting.class));
+                            }
+                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
                     }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        dialog.cancel();
-                    }
-                });
-
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "Please enter a MAC address first!", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
