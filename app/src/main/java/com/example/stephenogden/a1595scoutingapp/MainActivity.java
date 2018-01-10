@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     public Button start_button;
     public Button settings_btn;
 
-    public static String number;
+    public static int number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
                 alertDialogBuilder.setCancelable(false).setPositiveButton("Start scouting!", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        number = userInput.getText().toString();
+                        number = Integer.parseInt(userInput.getText().toString());
 
                         startActivity(new Intent(MainActivity.this, scouting.class));
                     }

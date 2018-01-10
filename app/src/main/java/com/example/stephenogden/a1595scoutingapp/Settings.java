@@ -4,6 +4,8 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,49 +24,32 @@ import java.util.UUID;
 
 public class Settings extends AppCompatActivity {
 
-    //public static BluetoothService service;
+    public static String MACADDR;
 
     protected void onCreate(Bundle savedInstanceState) {
-
-        /*
-        BluetoothConfiguration config = new BluetoothConfiguration();
-        config.context = getApplicationContext();
-        config.bluetoothServiceClass = BluetoothClassicService.class; // BluetoothClassicService.class or BluetoothLeService.class
-        config.bufferSize = 1024;
-        config.characterDelimiter = '\n';
-        config.deviceName = "Your App Name";
-        config.callListenersInMainThread = true;
-
-        config.uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
-
-        BluetoothService.init(config);
-
-        BluetoothService service = BluetoothService.getDefaultInstance();
-
-        service.setOnScanCallback(new BluetoothService.OnBluetoothScanCallback() {
-            @Override
-            public void onDeviceDiscovered(BluetoothDevice device, int rssi) {
-                // List devices
-            }
-
-            @Override
-            public void onStartScan() {
-                // Update text
-            }
-
-            @Override
-            public void onStopScan() {
-                // Update text
-            }
-        });
-
-        service.startScan(); // See also service.stopScan();
-        */
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
         Button back_btn = (Button) findViewById(R.id.back);
+        EditText macAddr = (EditText) findViewById(R.id.MAC);
+        macAddr.setText(MACADDR);
+
+        macAddr.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                MACADDR = s.toString();
+            }
+        });
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,22 +57,5 @@ public class Settings extends AppCompatActivity {
                 startActivity(new Intent(Settings.this, MainActivity.class));
             }
         });
-
-        // TODO: Fix phone string variable and ID
-
-        // get EditText by id
-        EditText inputTxt;
-        inputTxt = (EditText) findViewById(R.id.phoneID);
-
-        // Store EditText in Variable
-        String phoneIDString = inputTxt.getText().toString();
-
-        // Display new phone ID
-        String updating_title = getString(R.string.phoneID);
-        inputTxt.setText(updating_title);
-
     }
-
-
-
-    }
+}

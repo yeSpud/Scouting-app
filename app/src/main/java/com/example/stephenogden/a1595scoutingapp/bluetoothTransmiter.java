@@ -37,7 +37,7 @@ public class bluetoothTransmiter extends AppCompatActivity {
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     // Insert your server's MAC address
-    private static String address = "00:10:60:AA:B9:B2";
+    private static String address = Settings.MACADDR;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -52,6 +52,10 @@ public class bluetoothTransmiter extends AppCompatActivity {
 
         TextView field = (TextView) findViewById(R.id.Progress);
         ProgressBar progress = (ProgressBar) findViewById(R.id.loadingBar);
+
+        field.setText("Gathering data (teamNumber)");
+        int teamNumber = MainActivity.number;
+        progress.setProgress(0);
 
         field.setText("Gathering data (hasAuto)");
         boolean hasAuto = scouting.hasAuto;
@@ -170,11 +174,8 @@ public class bluetoothTransmiter extends AppCompatActivity {
         }
     }
 
-    public void AlertBox( String title, String message ){
-        new AlertDialog.Builder(this)
-                .setTitle( title )
-                .setMessage( message + " Press OK to exit." )
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+    public void AlertBox(String title, String message ){
+        new AlertDialog.Builder(this).setTitle(title).setMessage(message + " Press OK to exit." ).setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
                         finish();
                     }
