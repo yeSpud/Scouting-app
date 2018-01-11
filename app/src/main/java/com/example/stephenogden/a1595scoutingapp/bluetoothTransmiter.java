@@ -25,9 +25,10 @@ import java.util.UUID;
  * FRC 1595
  */
 
+
 public class bluetoothTransmiter extends AppCompatActivity {
 
-    TextView out;
+    TextView field;
     private static final int REQUEST_ENABLE_BT = 1;
     private BluetoothAdapter btAdapter = null;
     private BluetoothSocket btSocket = null;
@@ -39,58 +40,114 @@ public class bluetoothTransmiter extends AppCompatActivity {
     // Insert your server's MAC address
     private static String address = Settings.MACADDR;
 
+    @SuppressWarnings("unused")
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transmitter);
 
+        field = (TextView) findViewById(R.id.Progress);
+
         btAdapter = BluetoothAdapter.getDefaultAdapter();
-        CheckBTState();
+        if(btAdapter==null) {
+            AlertBox("Fatal Error", "Bluetooth Not supported. Aborting.");
+        } else {
+            if (btAdapter.isEnabled()) {
+                field.append("\n...Bluetooth is enabled...");
+            } else {
+                //Prompt user to turn on Bluetooth
+                Intent enableBtIntent = new Intent(btAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            }
+        }
 
-        TextView field = (TextView) findViewById(R.id.Progress);
         ProgressBar progress = (ProgressBar) findViewById(R.id.loadingBar);
-
+        field = (TextView) findViewById(R.id.Progress);
         field.setText("Gathering data (teamNumber)");
         int teamNumber = MainActivity.number;
         progress.setProgress(0);
 
+        try {
+            Thread.sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         field.setText("Gathering data (hasAuto)");
         boolean hasAuto = scouting.hasAuto;
         progress.setProgress(10);
 
+        try {
+            Thread.sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         field.setText("Gathering data (autoSwitch)");
         boolean autoSwitch = scouting.autoSwitch;
         progress.setProgress(20);
 
+        try {
+            Thread.sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         field.setText("Gathering data (autoScale)");
         boolean autoScale = scouting.autoScale;
         progress.setProgress(30);
 
+        try {
+            Thread.sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         field.setText("Gathering data (teleSwitch)");
         boolean teleSwitch = scouting.teleSwitch;
         progress.setProgress(40);
 
+        try {
+            Thread.sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         field.setText("Gathering data (teleScale)");
         boolean teleScale = scouting.teleScale;
         progress.setProgress(50);
 
+        try {
+            Thread.sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         field.setText("Gathering data (cubeNumber)");
         int cubeNumber = scouting.cubeNumber;
         progress.setProgress(60);
 
+        try {
+            Thread.sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         field.setText("Gathering data (endClimb)");
         boolean endClimb = scouting.endClimb;
         progress.setProgress(70);
 
+        try {
+            Thread.sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         field.setText("Gathering data (endClimbAssist)");
         boolean endClimbAssist = scouting.endClimbAssist;
         progress.setProgress(80);
 
         field.setText("Connecting to PC...");
+        try {
+            Thread.sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         // Set up a pointer to the remote node using it's address.
+        // Todo: not valid address
         BluetoothDevice device = btAdapter.getRemoteDevice(address);
 
         // Two things are needed to make a connection:
@@ -110,7 +167,7 @@ public class bluetoothTransmiter extends AppCompatActivity {
         // Establish the connection.  This will block until it connects.
         try {
             btSocket.connect();
-            out.append("\n...Connection established and data link opened...");
+            field.append("\n...Connection established and data link opened...");
         } catch (IOException e) {
             try {
                 btSocket.close();
@@ -134,10 +191,11 @@ public class bluetoothTransmiter extends AppCompatActivity {
         byte[] msgBuffer = message.getBytes();
         try {
             outStream.write(msgBuffer);
-        } catch (IOException e) {
+        } catch (IOException e) { //Todo: error here
             String msg = "An exception occurred during write: " + e.getMessage();
-            if (address.equals("00:00:00:00:00:00"))
+            if (address.equals("00:00:00:00:00:00")) {
                 msg = msg + ".\n\nUpdate your server address from 00:00:00:00:00:00 to the correct address on line 37 in the java code";
+            }
             msg = msg +  ".\n\nCheck that the SPP UUID: " + MY_UUID.toString() + " exists on server.\n\n";
 
             AlertBox("Fatal Error", msg);
@@ -157,23 +215,7 @@ public class bluetoothTransmiter extends AppCompatActivity {
         });
     }
 
-    private void CheckBTState() {
-        // Check for Bluetooth support and then check to make sure it is turned on
-
-        // Emulator doesn't support Bluetooth and will return null
-        if(btAdapter==null) {
-            AlertBox("Fatal Error", "Bluetooth Not supported. Aborting.");
-        } else {
-            if (btAdapter.isEnabled()) {
-                out.append("\n...Bluetooth is enabled...");
-            } else {
-                //Prompt user to turn on Bluetooth
-                Intent enableBtIntent = new Intent(btAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            }
-        }
-    }
-
+    @SuppressWarnings("SameParameterValue")
     public void AlertBox(String title, String message ){
         new AlertDialog.Builder(this).setTitle(title).setMessage(message + " Press OK to exit." ).setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
