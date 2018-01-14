@@ -102,7 +102,7 @@ public class bluetoothTransmiter extends AppCompatActivity {
         // Establish the connection.  This will block until it connects.
         try {
             btSocket.connect();
-            field.append("\n...Connection established and data link opened...");
+            field.setText("\n...Connection established and data link opened...");
         } catch (IOException e) {
             String msg = "An exception occurred during connection, socket closed: " + e.getMessage();
             AlertBox("Fatal Error", msg);
@@ -111,9 +111,7 @@ public class bluetoothTransmiter extends AppCompatActivity {
 
         progress.setProgress(57);
         // Create a data stream so we can talk to server.
-        field.append("\n...Sending message to server...");
-        String message = "Hello from Android.\n";
-        field.append("\n\n...The message that we will send to the server is: " + message);
+        field.setText("\n...Sending message to server...");
 
         try {
             outStream = btSocket.getOutputStream();
@@ -122,11 +120,11 @@ public class bluetoothTransmiter extends AppCompatActivity {
         }
 
         progress.setProgress(71);
-        field.append("\nSending data...");
-        byte[] msgBuffer = message.getBytes();
+        field.setText("\nSending data...");
+        byte[] msgBuffer = messageToSend.getBytes();
         try {
             outStream.write(msgBuffer);
-        } catch (IOException e) { //Todo: error here
+        } catch (IOException e) {
             String msg = "An exception occurred during write: " + e.getMessage();
             if (address.equals("00:00:00:00:00:00")) {
                 msg = msg + ".\n\nUpdate your server address from 00:00:00:00:00:00 to the correct address on line 37 in the java code";
@@ -135,38 +133,32 @@ public class bluetoothTransmiter extends AppCompatActivity {
 
             AlertBox("Fatal Error", msg);
         }
-    }
-    public void onPause() {
-        super.onPause();
 
-        //out.append("\n...Hello\n");
+        progress.setProgress(86);
+        field.setText("Awaiting verification");
+        // Recieve good to go message
         InputStream inStream;
+        BufferedReader bReader;
+        String check = "Data pending...";
         try {
             inStream = btSocket.getInputStream();
-            BufferedReader bReader=new BufferedReader(new InputStreamReader(inStream));
-            String lineRead=bReader.readLine();
-            field.append("\n..."+lineRead+"\n");
-
+            bReader = new BufferedReader(new InputStreamReader(inStream));
+            check = bReader.readLine();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        field.append("\n...In onPause()...");
-
-
-        if (outStream != null) {
+        progress.setProgress(100);
+        if (check.equals("Data recieved!") || check.equals("Data received")) {
             try {
                 outStream.flush();
+                btSocket.close();
+                Toast.makeText(bluetoothTransmiter.this, "Success!", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(bluetoothTransmiter.this, MainActivity.class));
             } catch (IOException e) {
-                AlertBox("Fatal Error", "In onPause() and failed to flush output stream: " + e.getMessage() + ".");
+                AlertBox("Fatal Error", "Cannot close streams: " + e.getMessage() + ".");
             }
-        }
 
-        try     {
-            btSocket.close();
-        } catch (IOException e2) {
-            AlertBox("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
         }
     }
 
@@ -178,7 +170,7 @@ public class bluetoothTransmiter extends AppCompatActivity {
             AlertBox("Fatal Error", "Bluetooth Not supported. Aborting.");
         } else {
             if (btAdapter.isEnabled()) {
-                field.append("\n...Bluetooth is enabled...");
+                field.setText("\nBluetooth is enabled");
             } else {
                 //Prompt user to turn on Bluetooth
                 Intent enableBtIntent = new Intent(btAdapter.ACTION_REQUEST_ENABLE);
