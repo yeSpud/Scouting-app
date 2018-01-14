@@ -3,6 +3,7 @@ package com.example.stephenogden.a1595scoutingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
+
+import java.util.Arrays;
 
 
 /**
@@ -20,7 +23,7 @@ import org.w3c.dom.Text;
 
 public class scouting extends AppCompatActivity {
 
-    public byte[] data;
+    public static byte[] data;
 
     TextView NumberOfCubes;
     SeekBar bar;
@@ -74,7 +77,7 @@ public class scouting extends AppCompatActivity {
                 Boolean endClimb = findViewById(R.id.endGameCheck).isActivated();
                 Boolean endClimbAssist = findViewById(R.id.endGameCheckAssist).isActivated();
 
-                scouting.this.data = (MainActivity.number +  ", " +
+                scouting.data = (MainActivity.number +  ", " +
                         hasAuto + ", " +
                         autoSwitch + ", " +
                         autoScale + ", " +
