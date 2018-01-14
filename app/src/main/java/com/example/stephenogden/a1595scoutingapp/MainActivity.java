@@ -58,9 +58,12 @@ public class MainActivity extends AppCompatActivity {
 
                         alertDialogBuilder.setCancelable(false).setPositiveButton("Start scouting!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                number = Integer.parseInt(userInput.getText().toString());
-
-                                startActivity(new Intent(MainActivity.this, scouting.class));
+                                if (userInput.getText().length() == 0) {
+                                    Toast.makeText(MainActivity.this, "Plaese enter a team number to scout", Toast.LENGTH_LONG).show();
+                                } else {
+                                    number = Integer.parseInt(userInput.getText().toString());
+                                    startActivity(new Intent(MainActivity.this, scouting.class));
+                                }
                             }
                         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
