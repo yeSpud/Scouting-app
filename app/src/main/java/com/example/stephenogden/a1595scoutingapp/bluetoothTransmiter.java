@@ -77,7 +77,7 @@ public class bluetoothTransmiter extends AppCompatActivity {
                 scouting.teleSwitch + "," +
                 scouting.teleScale + "," +
                 scouting.cubeNumber + "," +
-                scouting.endClimb  + "," +
+                scouting.endClimb + "," +
                 scouting.endClimbAssist;
         progress.setProgress(29);
         field.setText("Connecting to PC...");
@@ -129,13 +129,14 @@ public class bluetoothTransmiter extends AppCompatActivity {
             if (address.equals("00:00:00:00:00:00")) {
                 msg = msg + ".\n\nUpdate your server address from 00:00:00:00:00:00 to the correct address on line 37 in the java code";
             }
-            msg = msg +  ".\n\nCheck that the SPP UUID: " + MY_UUID.toString() + " exists on server.\n\n";
+            msg = msg + ".\n\nCheck that the SPP UUID: " + MY_UUID.toString() + " exists on server.\n\n";
 
             AlertBox("Fatal Error", msg);
         }
+    }
+    public void onPause() {
+        super.onPause();
 
-        progress.setProgress(86);
-        field.setText("Awaiting verification");
         // Recieve good to go message
         InputStream inStream;
         BufferedReader bReader;
@@ -148,7 +149,6 @@ public class bluetoothTransmiter extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        progress.setProgress(100);
         if (check.equals("Data recieved!") || check.equals("Data received")) {
             try {
                 outStream.flush();
@@ -160,6 +160,12 @@ public class bluetoothTransmiter extends AppCompatActivity {
             }
 
         }
+    }
+
+    public void onStop() {
+        super.onStop();
+        Toast.makeText(bluetoothTransmiter.this, "Error: ran out of RAM!", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(bluetoothTransmiter.this, MainActivity.class));
     }
 
     private void CheckBTState() {
