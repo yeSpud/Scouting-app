@@ -3,16 +3,11 @@ package com.example.stephenogden.a1595scoutingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
-import java.util.Arrays;
 
 
 /**
@@ -23,7 +18,7 @@ import java.util.Arrays;
 
 public class scouting extends AppCompatActivity {
 
-    public static byte[] data;
+    public static String data;
 
     TextView NumberOfCubes;
     SeekBar bar;
@@ -86,7 +81,7 @@ public class scouting extends AppCompatActivity {
                         teleScale + ", " +
                         cubeNumber + ", " +
                         endClimb + ", " +
-                        endClimbAssist).toUpperCase().getBytes();
+                        endClimbAssist).toUpperCase();
 
                 startActivity(new Intent(scouting.this, bluetoothTransmiter.class));
             }

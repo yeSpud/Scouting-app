@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -21,7 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.UUID;
 
 /**
@@ -115,7 +113,7 @@ public class bluetoothTransmiter extends AppCompatActivity {
         field.setText("\nSending data...");
         scouting scouting = new scouting();
         try {
-            outStream.write(scouting.data);
+            outStream.write(scouting.data.getBytes());
         } catch (IOException e) {
             String msg = "An exception occurred during write: " + e.getMessage();
             if (address.equals("00:00:00:00:00:00")) {
