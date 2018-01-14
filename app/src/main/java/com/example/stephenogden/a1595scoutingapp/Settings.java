@@ -1,6 +1,5 @@
 package com.example.stephenogden.a1595scoutingapp;
 
-import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,12 +8,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import com.github.douglasjunior.bluetoothclassiclibrary.BluetoothClassicService;
-import com.github.douglasjunior.bluetoothclassiclibrary.BluetoothConfiguration;
-import com.github.douglasjunior.bluetoothclassiclibrary.BluetoothService;
-
-import java.util.UUID;
 
 /**
  * Created by Stephen Ogden on 5/27/17.
