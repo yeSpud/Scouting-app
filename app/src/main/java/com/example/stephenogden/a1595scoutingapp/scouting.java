@@ -9,6 +9,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 
 /**
  * Created by Stephen Ogden on 5/27/17.
@@ -16,31 +18,9 @@ import android.widget.Toast;
  * FRC 1595
  */
 
-/*
-Auto:
-    Has auto
-    Can place cube on balance
-    Can place cube on scale
-Teleop:
-    Can place cube on balance
-    Can place cube on scale
-    Number of cubes placed in match
-End game:
-    Can climb
-    Can assist others on climb
-
- */
-
 public class scouting extends AppCompatActivity {
 
-    public static boolean hasAuto;
-    public static boolean autoSwitch;
-    public static boolean autoScale;
-    public static boolean teleSwitch;
-    public static boolean teleScale;
-    public static int cubeNumber;
-    public static boolean endClimb;
-    public static boolean endClimbAssist;
+    public byte[] data;
 
     TextView NumberOfCubes;
     SeekBar bar;
@@ -66,7 +46,7 @@ public class scouting extends AppCompatActivity {
         bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                NumberOfCubes.setText("Number of cubes placed: " + String.valueOf((int) Math.round(progress/2)));
+                NumberOfCubes.setText("Number of cubes placed: " + String.valueOf((int) Math.round(progress/4)));
             }
 
             @Override
@@ -83,7 +63,27 @@ public class scouting extends AppCompatActivity {
         send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cubeNumber = (int) Math.round(bar.getProgress()/2);
+
+                Boolean hasAuto = findViewById(R.id.autoCheck).isActivated();
+                Boolean autoSwitch = findViewById(R.id.autoBalanceCheck).isActivated();
+                Boolean autoScale = findViewById(R.id.autoScaleCheck).isActivated();
+                Boolean teleSwitch = findViewById(R.id.teleCheck).isActivated();
+                Boolean teleScale = findViewById(R.id.teleCheckScale).isActivated();
+                int cubeNumber = (int) Math.round(bar.getProgress()/4);
+                Boolean endClimb = findViewById(R.id.endGameCheck).isActivated();
+                Boolean endClimbAssist = findViewById(R.id.endGameCheckAssist).isActivated();
+
+                data = (MainActivity.number +  ", " +
+                        hasAuto + ", " +
+                        autoSwitch + ", " +
+                        autoScale + ", " +
+                        autoSwitch + ", " +
+                        teleSwitch + ", " +
+                        teleScale + ", " +
+                        cubeNumber + ", " +
+                        endClimb + ", " +
+                        endClimbAssist).toUpperCase().getBytes();
+
                 startActivity(new Intent(scouting.this, bluetoothTransmiter.class));
             }
         });

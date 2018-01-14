@@ -70,15 +70,6 @@ public class bluetoothTransmiter extends AppCompatActivity {
         progress.setProgress(14);
 
         field.setText("Compiling data...");
-        String messageToSend = MainActivity.number + "," +
-                scouting.hasAuto + "," +
-                scouting.autoSwitch + "," +
-                scouting.autoScale + "," +
-                scouting.teleSwitch + "," +
-                scouting.teleScale + "," +
-                scouting.cubeNumber + "," +
-                scouting.endClimb + "," +
-                scouting.endClimbAssist;
         progress.setProgress(29);
         field.setText("Connecting to PC...");
 
@@ -121,9 +112,9 @@ public class bluetoothTransmiter extends AppCompatActivity {
 
         progress.setProgress(71);
         field.setText("\nSending data...");
-        byte[] msgBuffer = messageToSend.getBytes();
+        scouting scouting = new scouting();
         try {
-            outStream.write(msgBuffer);
+            outStream.write(scouting.data);
         } catch (IOException e) {
             String msg = "An exception occurred during write: " + e.getMessage();
             if (address.equals("00:00:00:00:00:00")) {
@@ -132,6 +123,13 @@ public class bluetoothTransmiter extends AppCompatActivity {
             msg = msg + ".\n\nCheck that the SPP UUID: " + MY_UUID.toString() + " exists on server.\n\n";
 
             AlertBox("Fatal Error", msg);
+        }
+        try {
+            btSocket.close();
+            Toast.makeText(bluetoothTransmiter.this, "Success!", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(bluetoothTransmiter.this, MainActivity.class));
+        } catch (IOException e) {
+            AlertBox("Fatal Error", "Cannot close socket: " + e.getMessage() + ".");
         }
     }
     public void onPause() {
