@@ -26,7 +26,7 @@ public class scouting extends AppCompatActivity {
     SeekBar bar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scouting);
         setTitle(getResources().getString(R.string.teamToScout) + MainActivity.number);
@@ -61,6 +61,7 @@ public class scouting extends AppCompatActivity {
 
         Button send_btn = (Button) findViewById(R.id.submit);
         send_btn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
 
@@ -73,7 +74,7 @@ public class scouting extends AppCompatActivity {
                 Boolean endClimb = findViewById(R.id.endGameCheck).isActivated();
                 Boolean endClimbAssist = findViewById(R.id.endGameCheckAssist).isActivated();
 
-                data = (MainActivity.number +  ", " +
+                scouting.this.data = (MainActivity.number +  ", " +
                         hasAuto + ", " +
                         autoSwitch + ", " +
                         autoScale + ", " +
