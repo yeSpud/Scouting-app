@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".main_activity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,15 +22,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Settings"
+            android:name=".settings"
             android:label="@string/app_name">
         </activity>
         <activity
-            android:name=".scouting"
+            android:name=".data_collection"
             android:label="@string/teamToScout">
         </activity>
         <activity
-            android:name=".bluetoothTransmiter"
+            android:name=".transmit"
             android:label="@string/app_name">
         </activity>
     </application>

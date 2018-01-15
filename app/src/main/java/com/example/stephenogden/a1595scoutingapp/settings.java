@@ -15,7 +15,7 @@ import android.widget.EditText;
  * FRC 1595
  */
 
-public class Settings extends AppCompatActivity {
+public class settings extends AppCompatActivity {
 
     public static String MACADDR;
 
@@ -24,7 +24,8 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.settings);
 
         Button back_btn = (Button) findViewById(R.id.back);
-        EditText macAddr = (EditText) findViewById(R.id.MAC);
+        Button auto = (Button) findViewById(R.id.autoEnter);
+        final EditText macAddr = (EditText) findViewById(R.id.MAC);
         macAddr.setText(MACADDR);
 
         macAddr.addTextChangedListener(new TextWatcher() {
@@ -44,11 +45,21 @@ public class Settings extends AppCompatActivity {
             }
         });
 
+        auto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MACADDR = "AC:BC:32:8E:CC:1A";
+                macAddr.setText(MACADDR);
+            }
+        });
+
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Settings.this, MainActivity.class));
+                startActivity(new Intent(settings.this, main_activity.class));
             }
         });
+
+
     }
 }

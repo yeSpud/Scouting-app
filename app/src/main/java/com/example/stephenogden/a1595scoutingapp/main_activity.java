@@ -1,5 +1,7 @@
 package com.example.stephenogden.a1595scoutingapp;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,7 +20,9 @@ import android.widget.Toast;
  * FRC 1595
  */
 
-public class MainActivity extends AppCompatActivity {
+public class main_activity extends AppCompatActivity {
+
+    public static BluetoothAdapter btAdapter;
 
     final Context context = this;
 
@@ -30,13 +34,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
 
         settings_btn = (Button)findViewById(R.id.settings);
         settings_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Settings.class));
+                startActivity(new Intent(main_activity.this, settings.class));
             }
         });
 
@@ -45,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    if (Settings.MACADDR.isEmpty()) {
-                        Toast.makeText(MainActivity.this, "Please enter a MAC address first!", Toast.LENGTH_LONG).show();
+                    if (settings.MACADDR.isEmpty()) {
+                        Toast.makeText(main_activity.this, "Please enter a MAC address first!", Toast.LENGTH_LONG).show();
                     } else {
                         LayoutInflater li = LayoutInflater.from(context);
                         View promptsView = li.inflate(R.layout.teamselection, null);
@@ -59,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
                         alertDialogBuilder.setCancelable(false).setPositiveButton("Start scouting!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 if (userInput.getText().length() == 0) {
-                                    Toast.makeText(MainActivity.this, "Plaese enter a team number to scout", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(main_activity.this, "Please enter a team number to scout", Toast.LENGTH_LONG).show();
                                 } else {
                                     number = Integer.parseInt(userInput.getText().toString());
-                                    startActivity(new Intent(MainActivity.this, scouting.class));
+                                    startActivity(new Intent(main_activity.this, data_collection.class));
                                 }
                             }
                         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -75,9 +79,38 @@ public class MainActivity extends AppCompatActivity {
                         alertDialog.show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(MainActivity.this, "Please enter a MAC address first!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(main_activity.this, "Please enter a MAC address first!", Toast.LENGTH_LONG).show();
                 }
             }
         });
+    }
+
+    public void onResume() {
+        super.onResume();
+        btAdapter = BluetoothAdapter.getDefaultAdapter();
+        CheckBTState();
+
+    }
+
+    private void CheckBTState() {
+        // Check for Bluetooth support and then check to make sure it is turned on
+        // Emulator doesn't support Bluetooth and will return null
+        if(btAdapter==null) {
+            AlertBox("Error", "Bluetooth Not supported. Aborting.");
+        } else {
+            if (!btAdapter.isEnabled()) {
+                //Prompt user to turn on Bluetooth
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, 1);
+            }
+        }
+    }
+
+    public void AlertBox(@SuppressWarnings("SameParameterValue") String title, String message ){
+        new AlertDialog.Builder(this).setTitle(title).setMessage(message + " Press OK to exit." ).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                finish();
+            }
+        }).show();
     }
 }
