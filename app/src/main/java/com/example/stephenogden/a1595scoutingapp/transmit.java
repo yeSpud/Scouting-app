@@ -9,13 +9,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.UUID;
 
@@ -114,12 +118,14 @@ public class transmit extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        /*
+
         Thread.yield();
         // Todo: Error with receiving verification (BufferReader seems to overflow?)
         progress.setProgress(80);
         try {
+            Log.e("Before", "InputStream");
             InputStream inStream = btSocket.getInputStream();
+            Log.e("Before", "BufferedReader");
             BufferedReader bReader = new BufferedReader(new InputStreamReader(inStream), 14);
             Log.e("Output of inStream", bReader.readLine());
             if (bReader.readLine().equals("Data received!")) {
@@ -133,7 +139,7 @@ public class transmit extends AppCompatActivity {
         } catch (IOException e) {
             AlertBox("Fatal Error", "Cannot receive message or close socket: " + e.getMessage());
         }
-        */
+
         }
     };
 
