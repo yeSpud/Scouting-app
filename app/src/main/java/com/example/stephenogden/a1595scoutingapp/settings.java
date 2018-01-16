@@ -18,14 +18,15 @@ import android.widget.EditText;
 public class settings extends AppCompatActivity {
 
     public static String MACADDR;
+    EditText macAddr;
 
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
         Button back_btn = (Button) findViewById(R.id.back);
         Button auto = (Button) findViewById(R.id.autoEnter);
-        final EditText macAddr = (EditText) findViewById(R.id.MAC);
+        macAddr = (EditText) findViewById(R.id.MAC);
         macAddr.setText(MACADDR);
 
         macAddr.addTextChangedListener(new TextWatcher() {
