@@ -8,7 +8,7 @@
 # generated files
 bin/
 gen/
-1595-Scouting/
+AndroidApp/AndroidApp/
 
 # Local configuration file (sdk path, etc)
 local.properties
