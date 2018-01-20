@@ -118,7 +118,7 @@ public class transmit extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
+        /*
         Thread.yield();
         // Todo: Error with receiving verification (BufferReader seems to overflow?)
         progress.setProgress(80);
@@ -139,6 +139,7 @@ public class transmit extends AppCompatActivity {
         } catch (IOException e) {
             AlertBox("Fatal Error", "Cannot receive message or close socket: " + e.getMessage());
         }
+        */
 
         }
     };
