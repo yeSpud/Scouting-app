@@ -102,12 +102,12 @@ public class transmit extends AppCompatActivity {
                 OutputStream outStream = btSocket.getOutputStream();
                 outStream.write(data.getBytes(), 0, data.getBytes().length);
                 outStream.close();
-                btSocket.close();
-                progress.setProgress(100);
+                //btSocket.close();
+                //progress.setProgress(100);
                 Thread.yield();
                 Thread.sleep(1000);
-                Toast.makeText(transmit.this, "Success!", Toast.LENGTH_LONG).show();
-                finish();
+                //Toast.makeText(transmit.this, "Success!", Toast.LENGTH_LONG).show();
+                //finish();
             } catch (IOException e) {
                 String msg = "An exception occurred during write: " + e.getMessage();
                 if (settings.MACADDR.equals("00:00:00:00:00:00")) {
@@ -118,7 +118,7 @@ public class transmit extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        /*
+
         Thread.yield();
         // Todo: Error with receiving verification (BufferReader seems to overflow?)
         progress.setProgress(80);
@@ -126,20 +126,24 @@ public class transmit extends AppCompatActivity {
             Log.e("Before", "InputStream");
             InputStream inStream = btSocket.getInputStream();
             Log.e("Before", "BufferedReader");
-            BufferedReader bReader = new BufferedReader(new InputStreamReader(inStream), 14);
+            BufferedReader bReader = new BufferedReader(new InputStreamReader(inStream));
             Log.e("Output of inStream", bReader.readLine());
             if (bReader.readLine().equals("Data received!")) {
                 progress.setProgress(100);
                 bReader.close();
                 inStream.close();
                 btSocket.close();
+                Thread.yield();
+                Thread.sleep(1000);
                 Toast.makeText(transmit.this, "Success!", Toast.LENGTH_LONG).show();
                 finish();
             }
         } catch (IOException e) {
             AlertBox("Fatal Error", "Cannot receive message or close socket: " + e.getMessage());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        */
+
 
         }
     };
