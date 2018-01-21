@@ -9,17 +9,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.UUID;
 
@@ -76,6 +72,7 @@ public class transmit extends AppCompatActivity {
             // A Service ID or UUID.  In this case we are using the UUID for SPP.
             try {
                 btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
+
             } catch (IOException e) {
                 AlertBox("Fatal Error", "Socket create failed: " + e.getMessage() + ".");
             }
@@ -92,64 +89,37 @@ public class transmit extends AppCompatActivity {
                 AlertBox("Error", msg);
             }
 
-            // Good up until here!
-
             progress.setProgress(75);
             field.setText(R.string.datapending);
             // Create a data stream so we can talk to server.
-            // Close it once sent data
+            OutputStream outStream;
             try {
-                OutputStream outStream = btSocket.getOutputStream();
+                outStream = btSocket.getOutputStream();
                 outStream.write(data.getBytes(), 0, data.getBytes().length);
+                progress.setProgress(100);
                 outStream.close();
-                //btSocket.close();
-                //progress.setProgress(100);
-                Thread.yield();
-                Thread.sleep(1000);
-                //Toast.makeText(transmit.this, "Success!", Toast.LENGTH_LONG).show();
-                //finish();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 String msg = "An exception occurred during write: " + e.getMessage();
                 if (settings.MACADDR.equals("00:00:00:00:00:00")) {
                     msg = msg + ".\n\nUpdate your server address from 00:00:00:00:00:00 to the correct address on line 37 in the java code";
                 }
                 msg = msg + ".\n\nCheck that the SPP UUID: " + MY_UUID.toString() + " exists on server.\n\n";
                 AlertBox("Error", msg);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
 
-            Thread.yield();
-            // Todo: Error with receiving verification (BufferReader seems to overflow?)
-            // Maybe this has to be done on a separate process?
-            progress.setProgress(80);
             try {
-                Log.e("Before", "InputStream");
-                InputStream inStream = btSocket.getInputStream();
-                Log.e("Before", "BufferedReader");
-                BufferedReader bReader = new BufferedReader(new InputStreamReader(inStream));
-                Log.e("Output of inStream", bReader.readLine());
-                if (bReader.readLine().equals("Data received!")) {
-                    progress.setProgress(100);
-                    bReader.close();
-                    inStream.close();
-                    btSocket.close();
-                    Thread.yield();
-                    Thread.sleep(1000);
-                    Toast.makeText(transmit.this, "Success!", Toast.LENGTH_LONG).show();
-                    finish();
-                }
-            } catch (IOException e) {
-                AlertBox("Fatal Error", "Cannot receive message or close socket: " + e.getMessage());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                btSocket.close();
+                Thread.yield();
+                Thread.sleep(1000);
+                Toast.makeText(transmit.this, "Success!", Toast.LENGTH_LONG).show();
+                finish();
+            } catch (Exception e) {
+                AlertBox("Fatal Error", "Cannot close socket: " + e.getMessage());
             }
-
-
         }
     };
 
-    public void AlertBox(@SuppressWarnings("SameParameterValue") String title, String message ){
+    public void AlertBox(@SuppressWarnings("SameParameterValue") String title, String message ) {
         new AlertDialog.Builder(this).setTitle(title).setMessage(message + " Press OK to exit." ).setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
                 finish();

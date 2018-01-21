@@ -1,7 +1,6 @@
 package com.example.stephenogden.a1595scoutingapp;
 
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -59,7 +58,6 @@ public class main_activity extends AppCompatActivity {
                         alertDialogBuilder.setView(promptsView);
 
                         final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
-
                         alertDialogBuilder.setCancelable(false).setPositiveButton("Start scouting!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 if (userInput.getText().length() == 0) {
