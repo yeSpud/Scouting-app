@@ -14,12 +14,15 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="_595_Scouting_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9KB-9b-we5">
-                                <rect key="frame" x="110" y="157" width="99" height="30"/>
+                                <rect key="frame" x="110.5" y="157" width="99" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Vqe-ot-rxt"/>
+                                </constraints>
                                 <state key="normal" title="Start Scouting">
                                     <color key="titleColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" red="0.45009386540000001" green="0.98132258650000004" blue="0.4743030667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -30,6 +33,9 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDl-tV-YGo">
                                 <rect key="frame" x="93.5" y="218" width="133" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="oAb-9P-jVi"/>
+                                </constraints>
                                 <state key="normal" title="Enter MAC Address">
                                     <color key="titleColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -37,35 +43,72 @@
                                     <action selector="settingsButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="iug-ul-H5R"/>
                                 </connections>
                             </button>
-                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header" translatesAutoresizingMaskIntoConstraints="NO" id="qSg-dP-LhI">
+                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header" translatesAutoresizingMaskIntoConstraints="NO" id="qSg-dP-LhI">
                                 <rect key="frame" x="42" y="35" width="236" height="67"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="236" id="Ilx-eh-lML"/>
-                                    <constraint firstAttribute="height" constant="67" id="d8m-68-tRx"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="67" id="nsh-eR-73P"/>
-                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="main"/>
                         <constraints>
-                            <constraint firstItem="qSg-dP-LhI" firstAttribute="centerX" secondItem="9KB-9b-we5" secondAttribute="centerX" id="BDe-g8-Nuh"/>
-                            <constraint firstItem="qSg-dP-LhI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="42" id="H2b-9s-L8n"/>
-                            <constraint firstItem="9KB-9b-we5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Nvg-EM-mwk"/>
-                            <constraint firstItem="cDl-tV-YGo" firstAttribute="top" secondItem="9KB-9b-we5" secondAttribute="bottom" constant="31" id="dQR-u4-VHL"/>
-                            <constraint firstItem="9KB-9b-we5" firstAttribute="top" secondItem="qSg-dP-LhI" secondAttribute="bottom" constant="55" id="eeb-Kl-YCN"/>
-                            <constraint firstItem="qSg-dP-LhI" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="15" id="fhO-P2-O7M"/>
-                            <constraint firstItem="cDl-tV-YGo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gfd-tU-bkt"/>
-                            <constraint firstItem="qSg-dP-LhI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hYX-Tc-ck2"/>
+                            <constraint firstItem="qSg-dP-LhI" firstAttribute="centerX" secondItem="cDl-tV-YGo" secondAttribute="centerX" id="0eq-zM-gFf"/>
+                            <constraint firstItem="9KB-9b-we5" firstAttribute="top" secondItem="qSg-dP-LhI" secondAttribute="bottom" constant="55" id="0nw-9T-aSC"/>
+                            <constraint firstItem="qSg-dP-LhI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="2UE-G2-In7"/>
+                            <constraint firstItem="cDl-tV-YGo" firstAttribute="top" secondItem="9KB-9b-we5" secondAttribute="bottom" constant="31" id="5lC-ah-1xX"/>
+                            <constraint firstItem="qSg-dP-LhI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="42" id="Ko7-Rx-3GE"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cDl-tV-YGo" secondAttribute="bottom" constant="320" id="NJ3-ZQ-8J0"/>
+                            <constraint firstItem="qSg-dP-LhI" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="15" id="NTR-29-2db"/>
+                            <constraint firstItem="9KB-9b-we5" firstAttribute="centerX" secondItem="qSg-dP-LhI" secondAttribute="centerX" id="P6L-Dg-uBl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <segue destination="lUj-lx-2o2" kind="show" identifier="toScout" id="5Vo-hq-1ib"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="682.5" y="34.859154929577464"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="dXU-cA-VpI">
+            <objects>
+                <viewController id="lUj-lx-2o2" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="473-Kt-dgJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uqz-GI-Wws">
+                                <rect key="frame" x="100" y="20" width="120" height="21"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Scouting team: ">
+                                        <attributes>
+                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" metaFont="system" size="17"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="scouting"/>
+                        <constraints>
+                            <constraint firstItem="uqz-GI-Wws" firstAttribute="centerX" secondItem="473-Kt-dgJ" secondAttribute="centerX" id="AVZ-SR-RWO"/>
+                            <constraint firstItem="uqz-GI-Wws" firstAttribute="top" secondItem="V8t-Ni-f0c" secondAttribute="top" id="NZr-Ad-Hwe"/>
+                            <constraint firstItem="uqz-GI-Wws" firstAttribute="centerX" secondItem="473-Kt-dgJ" secondAttribute="centerX" id="npZ-gf-j0H"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="V8t-Ni-f0c"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y1i-e7-TkJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1650" y="35"/>
+        </scene>
     </scenes>
     <resources>
         <image name="header" width="1282" height="369"/>
     </resources>
+    <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
