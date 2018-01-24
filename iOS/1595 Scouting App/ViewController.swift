@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 	var teamNumber = 0
 	var serverMAC = ""
+	
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,15 +19,6 @@ class ViewController: UIViewController {
 		
     }
 	func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if (segue.identifier == "toSettings") {
-			let abcViewController = segue.destination
-			abcViewController.title = "Main"
-		} else if (segue.identifier == "toMainPage") {
-			let abcViewController = segue.destination
-			abcViewController.title = "Settings"
-		}
-	}
-	
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -51,6 +43,20 @@ class ViewController: UIViewController {
 		//adding textfields to our dialog box
 		alertController.addTextField { (textField) in
 			textField.placeholder = "Enter team number"
+			
+			// Observe the UITextFieldTextDidChange notification to be notified in the below block when text is changed
+			NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange, object: textField, queue: OperationQueue.main, using:
+				{_ in
+					// Being in this block means that something fired the UITextFieldTextDidChange notification.
+					
+					// Access the textField object from alertController.addTextField(configurationHandler:) above and get the character count of its non whitespace characters
+					let textIsNotEmpty = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+					
+					// If the text contains non whitespace characters, enable the OK Button
+					confirmAction.isEnabled = !textIsNotEmpty!
+					
+			})
+			
 		}
 		//adding the action to dialogbox
 		alertController.addAction(confirmAction)
@@ -81,11 +87,23 @@ class ViewController: UIViewController {
         //finally presenting the dialog box
         self.present(alertController, animated: true, completion: nil)
 	}
+    
+    func noMAC() {
+        // create the alert
+        let alert = UIAlertController(title: "No MAC Address", message: "No MAC Address has been entered, and the app will not be able to send data to the server. Please enter a MAC Address", preferredStyle: UIAlertControllerStyle.alert)
+        
+        // add an action (button)
+        alert.addAction(UIAlertAction(title: "k fine", style: UIAlertActionStyle.default, handler: nil))
+        
+        // show the alert
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func startButtonClicked() {
         if (self.serverMAC != "") {
         showScoutingDialog()
         } else {
-            return
+            noMAC()
         }
     }
     @IBAction func settingsButtonClicked() {

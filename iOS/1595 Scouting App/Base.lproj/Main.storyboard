@@ -21,6 +21,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9KB-9b-we5">
                                 <rect key="frame" x="110" y="157" width="99" height="30"/>
                                 <state key="normal" title="Start Scouting">
+                                    <color key="titleColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" red="0.45009386540000001" green="0.98132258650000004" blue="0.4743030667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -28,8 +29,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDl-tV-YGo">
-                                <rect key="frame" x="131.5" y="218" width="57" height="30"/>
-                                <state key="normal" title="Settings"/>
+                                <rect key="frame" x="93.5" y="218" width="133" height="30"/>
+                                <state key="normal" title="Enter MAC Address">
+                                    <color key="titleColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="settingsButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="iug-ul-H5R"/>
                                 </connections>
