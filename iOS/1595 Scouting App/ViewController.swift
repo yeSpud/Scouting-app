@@ -41,7 +41,7 @@ class ViewController: UIViewController {
 		let confirmAction = UIAlertAction(title: "Enter", style: .default) { (_) in
 			//getting the input values from user
 			alertController.addTextField(configurationHandler: { textField in
-				textField.keyboardType = .numberPad
+				textField.keyboardType = UIKeyboardType.numberPad
 			})
 			self.teamNumber =  Int((alertController.textFields?[0].text)!)!
 
@@ -61,40 +61,34 @@ class ViewController: UIViewController {
 
 	
 	func showMACDialog() {
-		//Creating UIAlertController and
-		//Setting title and message for the alert dialog
-		let alertController = UIAlertController(title: "Enter server MAC address", message: "Enter the team number to start scouting", preferredStyle: .alert)
-		//the confirm action taking the inputs
-		let confirmAction = UIAlertAction(title: "Enter", style: .default) { (_) in
-			//getting the input values from user
-			self.serverMAC = (alertController.textFields?[0].text)!
-			
-		}
-		//the cancel action doing nothing
-		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
-		
-		//adding textfields to our dialog box
-		alertController.addTextField { (textField) in
-			textField.placeholder = "Enter server MAC address"
-		}
-		
-		// Debug option
-		let autoOption = UIAlertAction(title: "Lol :P", style: .destructive) { (_) in
-			self.serverMAC = "AC:BC:32:8E:CC:1A"
-		}
-		
-		//adding the action to dialogbox
-		alertController.addAction(confirmAction)
-		alertController.addAction(cancelAction)
-		alertController.addAction(autoOption)
-		//finally presenting the dialog box
-		self.present(alertController, animated: true, completion: nil)
+        //Creating UIAlertController and
+        //Setting title and message for the alert dialog
+        let alertController = UIAlertController(title: "Enter MAC Address", message: "Enter the MAC address of the server", preferredStyle: .alert)
+        //the confirm action taking the inputs
+        let confirmAction = UIAlertAction(title: "Enter", style: .default) { (_) in
+            self.serverMAC = (alertController.textFields?[0].text)!
+            
+        }
+        //the cancel action doing nothing
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
+        //adding textfields to our dialog box
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Enter MAC Address"
+        }
+        //adding the action to dialogbox
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        //finally presenting the dialog box
+        self.present(alertController, animated: true, completion: nil)
 	}
     @IBAction func startButtonClicked() {
+        if (self.serverMAC != "") {
         showScoutingDialog()
+        } else {
+            return
+        }
     }
     @IBAction func settingsButtonClicked() {
-        //performSegue(withIdentifier: "toSettings", sender: nil)
 		showMACDialog()
     }
 

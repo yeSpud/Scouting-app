@@ -32,8 +32,6 @@
                                 <state key="normal" title="Settings"/>
                                 <connections>
                                     <action selector="settingsButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="iug-ul-H5R"/>
-                                    <action selector="settingsButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tSg-4N-rmx"/>
-                                    <action selector="settingsButtonClickedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AmS-0D-e4u"/>
                                 </connections>
                             </button>
                             <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header" translatesAutoresizingMaskIntoConstraints="NO" id="qSg-dP-LhI">
