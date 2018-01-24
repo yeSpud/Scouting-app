@@ -37,8 +37,12 @@ class ViewController: UIViewController {
 			self.teamNumber =  Int((alertController.textFields?[0].text)!)!
 
 		}
+		confirmAction.isEnabled = false
 		//the cancel action doing nothing
 		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
+		//adding the action to dialogbox
+		alertController.addAction(confirmAction)
+		alertController.addAction(cancelAction)
 		//adding textfields to our dialog box
 		alertController.addTextField { (textField) in
 			textField.placeholder = "Enter team number"
@@ -49,7 +53,7 @@ class ViewController: UIViewController {
 					// Being in this block means that something fired the UITextFieldTextDidChange notification.
 					
 					// Access the textField object from alertController.addTextField(configurationHandler:) above and get the character count of its non whitespace characters
-					let textIsNotEmpty = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+					let textIsNotEmpty = textField.text?.isEmpty
 					
 					// If the text contains non whitespace characters, enable the OK Button
 					confirmAction.isEnabled = !textIsNotEmpty!
@@ -57,9 +61,7 @@ class ViewController: UIViewController {
 			})
 			
 		}
-		//adding the action to dialogbox
-		alertController.addAction(confirmAction)
-		alertController.addAction(cancelAction)
+		
 		//finally presenting the dialog box
 		self.present(alertController, animated: true, completion: nil)
 	}
@@ -74,15 +76,30 @@ class ViewController: UIViewController {
             self.serverMAC = (alertController.textFields?[0].text)!
             
         }
+		confirmAction.isEnabled = false
         //the cancel action doing nothing
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
         //adding textfields to our dialog box
         alertController.addTextField { (textField) in
             textField.placeholder = "Enter MAC Address"
+			
+			//adding the action to dialogbox
+			alertController.addAction(confirmAction)
+			alertController.addAction(cancelAction)
+			
+			NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange, object: textField, queue: OperationQueue.main, using:
+				{_ in
+					// Being in this block means that something fired the UITextFieldTextDidChange notification.
+					
+					// Access the textField object from alertController.addTextField(configurationHandler:) above and get the character count of its non whitespace characters
+					let textIsNotEmpty = textField.text?.isEmpty
+					
+					// If the text contains non whitespace characters, enable the OK Button
+					confirmAction.isEnabled = !textIsNotEmpty!
+					
+			})
         }
-        //adding the action to dialogbox
-        alertController.addAction(confirmAction)
-        alertController.addAction(cancelAction)
+		
         //finally presenting the dialog box
         self.present(alertController, animated: true, completion: nil)
 	}
