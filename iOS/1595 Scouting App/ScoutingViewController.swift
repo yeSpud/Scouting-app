@@ -22,6 +22,9 @@ class ScoutingViewController: UIViewController {
     }
     
 
+    @IBAction func cancel() {
+        self.performSegue(withIdentifier: "toMain", sender: self)
+    }
     /*
     // MARK: - Navigation
 

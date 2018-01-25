@@ -9,14 +9,13 @@
 import UIKit
 
 class ViewController: UIViewController {
-	var teamNumber = 0
-	var serverMAC = ""
 	
+	var teamNumber:Int = 0;
+	var serverMAC:String = "";
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-		
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,7 +24,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func startButtonClicked() {
-        if (self.serverMAC != "") {
+		if (self.serverMAC != "") {
+			print(self.serverMAC)
 			//Creating UIAlertController and
 			//Setting title and message for the alert dialog
 			let alertController = UIAlertController(title: "Enter team number", message: "Enter the team number to start scouting", preferredStyle: .alert)
@@ -33,9 +33,10 @@ class ViewController: UIViewController {
 			let confirmAction = UIAlertAction(title: "Enter", style: .default) { (_) in
 				//getting the input values from user
 				alertController.addTextField(configurationHandler: { textField in
-					textField.keyboardType = UIKeyboardType.numberPad
+					textField.keyboardType = UIKeyboardTypePhonePad
 				})
 				self.teamNumber =  Int((alertController.textFields?[0].text)!)!
+				print(self.teamNumber)
 				self.performSegue(withIdentifier: "toScout", sender: self)
 				
 			}
@@ -84,6 +85,7 @@ class ViewController: UIViewController {
 		//the confirm action taking the inputs
 		let confirmAction = UIAlertAction(title: "Enter", style: .default) { (_) in
 			self.serverMAC = (alertController.textFields?[0].text)!
+			print(self.serverMAC)
 			
 		}
 		confirmAction.isEnabled = false

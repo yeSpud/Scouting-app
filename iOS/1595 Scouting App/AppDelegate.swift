@@ -13,7 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-	
 	private func application(application: UIApplication!, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]!) -> Bool {
 		
 		self.window!.backgroundColor = UIColor.black // customize ur self
