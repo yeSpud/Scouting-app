@@ -13,13 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-	private func application(application: UIApplication!, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]!) -> Bool {
-		
-		self.window!.backgroundColor = UIColor.black // customize ur self
-		return true
-		
-	}
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true

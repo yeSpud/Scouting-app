@@ -10,9 +10,11 @@ import UIKit
 
 class ScoutingViewController: UIViewController {
 
+    @IBOutlet weak var HeaderText: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-		
+        HeaderText.text = "Team to scout: " + String(globals.teamNumber)
+        HeaderText.textColor = UIColor.white
         // Do any additional setup after loading the view.
     }
 
@@ -21,10 +23,12 @@ class ScoutingViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    @IBAction func cancel() {
-        self.performSegue(withIdentifier: "toMain", sender: self)
+    @IBOutlet weak var cubeTextStepper: UIStepper!
+    @IBOutlet weak var cubeText: UILabel!
+    @IBAction func cubeNumberChange(_ sender: Any) {
+        cubeText.text = String(Int(cubeTextStepper.value));
     }
+    
     /*
     // MARK: - Navigation
 
