@@ -16,5 +16,6 @@ import Foundation
 	//}
 struct globals {
 	static var macAddress = "";
+	static var data = "Err";
 	static var teamNumber = Int()
 }

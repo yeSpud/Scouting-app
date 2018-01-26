@@ -17,7 +17,14 @@ class ScoutingViewController: UIViewController {
         HeaderText.textColor = UIColor.white
         // Do any additional setup after loading the view.
     }
-
+    @IBOutlet weak var hasAuto: UISwitch!
+    @IBOutlet weak var autoSwitch: UISwitch!
+    @IBOutlet weak var autoScale: UISwitch!
+    @IBOutlet weak var teleScale: UISwitch!
+    @IBOutlet weak var teleSwitch: UISwitch!
+    @IBOutlet weak var endClimb: UISwitch!
+    @IBOutlet weak var endClimbAssist: UISwitch!
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -28,15 +35,20 @@ class ScoutingViewController: UIViewController {
     @IBAction func cubeNumberChange(_ sender: Any) {
         cubeText.text = String(Int(cubeTextStepper.value));
     }
-    
-    /*
-    // MARK: - Navigation
+	
+    @IBAction func submit() {
+		var string:String;
+        string = String(String(globals.teamNumber) + ", ").uppercased()
+		string.append(String(String(hasAuto.isOn) + ", ").uppercased())
+		string.append(String(String(autoSwitch.isOn) + ", ").uppercased())
+		string.append(String(String(autoScale.isOn) + ", ").uppercased())
+		string.append(String(String(teleSwitch.isOn) + ", ").uppercased())
+		string.append(String(String(teleScale.isOn) + ", ").uppercased())
+		string.append(String(String(cubeText.text!) + ", ").uppercased())
+		string.append(String(String(endClimb.isOn) + ", ").uppercased())
+		string.append(String(String(endClimbAssist.isOn)).uppercased())
+		globals.data = string
+		self.performSegue(withIdentifier: "submit", sender: self)
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
-    */
-
 }
