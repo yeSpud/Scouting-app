@@ -119,7 +119,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" restorationIdentifier="teleScaleCell" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Dio-Wg-5fM" userLabel="teleScaleCell">
-                                                <rect key="frame" x="35" y="279" width="250.5" height="31"/>
+                                                <rect key="frame" x="35.5" y="279" width="250.5" height="31"/>
                                                 <subviews>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" restorationIdentifier="teleScale" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bau-GN-Jxp">
                                                         <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
@@ -155,7 +155,7 @@
                                                         <size key="shadowOffset" width="0.0" height="0.0"/>
                                                     </label>
                                                     <stepper verifyAmbiguity="off" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="748" verticalCompressionResistancePriority="766" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="top" maximumValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="Sq2-Qk-u4j">
-                                                        <rect key="frame" x="60" y="63" width="94" height="29"/>
+                                                        <rect key="frame" x="59.5" y="63" width="94" height="29"/>
                                                         <connections>
                                                             <action selector="cubeNumberChange:" destination="lUj-lx-2o2" eventType="valueChanged" id="pff-h6-pDJ"/>
                                                         </connections>
@@ -164,7 +164,7 @@
                                                 <edgeInsets key="layoutMargins" top="2" left="8" bottom="8" right="8"/>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" restorationIdentifier="teleSwitchCell" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="WVw-r2-XP4" userLabel="teleSwitchCell">
-                                                <rect key="frame" x="28" y="325" width="264.5" height="31"/>
+                                                <rect key="frame" x="28.5" y="325" width="264.5" height="31"/>
                                                 <subviews>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" restorationIdentifier="teleSwitch" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YrX-5t-avF">
                                                         <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
@@ -311,10 +311,10 @@
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="6ax-eJ-7CS" secondAttribute="trailing" id="KTS-RR-v7j"/>
+                                    <constraint firstAttribute="trailing" secondItem="6ax-eJ-7CS" secondAttribute="trailing" id="5Ka-o7-moz"/>
                                     <constraint firstItem="6ax-eJ-7CS" firstAttribute="top" secondItem="xse-ND-fyG" secondAttribute="top" id="NIt-3s-ToJ"/>
                                     <constraint firstAttribute="bottom" secondItem="6ax-eJ-7CS" secondAttribute="bottom" id="Z6q-Hk-hCF"/>
-                                    <constraint firstItem="6ax-eJ-7CS" firstAttribute="leading" secondItem="xse-ND-fyG" secondAttribute="leading" id="v6H-KL-Te3"/>
+                                    <constraint firstItem="6ax-eJ-7CS" firstAttribute="centerX" secondItem="xse-ND-fyG" secondAttribute="centerX" id="ntG-vr-6A6"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
