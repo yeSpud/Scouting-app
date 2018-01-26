@@ -9,9 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-	
-	var teamNumber:Int = 0;
-	var serverMAC:String = "";
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,20 +21,16 @@ class ViewController: UIViewController {
     }
     
     @IBAction func startButtonClicked() {
-		if (self.serverMAC != "") {
-			print(self.serverMAC)
+		if (globals.macAddress != "") {
 			//Creating UIAlertController and
 			//Setting title and message for the alert dialog
 			let alertController = UIAlertController(title: "Enter team number", message: "Enter the team number to start scouting", preferredStyle: .alert)
 			//the confirm action taking the inputs
 			let confirmAction = UIAlertAction(title: "Enter", style: .default) { (_) in
-				//getting the input values from user
-				alertController.addTextField(configurationHandler: { textField in
-					textField.keyboardType = UIKeyboardTypePhonePad
-				})
-				self.teamNumber =  Int((alertController.textFields?[0].text)!)!
-				print(self.teamNumber)
-				self.performSegue(withIdentifier: "toScout", sender: self)
+			//getting the input values from user
+			globals.teamNumber =  Int((alertController.textFields?[0].text)!)!
+			//print(self.teamNumber)
+			self.performSegue(withIdentifier: "toScout", sender: self)
 				
 			}
 			confirmAction.isEnabled = false
@@ -49,6 +42,7 @@ class ViewController: UIViewController {
 			//adding textfields to our dialog box
 			alertController.addTextField { (textField) in
 				textField.placeholder = "Enter team number"
+				textField.keyboardType = UIKeyboardType.decimalPad
 				
 				// Observe the UITextFieldTextDidChange notification to be notified in the below block when text is changed
 				NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange, object: textField, queue: OperationQueue.main, using:
@@ -84,9 +78,7 @@ class ViewController: UIViewController {
 		let alertController = UIAlertController(title: "Enter MAC Address", message: "Enter the MAC address of the server", preferredStyle: .alert)
 		//the confirm action taking the inputs
 		let confirmAction = UIAlertAction(title: "Enter", style: .default) { (_) in
-			self.serverMAC = (alertController.textFields?[0].text)!
-			print(self.serverMAC)
-			
+			globals.macAddress = (alertController.textFields?[0].text)!
 		}
 		confirmAction.isEnabled = false
 		//the cancel action doing nothing
