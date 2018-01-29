@@ -32,14 +32,8 @@ class transmitter: UIViewController, CBCentralManagerDelegate, CBPeripheralDeleg
 		}
 	}
 	
-	private func centralManager(
-		central: CBCentralManager,
-		didDiscoverPeripheral peripheral: CBPeripheral,
-		advertisementData: [String : AnyObject],
-		RSSI: NSNumber) {
-		let device = (advertisementData as NSDictionary)
-			.object(forKey: CBAdvertisementDataLocalNameKey)
-			as? NSString
+	private func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
+		let device = (advertisementData as NSDictionary).object(forKey: CBAdvertisementDataLocalNameKey) as? NSString
 		
 		if device?.contains(NAME) == true {
 			self.manager.stopScan()
@@ -49,6 +43,45 @@ class transmitter: UIViewController, CBCentralManagerDelegate, CBPeripheralDeleg
 			
 			manager.connect(peripheral, options: nil)
 		}
+	}
+	
+	func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
+		peripheral.discoverServices(nil)
+	}
+	
+	private func peripheral(peripheral: CBPeripheral,didDiscoverServices error: NSError?) {
+		for service in peripheral.services! {
+			let thisService = service as CBService
+			
+			if service.uuid == SERVICE_UUID {
+				peripheral.discoverCharacteristics(
+					nil,
+					for: thisService
+				)
+			}
+		}
+	}
+	private func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
+		for characteristic in service.characteristics! {
+			let thisCharacteristic = characteristic as CBCharacteristic
+			
+			if thisCharacteristic.uuid == SCRATCH_UUID {
+				self.peripheral.setNotifyValue(true, for: thisCharacteristic)
+			}
+		}
+	}
+	
+	private func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic,error: NSError?) {
+		var count:UInt32 = 0;
+		
+		if characteristic.uuid == SCRATCH_UUID {
+			characteristic.value!.getBytes(&count, length: sizeof(UInt32))
+			labelCount.text = NSString(format: "%llu", count) as String
+		}
+	}
+	
+	private func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+		central.scanForPeripherals(withServices: nil, options: nil)
 	}
 
     override func didReceiveMemoryWarning() {
