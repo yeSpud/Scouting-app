@@ -69,4 +69,7 @@ class ViewController: UIViewController {
 		}
 		self.present(alertController, animated: true, completion: nil)
 	}
+	override var preferredStatusBarStyle: UIStatusBarStyle {
+		return .lightContent
+	}
 }

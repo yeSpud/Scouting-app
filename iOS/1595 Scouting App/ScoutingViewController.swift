@@ -51,4 +51,7 @@ class ScoutingViewController: UIViewController {
 		self.performSegue(withIdentifier: "submit", sender: self)
 
     }
+	override var preferredStatusBarStyle: UIStatusBarStyle {
+		return .lightContent
+	}
 }
