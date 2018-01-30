@@ -13,29 +13,42 @@ class transmitter: UIViewController, CBCentralManagerDelegate, CBPeripheralDeleg
 
 	var manager:CBCentralManager!
 	var peripheral:CBPeripheral!
-	let NAME = "Spud"
-	let SCRATCH_UUID = CBUUID(string: "a495ff21-c5b1-4b44-b512-1370f02d74de")
+	let SCRATCH_UUID = UUID.init(uuidString: "00001101-0000-1000-8000-00805F9B34FB")
 	let SERVICE_UUID = CBUUID(string: "00001101-0000-1000-8000-00805F9B34FB")
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		// Define manager
 		manager = CBCentralManager(delegate: self, queue: nil)
 		print(globals.data)
         // Do any additional setup after loading the view.
     }
 	
+    @IBOutlet weak var console: UILabel!
+    
+    
+    
+	// Check if teh bluetooth is enabled
 	func centralManagerDidUpdateState(_ central: CBCentralManager) {
 		if central.state == CBManagerState.poweredOn {
-			central.scanForPeripherals(withServices: nil, options: nil)
+			central.scanForPeripherals(withServices:nil, options: nil)
+			print (central.isScanning)
+			console.text = String(describing: central.retrievePeripherals(withIdentifiers: [SCRATCH_UUID!]))
 		} else {
-			print("Bluetooth not available.")
+			//print("Bluetooth not available.")
+			let alert = UIAlertController(title: "Bluetooth unavalible", message: "Bluetooth is unavalibe for this device. Is it even turned on?", preferredStyle: UIAlertControllerStyle.alert)
+			alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+			self.present(alert, animated: true, completion: nil)
 		}
 	}
 	
+	// Pair with device....
+	// TODO: Change to be based on MAC Address instead of name
 	private func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
 		let device = (advertisementData as NSDictionary).object(forKey: CBAdvertisementDataLocalNameKey) as? NSString
-		
-		if device?.contains(NAME) == true {
+		// console.text = peripheral.name
+		/*
+		if device?.contains(globals.macAddress) == true {
 			self.manager.stopScan()
 			
 			self.peripheral = peripheral
@@ -43,43 +56,37 @@ class transmitter: UIViewController, CBCentralManagerDelegate, CBPeripheralDeleg
 			
 			manager.connect(peripheral, options: nil)
 		}
+*/
 	}
 	
+	// Once you are connected to a device, you can get a list of services on that device.
 	func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
 		peripheral.discoverServices(nil)
 	}
 	
+	// Once you get a list of the services offered by the device, you will want to get a list of the characteristics. You can get crazy here, or limit listing of characteristics to just a specific service. If you go crazy watch for threading issues.
 	private func peripheral(peripheral: CBPeripheral,didDiscoverServices error: NSError?) {
 		for service in peripheral.services! {
 			let thisService = service as CBService
 			
 			if service.uuid == SERVICE_UUID {
-				peripheral.discoverCharacteristics(
-					nil,
-					for: thisService
-				)
+				peripheral.discoverCharacteristics(nil, for: thisService)
 			}
 		}
 	}
+	
+	// There are different ways to approach getting data from the BLE device. One approach would be to read changes incrementally. Another approach, the approach I used in my application, would be to have the BLE device notify you whenever a characteristic value has changed.
 	private func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
 		for characteristic in service.characteristics! {
 			let thisCharacteristic = characteristic as CBCharacteristic
 			
-			if thisCharacteristic.uuid == SCRATCH_UUID {
+			if thisCharacteristic.uuid == SERVICE_UUID {
 				self.peripheral.setNotifyValue(true, for: thisCharacteristic)
 			}
 		}
 	}
 	
-	private func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic,error: NSError?) {
-		var count:UInt32 = 0;
-		
-		if characteristic.uuid == SCRATCH_UUID {
-			characteristic.value!.getBytes(&count, length: sizeof(UInt32))
-			labelCount.text = NSString(format: "%llu", count) as String
-		}
-	}
-	
+	// This is an optional step, but hey, let us be good programmers and clean up after ourselves. Also a good place to start scanning all over again.
 	private func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
 		central.scanForPeripherals(withServices: nil, options: nil)
 	}

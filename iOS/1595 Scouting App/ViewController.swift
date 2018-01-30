@@ -45,7 +45,7 @@ class ViewController: UIViewController {
 			self.present(alertController, animated: true, completion: nil)
 		} else {
 			let alert = UIAlertController(title: "No MAC Address", message: "No MAC Address has been entered, and the app will not be able to send data to the server. Please enter a MAC Address", preferredStyle: UIAlertControllerStyle.alert)
-			alert.addAction(UIAlertAction(title: "k fine", style: UIAlertActionStyle.default, handler: nil))
+			alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
 			self.present(alert, animated: true, completion: nil)
 		}
 	}

@@ -358,7 +358,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" restorationIdentifier="ProgressCell" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Psc-1L-AKa">
-                                <rect key="frame" x="85" y="183" width="150" height="72.5"/>
+                                <rect key="frame" x="85" y="183" width="150" height="108"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="statusText" text="Sending data..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jyu-rA-TE1">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="20.5"/>
@@ -369,6 +369,13 @@
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Mt4-u7-EUJ">
                                         <rect key="frame" x="0.0" y="35.5" width="150" height="37"/>
                                     </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Bf-U2-1R2">
+                                        <rect key="frame" x="0.0" y="87.5" width="150" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <size key="shadowOffset" width="0.0" height="0.0"/>
+                                    </label>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="Cancel" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3HF-ht-Mcb">
@@ -393,6 +400,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5DB-lc-WIY"/>
                     </view>
+                    <connections>
+                        <outlet property="console" destination="7Bf-U2-1R2" id="dxo-5Q-H3C"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wZA-vZ-J55" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -403,7 +413,7 @@
         <image name="header" width="1282" height="369"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="d1N-5q-tY9"/>
+        <segue reference="2tQ-qj-kqK"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
