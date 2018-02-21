@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreBluetooth
 //class globals {
 	//var macAddress = String();
 	//var teamNumber = Int();
@@ -18,4 +19,5 @@ struct globals {
 	static var macAddress = "";
 	static var data = "Err";
 	static var teamNumber = Int()
+	static var manager:CBCentralManager! 
 }

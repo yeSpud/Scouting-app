@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5C0516322019162A00CB3B30 /* ScoutingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0516312019162A00CB3B30 /* ScoutingViewController.swift */; };
-		5C7C0BFB200F383100BC0956 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C7C0BFA200F383100BC0956 /* ExternalAccessory.framework */; };
 		5C818B7A201A644D00E1DA59 /* globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C818B79201A644D00E1DA59 /* globals.swift */; };
 		5CC2E510201ED34600CAB666 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CC2E50F201ED34600CAB666 /* CoreBluetooth.framework */; };
 		5CCC8571200F34F000C891E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCC8570200F34F000C891E3 /* AppDelegate.swift */; };
@@ -40,7 +39,6 @@
 
 /* Begin PBXFileReference section */
 		5C0516312019162A00CB3B30 /* ScoutingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoutingViewController.swift; sourceTree = "<group>"; };
-		5C7C0BFA200F383100BC0956 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		5C7C0BFC200F383100BC0956 /* 1595 Scouting App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "1595 Scouting App.entitlements"; sourceTree = "<group>"; };
 		5C818B79201A644D00E1DA59 /* globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globals.swift; sourceTree = "<group>"; };
 		5CC2E50F201ED34600CAB666 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
@@ -66,7 +64,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CC2E510201ED34600CAB666 /* CoreBluetooth.framework in Frameworks */,
-				5C7C0BFB200F383100BC0956 /* ExternalAccessory.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,7 +88,6 @@
 			isa = PBXGroup;
 			children = (
 				5CC2E50F201ED34600CAB666 /* CoreBluetooth.framework */,
-				5C7C0BFA200F383100BC0956 /* ExternalAccessory.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -224,7 +220,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.WAC = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -461,32 +457,40 @@
 		5CCC8596200F34F000C891E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "1595 Scouting App/1595 Scouting App.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 92GPFLWS8D;
 				INFOPLIST_FILE = "1595 Scouting App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "-595-Dragons.-595-Scouting-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
+				TREAT_MISSING_BASELINES_AS_TEST_FAILURES = YES;
 			};
 			name = Debug;
 		};
 		5CCC8597200F34F000C891E3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "1595 Scouting App/1595 Scouting App.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 92GPFLWS8D;
 				INFOPLIST_FILE = "1595 Scouting App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "-595-Dragons.-595-Scouting-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
+				TREAT_MISSING_BASELINES_AS_TEST_FAILURES = YES;
 			};
 			name = Release;
 		};
