@@ -8,13 +8,7 @@
 
 import Foundation
 import CoreBluetooth
-//class globals {
-	//var macAddress = String();
-	//var teamNumber = Int();
-	
-	//func setMacAddress(macAddr:String) {
-		//macAddress = macAddr
-	//}
+
 struct globals {
 	static var macAddress = "";
 	static var data = "Err";

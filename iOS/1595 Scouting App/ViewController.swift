@@ -18,9 +18,9 @@ class ViewController: UIViewController {
 		manager = CBCentralManager()
 		manager.delegate = self as? CBCentralManagerDelegate
 		if (globals.manager != nil) {
-		if (globals.manager.isScanning) {
-			globals.manager.stopScan()
-		}
+			if (globals.manager.isScanning) {
+				globals.manager.stopScan()
+			}
 		}
 		// Do any additional setup after loading the view, typically from a nib.
 	}
