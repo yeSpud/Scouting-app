@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ public class data_collection extends AppCompatActivity {
     public static String data = null;
 
     TextView NumberOfCubes;
+    RadioButton noC, oneC, twoC, threeC;
     Button back_btn;
     Button send_btn;
     SeekBar bar;
@@ -42,6 +45,12 @@ public class data_collection extends AppCompatActivity {
                 Toast.makeText(data_collection.this, "Scouting canceled.", Toast.LENGTH_LONG).show();
             }
         });
+
+        noC = (RadioButton) findViewById(R.id.noClimb);
+        oneC = (RadioButton) findViewById(R.id.oneClimb);
+        twoC = (RadioButton) findViewById(R.id.twoClimb);
+        threeC = (RadioButton) findViewById(R.id.threeClimb);
+
 
         NumberOfCubes = (TextView) findViewById(R.id.cubeNumber);
         NumberOfCubes.setText("Number of cubes placed: ");
@@ -74,8 +83,16 @@ public class data_collection extends AppCompatActivity {
                 Boolean teleSwitch = ((CheckBox)findViewById(R.id.teleCheck)).isChecked();
                 Boolean teleScale = ((CheckBox)findViewById(R.id.teleCheckScale)).isChecked();
                 int cubeNumber = Math.round(bar.getProgress()/4);
-                Boolean endClimb = ((CheckBox)findViewById(R.id.endGameCheck)).isChecked();
-                Boolean endClimbAssist = ((CheckBox)findViewById(R.id.endGameCheckAssist)).isChecked();
+                int climbValue = 0;
+                if (noC.isChecked()) {
+                    climbValue = 0;
+                } else if (oneC.isChecked()) {
+                    climbValue = 1;
+                } else if (twoC.isChecked()) {
+                    climbValue = 2;
+                } else if (threeC.isChecked()) {
+                    climbValue = 3;
+                }
 
                 data = (main_activity.number +  ", " +
                         hasAuto + ", " +
@@ -84,8 +101,8 @@ public class data_collection extends AppCompatActivity {
                         teleSwitch + ", " +
                         teleScale + ", " +
                         cubeNumber + ", " +
-                        endClimb + ", " +
-                        endClimbAssist).toUpperCase();
+                        climbValue).toUpperCase();
+                //Log.e("",data);
 
 
                 startActivity(new Intent(data_collection.this, transmit.class));

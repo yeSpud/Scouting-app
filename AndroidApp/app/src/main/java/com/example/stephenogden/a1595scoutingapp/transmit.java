@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.UUID;
 
 import static com.example.stephenogden.a1595scoutingapp.data_collection.data;
@@ -27,7 +29,7 @@ import static com.example.stephenogden.a1595scoutingapp.main_activity.btAdapter;
  * FTC 6128 | 7935
  * FRC 1595
  */
-
+// TODO: Error windows pause activity until OK
 public class transmit extends AppCompatActivity {
 
     //public BluetoothAdapter btAdapter;
@@ -96,6 +98,8 @@ public class transmit extends AppCompatActivity {
             try {
                 outStream = btSocket.getOutputStream();
                 outStream.write(data.getBytes(), 0, data.getBytes().length);
+                Log.e("outString", data);
+                Log.e("outBytes", Arrays.toString(data.getBytes()));
                 progress.setProgress(100);
                 outStream.close();
             } catch (Exception e) {

@@ -39,7 +39,7 @@
             <Space
                 android:id="@+id/ButtonsPad"
                 android:layout_width="5dp"
-                android:layout_height="500dp"
+                android:layout_height="650dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -120,8 +120,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/teleCheckScale" />
 
@@ -149,29 +149,72 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/teleCheck" />
 
-            <CheckBox
-                android:id="@+id/endGameCheck"
+            <TextView
+                android:id="@+id/climbHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/endGameClimb"
+                android:layout_marginTop="20dp"
+                android:text="@string/climbHeader"
                 android:textColor="@color/white"
-                android:theme="@style/customBox"
+                android:textSize="20sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/numberPicker" />
 
-            <CheckBox
-                android:id="@+id/endGameCheckAssist"
+            <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/endGameClimbAssist"
-                android:textColor="@color/white"
-                android:theme="@style/customBox"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/endGameCheck" />
+                app:layout_constraintTop_toBottomOf="@id/climbHeader">
+
+                <RadioButton
+                    android:id="@+id/noClimb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:checked="true"
+                    android:text="@string/didntClimb"
+                    android:textColor="@color/white"
+                    android:theme="@style/customBox"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/climbHeader" />
+
+                <RadioButton
+                    android:id="@+id/oneClimb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/oneClimb"
+                    android:textColor="@color/white"
+                    android:theme="@style/customBox"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/noClimb" />
+
+                <RadioButton
+                    android:id="@+id/twoClimb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/twoClimb"
+                    android:textColor="@color/white"
+                    android:theme="@style/customBox"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/oneClimb" />
+
+                <RadioButton
+                    android:id="@+id/threeClimb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/threeClimb"
+                    android:textColor="@color/white"
+                    android:theme="@style/customBox"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/twoClimb" />
+            </RadioGroup>
 
             <Button
                 android:id="@+id/cancel"

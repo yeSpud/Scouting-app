@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">1595 Scouting App</string>
 
     <string name="settings">Enter MAC Address</string>
@@ -21,8 +21,12 @@
     <string name="teleBalance">Can place cube on switch</string>
     <string name="teleScale">Can place cube on scale</string>
     <string name="numberCube">Number of cubes placed: </string>
-    <string name="endGameClimb">Can climb</string>
-    <string name="endGameClimbAssist">Can help others climb</string>
+
+    <string name="climbHeader">Climbing:</string>
+    <string name="didntClimb" tools:ignore="Typos">This bot didnt cause any other bots to climb/failed to climb</string>
+    <string name="oneClimb" tools:ignore="Typos">This bot caused one bot to climb</string>
+    <string name="twoClimb">This bot caused two bots to climb</string>
+    <string name="threeClimb">This team climbed, and lifted two other bots</string>
 
     <string name="connecting">Connecting to Server</string>
     <string name="datapending">Sending data over bluetooth</string>
