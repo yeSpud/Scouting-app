@@ -31,5 +31,7 @@
     <string name="connecting">Connecting to Server</string>
     <string name="datapending">Sending data over bluetooth</string>
 
+    <string name="commentHeader">Comments:</string>
+
 
 </resources>

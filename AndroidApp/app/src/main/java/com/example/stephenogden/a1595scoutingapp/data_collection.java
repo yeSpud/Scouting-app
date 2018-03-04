@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ public class data_collection extends AppCompatActivity {
     public static String data = null;
 
     TextView NumberOfCubes;
+    EditText comment;
     RadioButton noC, oneC, twoC, threeC;
     Button back_btn;
     Button send_btn;
@@ -51,6 +53,8 @@ public class data_collection extends AppCompatActivity {
         twoC = (RadioButton) findViewById(R.id.twoClimb);
         threeC = (RadioButton) findViewById(R.id.threeClimb);
 
+
+        comment = (EditText) findViewById(R.id.comment);
 
         NumberOfCubes = (TextView) findViewById(R.id.cubeNumber);
         NumberOfCubes.setText("Number of cubes placed: ");
@@ -95,14 +99,16 @@ public class data_collection extends AppCompatActivity {
                 }
 
                 data = (main_activity.number +  ", " +
-                        hasAuto + ", " +
-                        autoSwitch + ", " +
-                        autoScale + ", " +
-                        teleSwitch + ", " +
-                        teleScale + ", " +
-                        cubeNumber + ", " +
+                        hasAuto + "," +
+                        autoSwitch + "," +
+                        autoScale + "," +
+                        teleSwitch + "," +
+                        teleScale + "," +
+                        cubeNumber + "," +
                         climbValue).toUpperCase();
-                //Log.e("",data);
+
+                data = data + "," + comment.getText().toString();
+                Log.d("Output",data);
 
 
                 startActivity(new Intent(data_collection.this, transmit.class));

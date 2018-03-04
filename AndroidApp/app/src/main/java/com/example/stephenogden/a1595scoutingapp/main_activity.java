@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 public class main_activity extends AppCompatActivity {
 
+    // TODO: Try connecting to PC immidiatly (When this appreas), if fail, toast text warning
+
     public static BluetoothAdapter btAdapter;
 
     final Context context = this;

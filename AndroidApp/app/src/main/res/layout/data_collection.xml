@@ -39,7 +39,7 @@
             <Space
                 android:id="@+id/ButtonsPad"
                 android:layout_width="5dp"
-                android:layout_height="650dp"
+                android:layout_height="900dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -235,6 +235,29 @@
                 android:textColor="@color/white"
                 app:layout_constraintLeft_toRightOf="@+id/ButtonsPad"
                 app:layout_constraintTop_toBottomOf="@+id/ButtonsPad" />
+
+            <TextView
+                android:id="@+id/commentHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/commentHeader"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_marginTop="200dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/climbHeader" />
+
+            <EditText
+                android:id="@+id/comment"
+                android:layout_width="fill_parent"
+                android:layout_height="150dp"
+                android:background="@color/darkGray"
+                android:textColor="@color/white"
+                android:inputType="textPersonName"
+                android:text=""
+                app:layout_constraintTop_toBottomOf="@id/commentHeader"
+                />
 
 
         </android.support.constraint.ConstraintLayout>

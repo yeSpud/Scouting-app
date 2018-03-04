@@ -120,6 +120,9 @@ public class transmit extends AppCompatActivity {
             } catch (Exception e) {
                 AlertBox("Fatal Error", "Cannot close socket: " + e.getMessage());
             }
+
+            // TODO: Dont disconnect from the device!!!
+
         }
     };
 
