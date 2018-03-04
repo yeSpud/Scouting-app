@@ -98,7 +98,7 @@ public class data_collection extends AppCompatActivity {
                     climbValue = 3;
                 }
 
-                data = (main_activity.number +  ", " +
+                data = (main_activity.number +  "," +
                         hasAuto + "," +
                         autoSwitch + "," +
                         autoScale + "," +

@@ -3,6 +3,7 @@
 
     <string name="settings">Enter MAC Address</string>
     <string name="startScout">Scout new team</string>
+    <string name="startPit">Pit scout a team</string>
     <string name="back">◀ Back</string>
     <string name="Cancel">Cancel</string>
     <string name="Submit">Submit</string>

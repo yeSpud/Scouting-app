@@ -39,7 +39,7 @@
             <Space
                 android:id="@+id/ButtonsPad"
                 android:layout_width="5dp"
-                android:layout_height="900dp"
+                android:layout_height="775dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -251,10 +251,11 @@
             <EditText
                 android:id="@+id/comment"
                 android:layout_width="fill_parent"
-                android:layout_height="150dp"
+                android:layout_height="70dp"
                 android:background="@color/darkGray"
                 android:textColor="@color/white"
-                android:inputType="textPersonName"
+                android:inputType="textMultiLine|textAutoCorrect"
+                android:imeOptions="actionDone"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@id/commentHeader"
                 />
