@@ -14,11 +14,11 @@
 
 
     <string name="teamToScout">Team to scout: </string>
-    <string name="autoHeaderText">Autonomous:</string>
+    <string name="autoHeaderText">Autonomous</string>
     <string name="hasAuto">This team has an auto\n(Can cross baseline)</string>
     <string name="autoBalance">Team can place a cube on switch</string>
     <string name="autoScale">Team can place cube on scale</string>
-    <string name="teleHeaderText">TeleOp:</string>
+    <string name="teleHeaderText">TeleOp</string>
     <string name="teleBalance">Can place cube on switch</string>
     <string name="teleScale">Can place cube on scale</string>
     <string name="numberCube">Number of cubes placed: </string>
@@ -33,6 +33,38 @@
     <string name="datapending">Sending data over bluetooth</string>
 
     <string name="commentHeader">Comments:</string>
-
+    
+    <string name="pitScoutTeamNumber">Team number</string>
+    <string name="pitScoutTeamName">Team name (Optional)</string>
+    <string name="pitScoutDTConfigHeader">Drive train configuration</string>
+    <string name="DTConfig_Standard">Tank drive/west coast (Standard)</string>
+    <string name="DTConfig_Mecanum">Mecanum</string>
+    <string name="DTConfig_Swerve">Swerve</string>
+    <string name="DTConfig_Holonomic">Holonimic</string>
+    <string name="DTConfig_Slide">Slide or H-Drive</string>
+    <string name="DTConfig_Butterfly">Butterfly</string>
+    <string name="DTConfig_Grasshopper">Grasshopper</string>
+    <string name="DTConfig_Kiwi">Kiwi</string>
+    <string name="DTConfig_Nonadrive">Nonadrive/Butterslide</string>
+    <string name="DTConfig_Octocanum">Octocanum</string>
+    <string name="DTConfig_Other">Other</string>
+    <string name="WheelsizeHeader">Wheel size (Inches)</string>
+    <string name="WheelspacingHeader">Wheel spaceing (Inches)</string>
+    <string name="GroundClearanceHeader">Ground clearance (Inches)</string>
+    <string name="pitScoutingNoAuto">No Auto</string>
+    <string name="pitScoutingBasicAuto">Can cross baseline</string>
+    <string name="pitScoutingSwitchAuto">Can place cube on switch</string>
+    <string name="pitScoutingScaleAuto">Can place cube on scale</string>
+    <string name="pitScoutingNoTele">No teleOp</string>
+    <string name="pitScoutingSwitchTele">Can place cube on switch</string>
+    <string name="pitScoutingScaleTele">Can place cube on scale</string>
+    <string name="pitScoutingClimberHeader">Type of climber</string>
+    <string name="rampClimb">Ramp climber (Dont climb themselves)</string>
+    <string name="TrippleClimb">TrippleClimber (Can hoist both robots and climb themselves)</string>
+    <string name="DoubleClimb">DoubleClimber (Can hoist one other robot, and climb themselves)</string>
+    <string name="shareClimb">Sharing is caring :)      (Leaves room on the bar for other bots</string>
+    <string name="onlyClimb">Only them</string>
+    <string name="otherClimb">Other</string>
+    <string name="pitScoutingCommentsHeader">Additional comments (Optional)</string>
 
 </resources>
