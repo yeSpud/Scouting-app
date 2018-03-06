@@ -13,7 +13,10 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:descendantFocusability="beforeDescendants"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        tools:layout_editor_absoluteX="58dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:ignore="MissingConstraints">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="fill_parent"
@@ -34,19 +37,19 @@
                 android:id="@+id/pitScoutNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/genericPad">
 
                 <TextView
-                    android:id="@+id/putScoutNumberHeader"
+                    android:id="@+id/pitScoutNumberHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pitScoutTeamNumber"
                     android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:textSize="20dp" />
 
                 <EditText
                     android:id="@+id/teamNumber"
@@ -59,6 +62,45 @@
 
 
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pitScoutName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pitScoutNumber">
+
+                <TextView
+                    android:id="@+id/putScoutNameHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pitScoutTeamName"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/teamName"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:background="@color/darkGray"
+                    android:inputType="text"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="17sp" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/DTConfig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pitScoutDTConfigHeader"
+                android:textColor="@color/white"/>
 
 
         </android.support.constraint.ConstraintLayout>
