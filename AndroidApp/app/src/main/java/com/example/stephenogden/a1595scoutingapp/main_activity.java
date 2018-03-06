@@ -29,6 +29,7 @@ public class main_activity extends AppCompatActivity {
 
     public Button start_button;
     public Button settings_btn;
+    public Button pit_button;
 
     public static int number;
 
@@ -44,6 +45,25 @@ public class main_activity extends AppCompatActivity {
                 startActivity(new Intent(main_activity.this, settings.class));
             }
         });
+
+
+        pit_button = (Button)findViewById(R.id.pitScout);
+        pit_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    if (settings.MACADDR.isEmpty()) {
+                        Toast.makeText(main_activity.this, "Please enter a MAC address first!", Toast.LENGTH_LONG).show();
+                    } else {
+                        startActivity(new Intent(main_activity.this, pitscouting.class));
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(main_activity.this, "Please enter a MAC address first!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
 
         start_button = (Button)findViewById(R.id.start);
         start_button.setOnClickListener(new View.OnClickListener() {

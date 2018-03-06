@@ -20,6 +20,47 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <Space
+                android:id="@+id/genericPad"
+                android:layout_width="50dp"
+                android:layout_height="25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <LinearLayout
+                android:id="@+id/pitScoutNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/genericPad">
+
+                <TextView
+                    android:id="@+id/putScoutNumberHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pitScoutTeamNumber"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/teamNumber"
+                    android:layout_width="75dp"
+                    android:layout_height="fill_parent"
+                    android:background="@color/darkGray"
+                    android:inputType="number"
+                    android:textColor="@color/white"
+                    android:textSize="17sp" />
+
+
+            </LinearLayout>
+
+
         </android.support.constraint.ConstraintLayout>
 
 

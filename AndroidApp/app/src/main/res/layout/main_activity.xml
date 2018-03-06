@@ -46,7 +46,7 @@
         android:background="@drawable/greenbutton"
         android:textColor="@color/white"
         android:text="@string/startPit"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/start" />
@@ -72,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@id/settings"
         android:textColor="@color/white"
         android:layout_marginTop="50dp"
-        android:text="Build date: 01:35; 3/4/2018"
+        android:text="Build date: 10:36; 3/6/2018"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:textSize="15sp"

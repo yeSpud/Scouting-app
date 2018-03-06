@@ -34,8 +34,8 @@
 
     <string name="commentHeader">Comments:</string>
     
-    <string name="pitScoutTeamNumber">Team number</string>
-    <string name="pitScoutTeamName">Team name (Optional)</string>
+    <string name="pitScoutTeamNumber">Team number:</string>
+    <string name="pitScoutTeamName">Team name (Optional):</string>
     <string name="pitScoutDTConfigHeader">Drive train configuration</string>
     <string name="DTConfig_Standard">Tank drive/west coast (Standard)</string>
     <string name="DTConfig_Mecanum">Mecanum</string>
