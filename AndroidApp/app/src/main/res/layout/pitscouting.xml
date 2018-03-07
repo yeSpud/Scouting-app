@@ -96,11 +96,201 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/DTConfigHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="@string/pitScoutDTConfigHeader"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pitScoutName" />
+
+            <RadioGroup
                 android:id="@+id/DTConfig"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pitScoutDTConfigHeader"
-                android:textColor="@color/white"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/DTConfigHeader">
+
+                <RadioButton
+                    android:id="@+id/DTStandard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/DTConfig_Standard"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/arial"
+                    android:textSize="17dp"
+                    android:theme="@style/customBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <RadioButton
+                    android:id="@+id/DTMecanum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/DTConfig_Mecanum"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/arial"
+                    android:textSize="17dp"
+                    android:theme="@style/customBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <RadioButton
+                    android:id="@+id/DTSwerve"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/DTConfig_Swerve"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/arial"
+                    android:textSize="17dp"
+                    android:theme="@style/customBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <RadioButton
+                android:id="@+id/DTHolonomic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/DTConfig_Holonomic"
+                android:textColor="@color/white"
+                android:fontFamily="@font/arial"
+                android:textSize="17dp"
+                android:theme="@style/customBox"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+                <RadioButton
+                    android:id="@+id/DTSlide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/DTConfig_Slide"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/arial"
+                    android:textSize="17dp"
+                    android:theme="@style/customBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <RadioButton
+                    android:id="@+id/DTButterfly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/DTConfig_Butterfly"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/arial"
+                    android:textSize="17dp"
+                    android:theme="@style/customBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <RadioButton
+                    android:id="@+id/DTGrasshopper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/DTConfig_Grasshopper"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/arial"
+                    android:textSize="17dp"
+                    android:theme="@style/customBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <RadioButton
+                    android:id="@+id/DTKiwi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/DTConfig_Kiwi"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/arial"
+                    android:textSize="17dp"
+                    android:theme="@style/customBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <RadioButton
+                    android:id="@+id/DTNona"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/DTConfig_Nonadrive"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/arial"
+                    android:textSize="17dp"
+                    android:theme="@style/customBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <RadioButton
+                    android:id="@+id/DTOctocanum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/DTConfig_Octocanum"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/arial"
+                    android:textSize="17dp"
+                    android:theme="@style/customBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <RadioButton
+                    android:id="@+id/DTOther"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/DTConfig_Other"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/arial"
+                    android:textSize="17dp"
+                    android:theme="@style/customBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/wheelSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/DTConfig">
+
+                <TextView
+                    android:id="@+id/pitScoutWheelSizeHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/WheelsizeHeader"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/wheelSizeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:background="@color/darkGray"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="17sp" />
+
+            </LinearLayout>
 
 
         </android.support.constraint.ConstraintLayout>
