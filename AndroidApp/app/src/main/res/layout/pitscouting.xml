@@ -411,6 +411,68 @@
                     android:theme="@style/customBox"
                     android:text="@string/pitScoutingScaleAuto"/>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pitScoutingTele"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pitScoutingAuto">
+
+                <TextView
+                    android:id="@+id/TeleHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/arial"
+                    android:textSize="20sp"
+                    android:text="@string/teleHeaderText"/>
+
+                <CheckBox
+                    android:id="@+id/pitNoTele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="17dp"
+                    android:theme="@style/customBox"
+                    android:text="@string/pitScoutingNoTele"/>
+
+                <CheckBox
+                    android:id="@+id/pitSwitchTele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="17dp"
+                    android:theme="@style/customBox"
+                    android:text="@string/pitScoutingSwitchTele"/>
+
+                <CheckBox
+                    android:id="@+id/pitScaleTele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="17dp"
+                    android:theme="@style/customBox"
+                    android:text="@string/pitScoutingScaleTele"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pitScoutingClimb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pitScoutingTele">
 
             </LinearLayout>
 
