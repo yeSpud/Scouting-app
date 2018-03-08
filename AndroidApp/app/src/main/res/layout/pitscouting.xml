@@ -367,20 +367,49 @@
 
                 <TextView
                     android:id="@+id/AutoHeader"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:fontFamily="@font/arial"
                     android:textSize="20sp"
                     android:text="@string/autoHeaderText"/>
                 
                 <CheckBox
+                    android:id="@+id/pitNoAuto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="17dp"
                     android:theme="@style/customBox"
                     android:text="@string/pitScoutingNoAuto"/>
+
+                <CheckBox
+                    android:id="@+id/pitBasicAuto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="17dp"
+                    android:theme="@style/customBox"
+                    android:text="@string/pitScoutingBasicAuto"/>
+
+                <CheckBox
+                    android:id="@+id/pitSwitchAuto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="17dp"
+                    android:theme="@style/customBox"
+                    android:text="@string/pitScoutingSwitchAuto"/>
+
+                <CheckBox
+                    android:id="@+id/pitScaleAuto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="17dp"
+                    android:theme="@style/customBox"
+                    android:text="@string/pitScoutingScaleAuto"/>
 
 
             </LinearLayout>

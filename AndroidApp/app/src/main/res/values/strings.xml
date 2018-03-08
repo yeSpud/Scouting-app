@@ -49,7 +49,7 @@
     <string name="DTConfig_Octocanum">Octocanum</string>
     <string name="DTConfig_Other">Other</string>
     <string name="WheelsizeHeader">Wheel size (Inches)</string>
-    <string name="WheelspacingHeader">Wheel spaceing (Inches)</string>
+    <string name="WheelspacingHeader">Wheel spacing (Inches)</string>
     <string name="GroundClearanceHeader">Ground clearance (Inches)</string>
     <string name="pitScoutingNoAuto">No Auto</string>
     <string name="pitScoutingBasicAuto">Can cross baseline</string>
