@@ -14,6 +14,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static com.example.stephenogden.a1595scoutingapp.main_activity.data;
+
 
 /**
  * Created by Stephen Ogden on 5/27/17.
@@ -22,8 +24,6 @@ import android.widget.Toast;
  */
 
 public class data_collection extends AppCompatActivity {
-
-    public static String data = null;
 
     TextView NumberOfCubes;
     EditText comment;

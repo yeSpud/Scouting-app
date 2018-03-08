@@ -24,6 +24,7 @@ public class main_activity extends AppCompatActivity {
     // TODO: Try connecting to PC immidiatly (When this appreas), if fail, toast text warning
 
     public static BluetoothAdapter btAdapter;
+    public static String data;
 
     final Context context = this;
 
