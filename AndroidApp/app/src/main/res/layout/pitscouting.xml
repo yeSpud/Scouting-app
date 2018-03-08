@@ -49,7 +49,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/pitScoutTeamNumber"
                     android:textColor="@color/white"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    tools:ignore="SpUsage" />
 
                 <EditText
                     android:id="@+id/teamNumber"
@@ -58,7 +59,8 @@
                     android:background="@color/darkGray"
                     android:inputType="number"
                     android:textColor="@color/white"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    tools:ignore="LabelFor" />
 
 
             </LinearLayout>
@@ -90,8 +92,8 @@
                     android:inputType="text"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="17sp" />
-
+                    android:textSize="17sp"
+                    tools:ignore="LabelFor" />
 
             </LinearLayout>
 
@@ -123,7 +125,7 @@
                     android:text="@string/DTConfig_Standard"
                     android:textColor="@color/white"
                     android:fontFamily="@font/arial"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -136,7 +138,7 @@
                     android:text="@string/DTConfig_Mecanum"
                     android:textColor="@color/white"
                     android:fontFamily="@font/arial"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -149,24 +151,24 @@
                     android:text="@string/DTConfig_Swerve"
                     android:textColor="@color/white"
                     android:fontFamily="@font/arial"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"/>
 
                 <RadioButton
-                android:id="@+id/DTHolonomic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/DTConfig_Holonomic"
-                android:textColor="@color/white"
-                android:fontFamily="@font/arial"
-                android:textSize="17dp"
-                android:theme="@style/customBox"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"/>
+                    android:id="@+id/DTHolonomic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/DTConfig_Holonomic"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/arial"
+                    android:textSize="17sp"
+                    android:theme="@style/customBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
                 <RadioButton
                     android:id="@+id/DTSlide"
@@ -175,7 +177,7 @@
                     android:text="@string/DTConfig_Slide"
                     android:textColor="@color/white"
                     android:fontFamily="@font/arial"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -188,7 +190,7 @@
                     android:text="@string/DTConfig_Butterfly"
                     android:textColor="@color/white"
                     android:fontFamily="@font/arial"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -201,7 +203,7 @@
                     android:text="@string/DTConfig_Grasshopper"
                     android:textColor="@color/white"
                     android:fontFamily="@font/arial"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -214,7 +216,7 @@
                     android:text="@string/DTConfig_Kiwi"
                     android:textColor="@color/white"
                     android:fontFamily="@font/arial"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -227,7 +229,7 @@
                     android:text="@string/DTConfig_Nonadrive"
                     android:textColor="@color/white"
                     android:fontFamily="@font/arial"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -240,7 +242,7 @@
                     android:text="@string/DTConfig_Octocanum"
                     android:textColor="@color/white"
                     android:fontFamily="@font/arial"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -253,7 +255,7 @@
                     android:text="@string/DTConfig_Other"
                     android:textColor="@color/white"
                     android:fontFamily="@font/arial"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -288,7 +290,8 @@
                     android:inputType="numberDecimal"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    tools:ignore="LabelFor" />
 
             </LinearLayout>
 
@@ -319,7 +322,8 @@
                     android:inputType="numberDecimal"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    tools:ignore="LabelFor" />
 
             </LinearLayout>
 
@@ -350,7 +354,8 @@
                     android:inputType="numberDecimal"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    tools:ignore="LabelFor" />
 
             </LinearLayout>
 
@@ -374,13 +379,13 @@
                     android:fontFamily="@font/arial"
                     android:textSize="20sp"
                     android:text="@string/autoHeaderText"/>
-                
+
                 <CheckBox
                     android:id="@+id/pitNoAuto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     android:text="@string/pitScoutingNoAuto"/>
 
@@ -389,7 +394,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     android:text="@string/pitScoutingBasicAuto"/>
 
@@ -398,7 +403,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     android:text="@string/pitScoutingSwitchAuto"/>
 
@@ -407,7 +412,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     android:text="@string/pitScoutingScaleAuto"/>
 
@@ -439,7 +444,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     android:text="@string/pitScoutingNoTele"/>
 
@@ -448,7 +453,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     android:text="@string/pitScoutingSwitchTele"/>
 
@@ -457,7 +462,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:theme="@style/customBox"
                     android:text="@string/pitScoutingScaleTele"/>
 
@@ -465,7 +470,7 @@
 
             <LinearLayout
                 android:id="@+id/pitScoutingClimb"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:orientation="vertical"
@@ -474,11 +479,162 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/pitScoutingTele">
 
+                <TextView
+                    android:id="@+id/ClimberHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/arial"
+                    android:textSize="20sp"
+                    android:text="@string/climbHeader"/>
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/pitScoutRampClimb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rampClimb"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/arial"
+                        android:textSize="12sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:theme="@style/customBox"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <RadioButton
+                        android:id="@+id/pitScoutTrippleClimb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/TrippleClimb"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/arial"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="10dp"
+                        android:theme="@style/customBox"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <RadioButton
+                        android:id="@+id/pitScoutDoubleClimb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/DoubleClimb"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/arial"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="10dp"
+                        android:theme="@style/customBox"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <RadioButton
+                        android:id="@+id/pitScoutShare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shareClimb"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/arial"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="5dp"
+                        android:theme="@style/customBox"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <RadioButton
+                        android:id="@+id/pitScoutOnlyThem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/onlyClimb"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/arial"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="5dp"
+                        android:theme="@style/customBox"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <RadioButton
+                        android:id="@+id/pitScoutNoClimb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/noClimb"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/arial"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="5dp"
+                        android:theme="@style/customBox"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <RadioButton
+                        android:id="@+id/pitScoutOtherClimb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/otherClimb"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/arial"
+                        android:textSize="12sp"
+                        android:theme="@style/customBox"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                </RadioGroup>
+
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintTop_toBottomOf="@id/pitScoutingClimb">
+
+                <Button
+                    android:id="@+id/cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/redbutton"
+                    android:text="@string/Cancel"
+                    android:fontFamily="@font/arial"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:textColor="@color/white"
+                    tools:ignore="ButtonStyle" />
+
+                <Button
+                    android:id="@+id/submit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/greenbutton"
+                    android:text="@string/Submit"
+                    android:fontFamily="@font/arial"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:textColor="@color/white"
+                    tools:ignore="ButtonStyle" />
+
+            </LinearLayout>
 
         </android.support.constraint.ConstraintLayout>
-
 
     </ScrollView>
 

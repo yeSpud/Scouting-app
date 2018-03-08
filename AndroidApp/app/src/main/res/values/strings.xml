@@ -23,7 +23,7 @@
     <string name="teleScale">Can place cube on scale</string>
     <string name="numberCube">Number of cubes placed: </string>
 
-    <string name="climbHeader">Climbing:</string>
+    <string name="climbHeader">Climbing</string>
     <string name="didntClimb" tools:ignore="Typos">This bot didnt cause any other bots to climb/failed to climb</string>
     <string name="oneClimb" tools:ignore="Typos">This bot caused one bot to climb</string>
     <string name="twoClimb">This bot caused two bots to climb</string>
@@ -32,7 +32,7 @@
     <string name="connecting">Connecting to Server</string>
     <string name="datapending">Sending data over bluetooth</string>
 
-    <string name="commentHeader">Comments:</string>
+    <string name="commentHeader">Additional comments (Optional)</string>
     
     <string name="pitScoutTeamNumber">Team number:</string>
     <string name="pitScoutTeamName">Team name (Optional):</string>
@@ -60,11 +60,11 @@
     <string name="pitScoutingScaleTele">Can place cube on scale</string>
     <string name="pitScoutingClimberHeader">Type of climber</string>
     <string name="rampClimb">Ramp climber (Dont climb themselves)</string>
-    <string name="TrippleClimb">TrippleClimber (Can hoist both robots and climb themselves)</string>
-    <string name="DoubleClimb">DoubleClimber (Can hoist one other robot, and climb themselves)</string>
+    <string name="TrippleClimb">Triple climber (Can hoist both robots and climb themselves)</string>
+    <string name="DoubleClimb">Double climber (Can hoist one other robot, and climb themselves)</string>
     <string name="shareClimb">Sharing is caring :)      (Leaves room on the bar for other bots</string>
-    <string name="onlyClimb">Only them</string>
-    <string name="otherClimb">Other</string>
-    <string name="pitScoutingCommentsHeader">Additional comments (Optional)</string>
+    <string name="onlyClimb">Only them (Leaves no room for other bots)</string>
+    <string name="noClimb">No climber :(</string>
+    <string name="otherClimb">Other kind of climber</string>
 
 </resources>
