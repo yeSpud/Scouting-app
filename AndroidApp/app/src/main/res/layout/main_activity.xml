@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context="com.example.stephenogden.a1595scoutingapp.main_activity"
+    tools:context="com.example.stephenogden.a1595scoutingapp.org.example.stephenogden.a1595scoutingapp.main_activity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 
@@ -76,7 +76,7 @@
         android:textColor="@color/white"
         android:layout_marginTop="50dp"
         android:fontFamily="@font/arial"
-        android:text="Build date: 10:09; 3/8/2018"
+        android:text="Build date: 10:54; 3/8/2018"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:textSize="15sp"

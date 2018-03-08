@@ -1,16 +1,17 @@
-package com.example.stephenogden.a1595scoutingapp;
+package org._1595dragons.Dragons._1595scoutingapp;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
-
-import static com.example.stephenogden.a1595scoutingapp.main_activity.data;
 
 /**
  * Created by Stephen Ogden on 3/6/18.
@@ -24,7 +25,9 @@ public class pitscouting extends AppCompatActivity {
 
     CheckBox noAuto, basicAuto, switchAuto, scaleAuto, noTele, switchTele, scaleTele;
 
+    EditText teamNumber, teamName, wheelSize, wheelSpace, grndClearance, comments;
 
+    RadioGroup DTC, Climber;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,6 +107,32 @@ public class pitscouting extends AppCompatActivity {
 
 
         submit = (Button) findViewById(R.id.submit);
+
+        teamNumber = (EditText) findViewById(R.id.teamNumber);
+        teamName = (EditText) findViewById(R.id.teamName);
+        DTC = (RadioGroup) findViewById(R.id.DTConfig);
+        wheelSize = (EditText) findViewById(R.id.wheelSizeText);
+        wheelSpace = (EditText) findViewById(R.id.wheelSpaceText);
+        grndClearance = (EditText) findViewById(R.id.groundClearance);
+        Climber = (RadioGroup) findViewById(R.id.climbType);
+
+        submit.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                main_activity.data = teamNumber.getText().toString();
+
+                if ((teamName.getText() != null) && ((teamName.getText().toString().replace(" ", "")) != "")) {
+                    main_activity.data = String.format("%s,%s", main_activity.data, teamName.getText().toString());
+                } else {
+                    main_activity.data = String.format("%s,%s", main_activity.data, " ");
+                }
+
+                main_activity.data = String.format("%s,%s", main_activity.data, ((RadioButton) findViewById(DTC.getCheckedRadioButtonId())).getText());
+
+                Log.e("Output", main_activity.data);
+            }
+        });
 
 
         }

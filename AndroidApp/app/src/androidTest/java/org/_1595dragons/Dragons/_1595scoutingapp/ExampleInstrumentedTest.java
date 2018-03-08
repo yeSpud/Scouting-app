@@ -1,4 +1,4 @@
-package com.example.stephenogden.a1595scoutingapp;
+package org._1595dragons.Dragons._1595scoutingapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

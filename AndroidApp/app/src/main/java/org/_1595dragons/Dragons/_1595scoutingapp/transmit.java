@@ -1,4 +1,4 @@
-package com.example.stephenogden.a1595scoutingapp;
+package org._1595dragons.Dragons._1595scoutingapp;
 
 
 import android.bluetooth.BluetoothDevice;
@@ -20,9 +20,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.UUID;
-
-import static com.example.stephenogden.a1595scoutingapp.main_activity.data;
-import static com.example.stephenogden.a1595scoutingapp.main_activity.btAdapter;
 
 /**
  * Created by Stephen Ogden on 5/29/17.
@@ -68,7 +65,7 @@ public class transmit extends AppCompatActivity {
         @Override
         public void run() {
             // Set up a pointer to the remote node using it's address.
-            BluetoothDevice device = btAdapter.getRemoteDevice(settings.MACADDR);
+            BluetoothDevice device = main_activity.btAdapter.getRemoteDevice(settings.MACADDR);
             // Two things are needed to make a connection:
             // A MAC address, which we got above.
             // A Service ID or UUID.  In this case we are using the UUID for SPP.
@@ -81,7 +78,7 @@ public class transmit extends AppCompatActivity {
             progress.setProgress(50);
             // Discovery is resource intensive.  Make sure it isn't going on
             // when you attempt to connect and pass your message.
-            btAdapter.cancelDiscovery();
+            main_activity.btAdapter.cancelDiscovery();
 
             // Establish the connection.  This will block until it connects.
             try {
@@ -97,9 +94,9 @@ public class transmit extends AppCompatActivity {
             OutputStream outStream;
             try {
                 outStream = btSocket.getOutputStream();
-                outStream.write(data.getBytes(), 0, data.getBytes().length);
-                Log.e("outString", data);
-                Log.e("outBytes", Arrays.toString(data.getBytes()));
+                outStream.write(main_activity.data.getBytes(), 0, main_activity.data.getBytes().length);
+                Log.e("outString", main_activity.data);
+                Log.e("outBytes", Arrays.toString(main_activity.data.getBytes()));
                 progress.setProgress(100);
                 outStream.close();
             } catch (Exception e) {
@@ -113,8 +110,8 @@ public class transmit extends AppCompatActivity {
 
             try {
                 btSocket.close();
+                main_activity.data = null;
                 Thread.yield();
-                Thread.sleep(1000);
                 Toast.makeText(transmit.this, "Success!", Toast.LENGTH_LONG).show();
                 finish();
             } catch (Exception e) {

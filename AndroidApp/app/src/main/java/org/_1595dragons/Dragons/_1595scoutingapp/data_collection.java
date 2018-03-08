@@ -1,4 +1,4 @@
-package com.example.stephenogden.a1595scoutingapp;
+package org._1595dragons.Dragons._1595scoutingapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.example.stephenogden.a1595scoutingapp.main_activity.data;
+import static org._1595dragons.Dragons._1595scoutingapp.main_activity.data;
 
 
 /**
