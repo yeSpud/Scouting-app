@@ -24,6 +24,7 @@ import static org.dragons.Dragons.scoutingapp.main_activity.data;
 
 public class data_collection extends AppCompatActivity {
 
+    final int MAX_CUBE = 25;
     CheckBox basicAuto, switchAuto, scaleAuto;
     TextView teleSwitchHeaderText, teleSwitchNumberText, teleScaleHeaderText, teleScaleNumberText, exchangeNumber;
     Button teleSwitchSubtract, teleSwitchAdd, teleScaleSubtract, teleScaleAdd, exchangeSubtract, exchangeAdd;
@@ -31,10 +32,7 @@ public class data_collection extends AppCompatActivity {
     EditText comment;
     Button back_btn;
     Button send_btn;
-
     byte teleSwitchCube = 0, teleScaleCube = 0, exchangeCube = 0;
-
-    final int MAX_CUBE = 25;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,7 +94,7 @@ public class data_collection extends AppCompatActivity {
             public void onClick(View v) {
                 if (teleSwitchCube > 0) {
                     teleSwitchCube--;
-                    teleSwitchNumberText.setText(String.format("%s",teleSwitchCube));
+                    teleSwitchNumberText.setText(String.format("%s", teleSwitchCube));
                 }
             }
         });
@@ -106,7 +104,7 @@ public class data_collection extends AppCompatActivity {
             public void onClick(View v) {
                 if (teleSwitchCube < MAX_CUBE) {
                     teleSwitchCube++;
-                    teleSwitchNumberText.setText(String.format("%s",teleSwitchCube));
+                    teleSwitchNumberText.setText(String.format("%s", teleSwitchCube));
                 }
             }
         });
@@ -118,7 +116,7 @@ public class data_collection extends AppCompatActivity {
             public void onClick(View v) {
                 if (teleScaleCube > 0) {
                     teleScaleCube--;
-                    teleScaleNumberText.setText(String.format("%s",teleScaleCube));
+                    teleScaleNumberText.setText(String.format("%s", teleScaleCube));
                 }
             }
         });
@@ -128,7 +126,7 @@ public class data_collection extends AppCompatActivity {
             public void onClick(View v) {
                 if (teleScaleCube < MAX_CUBE) {
                     teleScaleCube++;
-                    teleScaleNumberText.setText(String.format("%s",teleScaleCube));
+                    teleScaleNumberText.setText(String.format("%s", teleScaleCube));
                 }
             }
         });
@@ -141,7 +139,7 @@ public class data_collection extends AppCompatActivity {
             public void onClick(View v) {
                 if (exchangeCube > 0) {
                     exchangeCube--;
-                    exchangeNumber.setText(String.format("%s",exchangeCube));
+                    exchangeNumber.setText(String.format("%s", exchangeCube));
                 }
             }
         });
@@ -151,7 +149,7 @@ public class data_collection extends AppCompatActivity {
             public void onClick(View v) {
                 if (exchangeCube < MAX_CUBE) {
                     exchangeCube++;
-                    exchangeNumber.setText(String.format("%s",exchangeCube));
+                    exchangeNumber.setText(String.format("%s", exchangeCube));
                 }
             }
         });
@@ -175,16 +173,16 @@ public class data_collection extends AppCompatActivity {
 
                 data = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s",
                         main_activity.number,
-                        (byte) (basicAuto.isChecked()?1:0),
-                        (byte) (switchAuto.isChecked()?1:0),
-                        (byte) (scaleAuto.isChecked()?1:0),
+                        (byte) (basicAuto.isChecked() ? 1 : 0),
+                        (byte) (switchAuto.isChecked() ? 1 : 0),
+                        (byte) (scaleAuto.isChecked() ? 1 : 0),
                         teleSwitchCube,
                         teleScaleCube,
                         exchangeCube,
                         climbValue,
                         comment.getText().toString());
 
-                Log.e("Output",data);
+                Log.e("Output", data);
 
                 //startActivity(new Intent(data_collection.this, transmit.class));
                 finish();
