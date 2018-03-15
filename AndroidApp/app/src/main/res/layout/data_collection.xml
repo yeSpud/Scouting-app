@@ -275,6 +275,7 @@
 
                 <Button
                     android:id="@+id/teleExchangeAdd"
+                    android:layout_width="30dp"
                     android:layout_height="33dp"
                     android:fontFamily="@font/arial"
                     android:text="+"
