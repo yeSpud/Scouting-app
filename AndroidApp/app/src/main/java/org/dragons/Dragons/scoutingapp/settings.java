@@ -1,5 +1,7 @@
 package org.dragons.Dragons.scoutingapp;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.io.OutputStream;
+
 /**
  * Created by Stephen Ogden on 5/27/17.
  * FTC 6128 | 7935
@@ -17,6 +21,8 @@ import android.widget.EditText;
 
 public class settings extends AppCompatActivity {
 
+    public static BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();;
+    public static BluetoothSocket btSocket;
     public static String MACADDR;
     EditText macAddr;
 

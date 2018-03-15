@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -28,8 +29,7 @@ public class main_activity extends AppCompatActivity {
 
     // TODO: Try connecting to PC immediately (When this appear), if fail, toast text warning
 
-    public static BluetoothAdapter btAdapter;
-    public static BluetoothSocket btSocket;
+    BluetoothAdapter TestBT = BluetoothAdapter.getDefaultAdapter();
     public static String data;
 
     // Well known SPP UUID
@@ -80,11 +80,7 @@ public class main_activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    if (btAdapter==null) {
-                        Toast.makeText(main_activity.this, "Device does not support bluetooth!", Toast.LENGTH_LONG).show();
-                    } else if (btSocket==null || !btSocket.isConnected()) {
-                        Toast.makeText(main_activity.this, "Device not connected to server", Toast.LENGTH_LONG).show();
-                    } else if (settings.MACADDR.isEmpty()) {
+                    if (settings.MACADDR.isEmpty()) {
                         Toast.makeText(main_activity.this, "Please enter a MAC address first!", Toast.LENGTH_LONG).show();
                     } else {
                         LayoutInflater li = LayoutInflater.from(context);
@@ -123,26 +119,56 @@ public class main_activity extends AppCompatActivity {
 
     public void onResume() {
         super.onResume();
-        btAdapter = BluetoothAdapter.getDefaultAdapter();
+        settings.btAdapter = BluetoothAdapter.getDefaultAdapter();
         CheckBTState();
 
-        if (btAdapter != null) {
-            if (btAdapter.isEnabled() && !btSocket.isConnected() && !settings.MACADDR.isEmpty()) {
-                establishConnection();
+        if (isSupportedandOn()) {
+            if(enteredMac()) {
+                if (isConnected()) {
+                    Toast.makeText(main_activity.this, "Already connected :)", Toast.LENGTH_LONG).show();
+                } else {
+                    establishConnection();
+                }
             } else {
-                Toast.makeText(main_activity.this, "Already connected (Hopefully)", Toast.LENGTH_LONG).show();
+                Toast.makeText(main_activity.this, "Invalid MAC", Toast.LENGTH_LONG).show();
             }
+        } else {
+            Toast.makeText(main_activity.this, "BlueTooth not supported/on", Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    private boolean isSupportedandOn() {
+        try {
+            return settings.btAdapter.isEnabled();
+        } catch (Exception NullPointerException) {
+            return false;
+        }
+    }
+
+    private boolean enteredMac() {
+        try {
+            return !settings.MACADDR.isEmpty();
+        } catch (Exception NullPointerException) {
+            return false;
+        }
+    }
+
+    private boolean isConnected() {
+        try {
+            return settings.btSocket.isConnected();
+        } catch (Exception NullPointerException) {
+            return false;
+        }
     }
 
     private void CheckBTState() {
         // Check for Bluetooth support and then check to make sure it is turned on
         // Emulator doesn't support Bluetooth and will return null
-        if(btAdapter==null) {
+        if(TestBT==null) {
             AlertBox("Error", "Bluetooth Not supported. Aborting.");
         } else {
-            if (!btAdapter.isEnabled()) {
+            if (!settings.btAdapter.isEnabled()) {
                 //Prompt user to turn on Bluetooth
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, 1);
@@ -151,11 +177,10 @@ public class main_activity extends AppCompatActivity {
     }
 
     private void establishConnection() {
-            Toast.makeText(main_activity.this, "Establishing connection", Toast.LENGTH_LONG).show();
             // Set up a pointer to the remote node using it's address.
             BluetoothDevice device = null;
             try {
-                device = btAdapter.getRemoteDevice(settings.MACADDR);
+                device = settings.btAdapter.getRemoteDevice(settings.MACADDR);
             } catch (Exception e) {
                 AlertBox("MAC Invalid!", e.getMessage());
             }
@@ -164,22 +189,24 @@ public class main_activity extends AppCompatActivity {
             // A Service ID or UUID.  In this case we are using the UUID for SPP.
             try {
                 assert device != null;
-                btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
+                settings.btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
 
             } catch (IOException e) {
                 AlertBox("Fatal Error", "Socket create failed: " + e.getMessage() + ".");
             }
-            // Discovery is resource intensive.  Make sure it isn't going on
-            // when you attempt to connect and pass your message.
-            main_activity.btAdapter.cancelDiscovery();
 
-            // Establish the connection.  This will block until it connects.
-            try {
-                btSocket.connect();
-            } catch (IOException e) {
-                String msg = "An exception occurred during connection, socket closed: " + e.getMessage();
-                AlertBox("Error", msg);
-            }
+                Toast.makeText(main_activity.this, "Establishing connection", Toast.LENGTH_LONG).show();
+                // Discovery is resource intensive.  Make sure it isn't going on
+                // when you attempt to connect and pass your message.
+                settings.btAdapter.cancelDiscovery();
+
+                // Establish the connection.  This will block until it connects.
+                try {
+                    settings.btSocket.connect();
+                } catch (IOException e) {
+                    String msg = "An exception occurred during connection, socket closed: " + e.getMessage();
+                    AlertBox("Error", msg);
+                }
     }
 
     public void AlertBox(@SuppressWarnings("SameParameterValue") String title, String message ){

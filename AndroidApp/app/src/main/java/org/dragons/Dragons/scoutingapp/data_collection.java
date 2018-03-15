@@ -183,8 +183,10 @@ public class data_collection extends AppCompatActivity {
                         comment.getText().toString());
 
                 Log.e("Output", data);
-
-                startActivity(new Intent(data_collection.this, transmit.class));
+                transmit transmit = new transmit();
+                transmit.sendData(data);
+                Toast.makeText(data_collection.this, "Success!", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(data_collection.this, main_activity.class));
                 finish();
             }
         });
