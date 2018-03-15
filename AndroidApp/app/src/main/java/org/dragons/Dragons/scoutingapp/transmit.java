@@ -35,8 +35,6 @@ public class transmit extends AppCompatActivity {
     TextView field;
     ProgressBar progress;
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,16 +51,16 @@ public class transmit extends AppCompatActivity {
             }
         });
 
-        progress.setProgress(25);
-        field.setText(R.string.connecting);
-        Handler handler = new Handler();
-        handler.postDelayed(task, 500);
-        Thread.yield();
-    }
+        //progress.setProgress(25);
+        //field.setText(R.string.connecting);
+        //Handler handler = new Handler();
+        //handler.postDelayed(task, 500);
+        //Thread.yield();
+    //}
 
-    private Runnable task = new Runnable() {
-        @Override
-        public void run() {
+    //private Runnable task = new Runnable() {
+        //@Override
+        //public void run() {
             /*
             // Set up a pointer to the remote node using it's address.
             BluetoothDevice device = main_activity.btAdapter.getRemoteDevice(settings.MACADDR);
@@ -124,7 +122,7 @@ public class transmit extends AppCompatActivity {
             // TODO: Dont disconnect from the device!!!
 
         }
-    };
+   // };
 
     public void AlertBox(@SuppressWarnings("SameParameterValue") String title, String message ) {
         new AlertDialog.Builder(this).setTitle(title).setMessage(message + " Press OK to exit." ).setPositiveButton("OK", new DialogInterface.OnClickListener() {
