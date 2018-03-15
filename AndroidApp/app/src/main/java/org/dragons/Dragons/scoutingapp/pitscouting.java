@@ -1,4 +1,4 @@
-package org._1595dragons.Dragons._1595scoutingapp;
+package org.dragons.Dragons.scoutingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import static org._1595dragons.Dragons._1595scoutingapp.main_activity.data;
+import static org.dragons.Dragons.scoutingapp.main_activity.data;
 
 /**
  * Created by Stephen Ogden on 3/6/18.
@@ -147,7 +147,7 @@ public class pitscouting extends AppCompatActivity {
                     }
                 }
 
-                data = String.format("%s,%s", data, )
+                //data = String.format("%s,%s", data, );
 
                 Log.e("Output", data);
             }

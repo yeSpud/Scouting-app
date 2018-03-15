@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/black"
-    tools:context="org._1595dragons.Dragons._1595scoutingapp.main_activity"
+    tools:context="org.dragons.Dragons.scoutingapp.main_activity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 
@@ -284,7 +284,6 @@
 
 
             </LinearLayout>
-
 
             <TextView
                 android:id="@+id/climbHeader"

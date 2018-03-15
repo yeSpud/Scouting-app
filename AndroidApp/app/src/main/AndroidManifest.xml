@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.stephenogden.a1595scoutingapp" >
+    package="org.dragons.Dragons.scoutingapp" >
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="org._1595dragons.Dragons._1595scoutingapp.main_activity"
+            android:name="org.dragons.Dragons.scoutingapp.main_activity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,20 +22,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org._1595dragons.Dragons._1595scoutingapp.settings"
+            android:name="org.dragons.Dragons.scoutingapp.settings"
             android:label="@string/app_name">
         </activity>
         <activity
-            android:name="org._1595dragons.Dragons._1595scoutingapp.data_collection"
+            android:name="org.dragons.Dragons.scoutingapp.data_collection"
             android:label="@string/teamToScout">
         </activity>
         <activity
-            android:name="org._1595dragons.Dragons._1595scoutingapp.transmit"
+            android:name="org.dragons.Dragons.scoutingapp.transmit"
             android:label="@string/app_name">
         </activity>
 
         <activity
-            android:name="org._1595dragons.Dragons._1595scoutingapp.pitscouting"
+            android:name="org.dragons.Dragons.scoutingapp.pitscouting"
             android:label="@string/app_name">
 
         </activity>

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion '27.0.3'
     defaultConfig {
-        applicationId "com.example.stephenogden.a1595scoutingapp"
+        applicationId "org.dragons.Dragons.scoutingapp"
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 2
