@@ -184,7 +184,7 @@ public class data_collection extends AppCompatActivity {
 
                 Log.e("Output", data);
 
-                //startActivity(new Intent(data_collection.this, transmit.class));
+                startActivity(new Intent(data_collection.this, transmit.class));
                 finish();
             }
         });
