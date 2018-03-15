@@ -176,8 +176,8 @@ public class data_collection extends AppCompatActivity {
                         (byte) (basicAuto.isChecked() ? 1 : 0),
                         (byte) (switchAuto.isChecked() ? 1 : 0),
                         (byte) (scaleAuto.isChecked() ? 1 : 0),
-                        teleSwitchCube,
-                        teleScaleCube,
+                        teleSwitchCube + (byte) (switchAuto.isChecked() ? 1 : 0),
+                        teleScaleCube + (byte) (scaleAuto.isChecked() ? 1 : 0),
                         exchangeCube,
                         climbValue,
                         comment.getText().toString());

@@ -30,13 +30,12 @@ import java.util.UUID;
 public class transmit extends AppCompatActivity {
 
     //public BluetoothAdapter btAdapter;
-    public BluetoothSocket btSocket;
+    //public BluetoothSocket btSocket;
 
     TextView field;
     ProgressBar progress;
 
-    // Well known SPP UUID
-    public static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +63,7 @@ public class transmit extends AppCompatActivity {
     private Runnable task = new Runnable() {
         @Override
         public void run() {
+            /*
             // Set up a pointer to the remote node using it's address.
             BluetoothDevice device = main_activity.btAdapter.getRemoteDevice(settings.MACADDR);
             // Two things are needed to make a connection:
@@ -75,6 +75,7 @@ public class transmit extends AppCompatActivity {
             } catch (IOException e) {
                 AlertBox("Fatal Error", "Socket create failed: " + e.getMessage() + ".");
             }
+
             progress.setProgress(50);
             // Discovery is resource intensive.  Make sure it isn't going on
             // when you attempt to connect and pass your message.
@@ -87,13 +88,15 @@ public class transmit extends AppCompatActivity {
                 String msg = "An exception occurred during connection, socket closed: " + e.getMessage();
                 AlertBox("Error", msg);
             }
+            */
 
             progress.setProgress(75);
             field.setText(R.string.datapending);
             // Create a data stream so we can talk to server.
             OutputStream outStream;
             try {
-                outStream = btSocket.getOutputStream();
+                outStream = main_activity.btSocket.getOutputStream();
+                outStream.flush();
                 outStream.write(main_activity.data.getBytes(), 0, main_activity.data.getBytes().length);
                 Log.e("outString", main_activity.data);
                 Log.e("outBytes", Arrays.toString(main_activity.data.getBytes()));
@@ -104,19 +107,19 @@ public class transmit extends AppCompatActivity {
                 if (settings.MACADDR.equals("00:00:00:00:00:00")) {
                     msg = msg + ".\n\nUpdate your server address from 00:00:00:00:00:00 to the correct address on line 37 in the java code";
                 }
-                msg = msg + ".\n\nCheck that the SPP UUID: " + MY_UUID.toString() + " exists on server.\n\n";
+                msg = msg + ".\n\nCheck that the SPP UUID exists on server.\n\n";
                 AlertBox("Error", msg);
             }
 
-            try {
-                btSocket.close();
+            //try {
+                //btSocket.close();
                 main_activity.data = null;
                 Thread.yield();
                 Toast.makeText(transmit.this, "Success!", Toast.LENGTH_LONG).show();
                 finish();
-            } catch (Exception e) {
-                AlertBox("Fatal Error", "Cannot close socket: " + e.getMessage());
-            }
+            //} catch (Exception e) {
+                //AlertBox("Fatal Error", "Cannot close socket: " + e.getMessage());
+            //}
 
             // TODO: Dont disconnect from the device!!!
 

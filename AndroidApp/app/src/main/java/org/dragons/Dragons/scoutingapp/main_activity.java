@@ -1,6 +1,8 @@
 package org.dragons.Dragons.scoutingapp;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.util.UUID;
+
 /**
  * Created by Stephen Ogden on 3/23/17.
  * FTC 6128 | 7935
@@ -21,10 +26,14 @@ import android.widget.Toast;
 
 public class main_activity extends AppCompatActivity {
 
-    // TODO: Try connecting to PC immidiatly (When this appreas), if fail, toast text warning
+    // TODO: Try connecting to PC immediately (When this appear), if fail, toast text warning
 
     public static BluetoothAdapter btAdapter;
+    public static BluetoothSocket btSocket;
     public static String data;
+
+    // Well known SPP UUID
+    final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     final Context context = this;
 
@@ -65,13 +74,16 @@ public class main_activity extends AppCompatActivity {
         });
 
 
-
         start_button = (Button)findViewById(R.id.start);
         start_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    if (settings.MACADDR.isEmpty()) {
+                    if (btAdapter==null) {
+                        Toast.makeText(main_activity.this, "Device does not support bluetooth!", Toast.LENGTH_LONG).show();
+                    } else if (btSocket==null || !btSocket.isConnected()) {
+                        Toast.makeText(main_activity.this, "Device not connected to server", Toast.LENGTH_LONG).show();
+                    } else if (settings.MACADDR.isEmpty()) {
                         Toast.makeText(main_activity.this, "Please enter a MAC address first!", Toast.LENGTH_LONG).show();
                     } else {
                         LayoutInflater li = LayoutInflater.from(context);
@@ -104,12 +116,51 @@ public class main_activity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
     public void onResume() {
         super.onResume();
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         CheckBTState();
+
+        if (btAdapter != null) {
+            if (btAdapter.isEnabled() && !btSocket.isConnected() && !settings.MACADDR.isEmpty()) {
+                Toast.makeText(main_activity.this, "Establishing connection", Toast.LENGTH_LONG).show();
+                // Set up a pointer to the remote node using it's address.
+                BluetoothDevice device = null;
+                try {
+                    device = btAdapter.getRemoteDevice(settings.MACADDR);
+                } catch (Exception e) {
+                    AlertBox("MAC Invalid!", e.getMessage());
+                }
+                // Two things are needed to make a connection:
+                // A MAC address, which we got above.
+                // A Service ID or UUID.  In this case we are using the UUID for SPP.
+                try {
+                    assert device != null;
+                    btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
+
+                } catch (IOException e) {
+                    AlertBox("Fatal Error", "Socket create failed: " + e.getMessage() + ".");
+                }
+                // Discovery is resource intensive.  Make sure it isn't going on
+                // when you attempt to connect and pass your message.
+                main_activity.btAdapter.cancelDiscovery();
+
+                // Establish the connection.  This will block until it connects.
+                try {
+                    btSocket.connect();
+                } catch (IOException e) {
+                    String msg = "An exception occurred during connection, socket closed: " + e.getMessage();
+                    AlertBox("Error", msg);
+                }
+
+            } else {
+                Toast.makeText(main_activity.this, "Already connected (Hopefully)", Toast.LENGTH_LONG).show();
+            }
+        }
 
     }
 
