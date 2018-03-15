@@ -19,9 +19,9 @@
     <string name="autoBalance">Team can place a cube on switch</string>
     <string name="autoScale">Team can place cube on scale</string>
     <string name="teleHeaderText">TeleOp</string>
-    <string name="teleBalance">Can place cube on switch</string>
-    <string name="teleScale">Can place cube on scale</string>
-    <string name="numberCube">Number of cubes placed: </string>
+    <string name="teleSwitch">Number of cubes placed on switch</string>
+    <string name="teleScale">Number of cubes placed on scale</string>
+    <string name="teleExchange">Number of cubes placed in exchange</string>
 
     <string name="climbHeader">Climbing</string>
     <string name="didntClimb" tools:ignore="Typos">This bot didnt cause any other bots to climb/failed to climb</string>

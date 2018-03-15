@@ -8,9 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,12 +25,13 @@ import static org._1595dragons.Dragons._1595scoutingapp.main_activity.data;
 
 public class data_collection extends AppCompatActivity {
 
-    TextView NumberOfCubes;
-    EditText comment;
+    CheckBox basicAuto, switchAuto, scaleAuto;
+    TextView teleSwitchHeaderText, teleSwitchNumberText, teleScaleHeaderText, teleScaleNumberText, exchangeNumber;
+    Button teleSwitchSubtract, teleSwitchAdd, teleScaleSubtract, teleScaleAdd, exchangeSubtract, exchangeAdd;
     RadioButton noC, oneC, twoC, threeC;
+    EditText comment;
     Button back_btn;
     Button send_btn;
-    SeekBar bar;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -53,24 +54,16 @@ public class data_collection extends AppCompatActivity {
         twoC = (RadioButton) findViewById(R.id.twoClimb);
         threeC = (RadioButton) findViewById(R.id.threeClimb);
 
-
         comment = (EditText) findViewById(R.id.comment);
 
-        NumberOfCubes = (TextView) findViewById(R.id.cubeNumber);
-        NumberOfCubes.setText("Number of cubes placed: ");
-        bar = (SeekBar) findViewById(R.id.numberPicker);
-        bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                NumberOfCubes.setText("Number of cubes placed: " + String.valueOf(Math.round(progress/4)));
-            }
+        teleSwitchHeaderText = (TextView) findViewById(R.id.);
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
+        basicAuto = (CheckBox) findViewById(R.id.autoCheck);
 
+        switchAuto = (CheckBox) findViewById(R.id.autoBalanceCheck);
+        switchAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
             }
         });
@@ -81,12 +74,6 @@ public class data_collection extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Boolean hasAuto = ((CheckBox)findViewById(R.id.autoCheck)).isChecked();
-                Boolean autoSwitch = ((CheckBox)findViewById(R.id.autoBalanceCheck)).isChecked();
-                Boolean autoScale = ((CheckBox)findViewById(R.id.autoScaleCheck)).isChecked();
-                Boolean teleSwitch = ((CheckBox)findViewById(R.id.teleCheck)).isChecked();
-                Boolean teleScale = ((CheckBox)findViewById(R.id.teleCheckScale)).isChecked();
-                int cubeNumber = Math.round(bar.getProgress()/4);
                 int climbValue = 0;
                 if (noC.isChecked()) {
                     climbValue = 0;
@@ -116,12 +103,4 @@ public class data_collection extends AppCompatActivity {
             }
         });
     }
-    public void onDestroy() {
-        super.onDestroy();
-        bar.setOnSeekBarChangeListener(null);
-        back_btn.setOnClickListener(null);
-        send_btn.setOnClickListener(null);
-
-    }
-
 }

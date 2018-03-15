@@ -13,6 +13,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import static org._1595dragons.Dragons._1595scoutingapp.main_activity.data;
+
 /**
  * Created by Stephen Ogden on 3/6/18.
  * FTC 6128 | 7935
@@ -120,17 +122,34 @@ public class pitscouting extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                main_activity.data = teamNumber.getText().toString();
+                data = teamNumber.getText().toString();
 
                 if ((teamName.getText() != null) && ((teamName.getText().toString().replace(" ", "")) != "")) {
-                    main_activity.data = String.format("%s,%s", main_activity.data, teamName.getText().toString());
+                    data = String.format("%s,%s", data, teamName.getText().toString());
                 } else {
-                    main_activity.data = String.format("%s,%s", main_activity.data, " ");
+                    data = String.format("%s,%s", data, " ");
                 }
 
-                main_activity.data = String.format("%s,%s", main_activity.data, ((RadioButton) findViewById(DTC.getCheckedRadioButtonId())).getText());
+                data = String.format("%s,%s", data, ((RadioButton) findViewById(DTC.getCheckedRadioButtonId())).getText());
 
-                Log.e("Output", main_activity.data);
+                data = String.format("%s,%s", data, wheelSize.getText().toString());
+
+                data = String.format("%s,%s", data, wheelSpace.getText().toString());
+
+                data = String.format("%s,%s", data, grndClearance.getText().toString());
+
+                String autoString = null;
+                if (noAuto.isChecked()) {
+                    autoString = "No auto";
+                } else {
+                    if (basicAuto.isChecked()) {
+                        autoString = "Can cross baseline";
+                    }
+                }
+
+                data = String.format("%s,%s", data, )
+
+                Log.e("Output", data);
             }
         });
 
