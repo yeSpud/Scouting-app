@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/black"
-    tools:context="com.example.stephenogden.a1595scoutingapp.org.example.stephenogden.a1595scoutingapp.main_activity"
+    tools:context=".pitscouting"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 

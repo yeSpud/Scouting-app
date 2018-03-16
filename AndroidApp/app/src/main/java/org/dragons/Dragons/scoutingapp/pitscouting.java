@@ -117,26 +117,29 @@ public class pitscouting extends AppCompatActivity {
         wheelSpace = (EditText) findViewById(R.id.wheelSpaceText);
         grndClearance = (EditText) findViewById(R.id.groundClearance);
         Climber = (RadioGroup) findViewById(R.id.climbType);
+        comments = (EditText) findViewById(R.id.commentsText);
 
         submit.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                data = teamNumber.getText().toString();
 
-                if ((teamName.getText() != null) && ((teamName.getText().toString().replace(" ", "")) != "")) {
-                    data = String.format("%s,%s", data, teamName.getText().toString());
-                } else {
-                    data = String.format("%s,%s", data, " ");
-                }
+                data = String.format("%s,%s,%s,%s,%s,%s,%s",
+                        "pit",
+                        teamNumber.getText().toString(),
+                        teamName.getText().toString(),
+                        ((RadioButton) findViewById(DTC.getCheckedRadioButtonId())).getText().toString(),
+                        wheelSize.getText().toString(),
+                        wheelSpace.getText().toString(),
+                        grndClearance.getText().toString());
 
-                data = String.format("%s,%s", data, ((RadioButton) findViewById(DTC.getCheckedRadioButtonId())).getText());
+                //data = String.format("%s,%s", data, ((RadioButton) findViewById(DTC.getCheckedRadioButtonId())).getText());
 
-                data = String.format("%s,%s", data, wheelSize.getText().toString());
+                //data = String.format("%s,%s", data, wheelSize.getText().toString());
 
-                data = String.format("%s,%s", data, wheelSpace.getText().toString());
+                //data = String.format("%s,%s", data, wheelSpace.getText().toString());
 
-                data = String.format("%s,%s", data, grndClearance.getText().toString());
+                //data = String.format("%s,%s", data, grndClearance.getText().toString());
 
                 String autoString = null;
                 if (noAuto.isChecked()) {
@@ -145,11 +148,46 @@ public class pitscouting extends AppCompatActivity {
                     if (basicAuto.isChecked()) {
                         autoString = "Can cross baseline";
                     }
+                    if (switchAuto.isChecked()) {
+                        autoString = autoString + "|can place cube on switch";
+                    }
+                    if (scaleAuto.isChecked()) {
+                        autoString = autoString + "|can place cube on scale";
+                    }
                 }
+
+                data = String.format("%s,%s", data, autoString);
+
+                String teleString = null;
+                if (noTele.isChecked()) {
+                    teleString = "No teleOp.... how?";
+                } else {
+                    if (switchTele.isChecked() && scaleTele.isChecked()) {
+                        teleString = "Can place cube on switch and scale";
+                    }
+                    if (switchTele.isChecked()) {
+                        teleString = "Can place cube on switch";
+                    }
+                    if (scaleTele.isChecked()) {
+                        teleString = "Can place cube on scale";
+                    }
+                }
+
+                data = String.format("%s,%s,%s,%s",
+                        data,
+                        teleString,
+                        ((RadioButton) findViewById(Climber.getCheckedRadioButtonId())).getText().toString(),
+                        comments.getText().toString());
+
 
                 //data = String.format("%s,%s", data, );
 
                 Log.e("Output", data);
+                transmit transmit = new transmit();
+                transmit.sendData(data);
+                Toast.makeText(pitscouting.this, "Success!", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(pitscouting.this, main_activity.class));
+                finish();
             }
         });
 
