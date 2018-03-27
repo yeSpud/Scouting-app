@@ -27,8 +27,6 @@ import java.util.UUID;
 
 public class main_activity extends AppCompatActivity {
 
-    // TODO: Try connecting to PC immediately (When this appear), if fail, toast text warning
-
     BluetoothAdapter TestBT = BluetoothAdapter.getDefaultAdapter();
     public static String data;
 
@@ -125,7 +123,7 @@ public class main_activity extends AppCompatActivity {
         if (isSupportedandOn()) {
             if(enteredMac()) {
                 if (isConnected()) {
-                    Toast.makeText(main_activity.this, "Already connected :)", Toast.LENGTH_LONG).show();
+                    Toast.makeText(main_activity.this, "Already connected to server", Toast.LENGTH_LONG).show();
                 } else {
                     establishConnection();
                 }
@@ -133,7 +131,7 @@ public class main_activity extends AppCompatActivity {
                 Toast.makeText(main_activity.this, "Invalid MAC", Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(main_activity.this, "BlueTooth not supported/on", Toast.LENGTH_LONG).show();
+            Toast.makeText(main_activity.this, "Bluetooth not supported/on", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -195,7 +193,7 @@ public class main_activity extends AppCompatActivity {
                 AlertBox("Fatal Error", "Socket create failed: " + e.getMessage() + ".");
             }
 
-                Toast.makeText(main_activity.this, "Establishing connection", Toast.LENGTH_LONG).show();
+                Toast.makeText(main_activity.this, "Connecting to server", Toast.LENGTH_LONG).show();
                 // Discovery is resource intensive.  Make sure it isn't going on
                 // when you attempt to connect and pass your message.
                 settings.btAdapter.cancelDiscovery();

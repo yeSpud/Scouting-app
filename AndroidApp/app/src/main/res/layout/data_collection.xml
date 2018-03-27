@@ -39,7 +39,7 @@
             <Space
                 android:id="@+id/ButtonsPad"
                 android:layout_width="5dp"
-                android:layout_height="875dp"
+                android:layout_height="1075dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -299,6 +299,7 @@
                 app:layout_constraintTop_toBottomOf="@id/teleExchange" />
 
             <RadioGroup
+                android:id="@+id/climbGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/climbHeader">
@@ -318,11 +319,11 @@
                     app:layout_constraintTop_toBottomOf="@id/climbHeader" />
 
                 <RadioButton
-                    android:id="@+id/oneClimb"
+                    android:id="@+id/oneClimbSide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@string/oneClimb"
+                    android:text="@string/oneSideClimb"
                     android:fontFamily="@font/arial"
                     android:textColor="@color/white"
                     android:theme="@style/customBox"
@@ -331,30 +332,83 @@
                     app:layout_constraintTop_toBottomOf="@id/noClimb" />
 
                 <RadioButton
-                    android:id="@+id/twoClimb"
+                    android:id="@+id/oneClimbCenter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@string/twoClimb"
+                    android:text="@string/oneCenterClimb"
                     android:fontFamily="@font/arial"
                     android:textColor="@color/white"
                     android:theme="@style/customBox"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/oneClimb" />
+                    app:layout_constraintTop_toBottomOf="@id/oneClimbSide" />
 
                 <RadioButton
-                    android:id="@+id/threeClimb"
+                    android:id="@+id/twoClimbSide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@string/threeClimb"
+                    android:text="@string/twoSideClimb"
                     android:fontFamily="@font/arial"
                     android:textColor="@color/white"
                     android:theme="@style/customBox"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/twoClimb" />
+                    app:layout_constraintTop_toBottomOf="@id/oneClimbCenter" />
+
+                <RadioButton
+                    android:id="@+id/twoClimbCenter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/twoCenterClimb"
+                    android:fontFamily="@font/arial"
+                    android:textColor="@color/white"
+                    android:theme="@style/customBox"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/twoClimbSide" />
+
+                <RadioButton
+                    android:id="@+id/threeClimbSide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/threeSideClimb"
+                    android:fontFamily="@font/arial"
+                    android:textColor="@color/white"
+                    android:theme="@style/customBox"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/twoClimbCenter" />
+
+                <RadioButton
+                    android:id="@+id/threeClimbCenter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/threeCenterClimb"
+                    android:fontFamily="@font/arial"
+                    android:textColor="@color/white"
+                    android:theme="@style/customBox"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/threeClimbSide" />
+
+                <RadioButton
+                    android:id="@+id/rampClimb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/rampClimber"
+                    android:fontFamily="@font/arial"
+                    android:textColor="@color/white"
+                    android:theme="@style/customBox"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/threeClimbCenter" />
+
             </RadioGroup>
 
             <Button
@@ -387,10 +441,10 @@
                 android:fontFamily="@font/arial"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:layout_marginTop="200dp"
+                android:layout_marginTop="40dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/climbHeader" />
+                app:layout_constraintTop_toBottomOf="@id/climbGroup" />
 
             <EditText
                 android:id="@+id/comment"

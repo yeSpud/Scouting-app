@@ -2,6 +2,7 @@ package org.dragons.Dragons.scoutingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +30,7 @@ public class data_collection extends AppCompatActivity {
     CheckBox basicAuto, switchAuto, scaleAuto;
     TextView teleSwitchHeaderText, teleSwitchNumberText, teleScaleHeaderText, teleScaleNumberText, exchangeNumber;
     Button teleSwitchSubtract, teleSwitchAdd, teleScaleSubtract, teleScaleAdd, exchangeSubtract, exchangeAdd;
-    RadioButton noC, oneC, twoC, threeC;
+    RadioButton noC, oneCS, oneCC, twoCS, twoCC, threeCS, threeCC, rampC;
     EditText comment;
     Button back_btn;
     Button send_btn;
@@ -50,9 +52,12 @@ public class data_collection extends AppCompatActivity {
         });
 
         noC = (RadioButton) findViewById(R.id.noClimb);
-        oneC = (RadioButton) findViewById(R.id.oneClimb);
-        twoC = (RadioButton) findViewById(R.id.twoClimb);
-        threeC = (RadioButton) findViewById(R.id.threeClimb);
+        oneCS = (RadioButton) findViewById(R.id.oneClimbSide);
+        oneCC = (RadioButton) findViewById(R.id.oneClimbCenter);
+        twoCS = (RadioButton) findViewById(R.id.twoClimbSide);
+        twoCC = (RadioButton) findViewById(R.id.twoClimbCenter);
+        threeCS = (RadioButton) findViewById(R.id.threeClimbSide);
+        threeCC = (RadioButton) findViewById(R.id.threeClimbCenter);
 
         comment = (EditText) findViewById(R.id.comment);
 
@@ -160,17 +165,6 @@ public class data_collection extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                int climbValue = 0;
-                if (noC.isChecked()) {
-                    climbValue = 0;
-                } else if (oneC.isChecked()) {
-                    climbValue = 1;
-                } else if (twoC.isChecked()) {
-                    climbValue = 2;
-                } else if (threeC.isChecked()) {
-                    climbValue = 3;
-                }
-
                 data = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s",
                         main_activity.number,
                         (byte) (basicAuto.isChecked() ? 1 : 0),
@@ -179,7 +173,13 @@ public class data_collection extends AppCompatActivity {
                         teleSwitchCube + (byte) (switchAuto.isChecked() ? 1 : 0),
                         teleScaleCube + (byte) (scaleAuto.isChecked() ? 1 : 0),
                         exchangeCube,
-                        climbValue,
+                        (byte) (oneCS.isChecked() ? 1:0),
+                        (byte) (oneCC.isChecked() ? 1:0),
+                        (byte) (twoCS.isChecked() ? 1:0),
+                        (byte) (twoCC.isChecked() ? 1:0),
+                        (byte) (threeCS.isChecked() ? 1:0),
+                        (byte) (threeCC.isChecked() ? 1:0),
+                        (byte) (rampC.isChecked() ? 1:0),
                         comment.getText().toString());
 
                 Log.e("Output", data);
