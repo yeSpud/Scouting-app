@@ -15,15 +15,15 @@ class BluetoothList: UIViewController {
 	// let SCRATCH_UUID = UUID.init(uuidString: "00001101-0000-1000-8000-00805F9B34FB")
 	let SERVICE_UUID = CBUUID(string: "0x1800")
 	
-    @IBOutlet weak var text: UILabel!
+	@IBOutlet weak var text: UILabel!
 	
-    override func viewDidLoad() {
+	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Define manager
 		globals.manager = CBCentralManager(delegate: self as CBCentralManagerDelegate, queue: nil)
 		// Do any additional setup after loading the view.
 		
-        
+		
 	}
 	
 	override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -64,8 +64,8 @@ extension BluetoothList: CBCentralManagerDelegate {
 			if (text.text?.contains(peripheral.name!))! {
 				// Dont write it
 			} else {
-			text.text?.append("\n")
-			text.text?.append(peripheral.name!)
+				text.text?.append("\n")
+				text.text?.append(peripheral.name!)
 			}
 		}
 	}
