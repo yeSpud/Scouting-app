@@ -58,6 +58,7 @@ public class data_collection extends AppCompatActivity {
         twoCC = (RadioButton) findViewById(R.id.twoClimbCenter);
         threeCS = (RadioButton) findViewById(R.id.threeClimbSide);
         threeCC = (RadioButton) findViewById(R.id.threeClimbCenter);
+        rampC = (RadioButton) findViewById(R.id.rampClimb);
 
         comment = (EditText) findViewById(R.id.comment);
 
@@ -165,7 +166,7 @@ public class data_collection extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                data = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s",
+                data = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,\"%s\"",
                         main_activity.number,
                         (byte) (basicAuto.isChecked() ? 1 : 0),
                         (byte) (switchAuto.isChecked() ? 1 : 0),
