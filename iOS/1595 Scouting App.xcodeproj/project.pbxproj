@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5C0516322019162A00CB3B30 /* ScoutingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0516312019162A00CB3B30 /* ScoutingViewController.swift */; };
+		5C334065206BFD07006982A6 /* BluetoothList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C334064206BFD07006982A6 /* BluetoothList.storyboard */; };
+		5C334067206BFE6D006982A6 /* BluetoothList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C334066206BFE6D006982A6 /* BluetoothList.swift */; };
 		5C818B7A201A644D00E1DA59 /* globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C818B79201A644D00E1DA59 /* globals.swift */; };
 		5CC2E510201ED34600CAB666 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CC2E50F201ED34600CAB666 /* CoreBluetooth.framework */; };
 		5CCC8571200F34F000C891E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCC8570200F34F000C891E3 /* AppDelegate.swift */; };
@@ -39,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		5C0516312019162A00CB3B30 /* ScoutingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoutingViewController.swift; sourceTree = "<group>"; };
+		5C334064206BFD07006982A6 /* BluetoothList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BluetoothList.storyboard; sourceTree = "<group>"; };
+		5C334066206BFE6D006982A6 /* BluetoothList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothList.swift; sourceTree = "<group>"; };
 		5C7C0BFC200F383100BC0956 /* 1595 Scouting App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "1595 Scouting App.entitlements"; sourceTree = "<group>"; };
 		5C818B79201A644D00E1DA59 /* globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globals.swift; sourceTree = "<group>"; };
 		5CC2E50F201ED34600CAB666 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
@@ -122,6 +126,8 @@
 				5CCC8572200F34F000C891E3 /* ViewController.swift */,
 				5C0516312019162A00CB3B30 /* ScoutingViewController.swift */,
 				5CCC8574200F34F000C891E3 /* Main.storyboard */,
+				5C334064206BFD07006982A6 /* BluetoothList.storyboard */,
+				5C334066206BFE6D006982A6 /* BluetoothList.swift */,
 				5CEDCC9E201B9BF100A7EF22 /* transmitter.swift */,
 				5C818B79201A644D00E1DA59 /* globals.swift */,
 				5CCC8577200F34F000C891E3 /* Assets.xcassets */,
@@ -262,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CCC857B200F34F000C891E3 /* LaunchScreen.storyboard in Resources */,
+				5C334065206BFD07006982A6 /* BluetoothList.storyboard in Resources */,
 				5CCC8578200F34F000C891E3 /* Assets.xcassets in Resources */,
 				5CCC8576200F34F000C891E3 /* Main.storyboard in Resources */,
 			);
@@ -292,6 +299,7 @@
 				5CEDCC9F201B9BF100A7EF22 /* transmitter.swift in Sources */,
 				5CCC8573200F34F000C891E3 /* ViewController.swift in Sources */,
 				5C0516322019162A00CB3B30 /* ScoutingViewController.swift in Sources */,
+				5C334067206BFE6D006982A6 /* BluetoothList.swift in Sources */,
 				5CCC8571200F34F000C891E3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
