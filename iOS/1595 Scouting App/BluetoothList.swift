@@ -53,15 +53,20 @@ extension BluetoothList: CBCentralManagerDelegate {
 			}
 		case .poweredOn:
 			print("central.state is .poweredOn")
-			globals.manager.scanForPeripherals(withServices: nil)
+			// This is where we define the GATT service to san for!
+			globals.manager.scanForPeripherals(withServices: [SERVICE_UUID])
 		}
 	}
 	func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
 		// print(peripheral)
 		print(peripheral.name ?? "Name not avalible")
 		if peripheral.name != nil {
+			if (text.text?.contains(peripheral.name!))! {
+				// Dont write it
+			} else {
 			text.text?.append("\n")
 			text.text?.append(peripheral.name!)
+			}
 		}
 	}
 	
