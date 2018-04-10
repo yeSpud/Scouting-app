@@ -36,7 +36,7 @@ public class pitscouting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pitscouting);
 
-        cancel = (Button) findViewById(R.id.cancel);
+        cancel = findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,10 +45,10 @@ public class pitscouting extends AppCompatActivity {
             }
         });
 
-        noAuto = (CheckBox) findViewById(R.id.pitNoAuto);
-        basicAuto = (CheckBox) findViewById(R.id.pitBasicAuto);
-        switchAuto = (CheckBox) findViewById(R.id.pitSwitchAuto);
-        scaleAuto = (CheckBox) findViewById(R.id.pitScaleAuto);
+        noAuto = findViewById(R.id.pitNoAuto);
+        basicAuto = findViewById(R.id.pitBasicAuto);
+        switchAuto = findViewById(R.id.pitSwitchAuto);
+        scaleAuto =  findViewById(R.id.pitScaleAuto);
 
 
         noAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -81,9 +81,9 @@ public class pitscouting extends AppCompatActivity {
             }
         });
 
-        noTele = (CheckBox) findViewById(R.id.pitNoTele);
-        switchTele = (CheckBox) findViewById(R.id.pitSwitchTele);
-        scaleTele = (CheckBox) findViewById(R.id.pitScaleTele);
+        noTele = findViewById(R.id.pitNoTele);
+        switchTele = findViewById(R.id.pitSwitchTele);
+        scaleTele = findViewById(R.id.pitScaleTele);
 
         noTele.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -108,16 +108,16 @@ public class pitscouting extends AppCompatActivity {
         });
 
 
-        submit = (Button) findViewById(R.id.submit);
+        submit = findViewById(R.id.submit);
 
-        teamNumber = (EditText) findViewById(R.id.teamNumber);
-        teamName = (EditText) findViewById(R.id.teamName);
-        DTC = (RadioGroup) findViewById(R.id.DTConfig);
-        wheelSize = (EditText) findViewById(R.id.wheelSizeText);
-        wheelSpace = (EditText) findViewById(R.id.wheelSpaceText);
-        grndClearance = (EditText) findViewById(R.id.groundClearance);
-        Climber = (RadioGroup) findViewById(R.id.climbType);
-        comments = (EditText) findViewById(R.id.commentsText);
+        teamNumber = findViewById(R.id.teamNumber);
+        teamName = findViewById(R.id.teamName);
+        DTC = findViewById(R.id.DTConfig);
+        wheelSize = findViewById(R.id.wheelSizeText);
+        wheelSpace = findViewById(R.id.wheelSpaceText);
+        grndClearance = findViewById(R.id.groundClearance);
+        Climber = findViewById(R.id.climbType);
+        comments = findViewById(R.id.commentsText);
 
         submit.setOnClickListener(new View.OnClickListener() {
 
@@ -132,14 +132,6 @@ public class pitscouting extends AppCompatActivity {
                         wheelSize.getText().toString(),
                         wheelSpace.getText().toString(),
                         grndClearance.getText().toString());
-
-                //data = String.format("%s,%s", data, ((RadioButton) findViewById(DTC.getCheckedRadioButtonId())).getText());
-
-                //data = String.format("%s,%s", data, wheelSize.getText().toString());
-
-                //data = String.format("%s,%s", data, wheelSpace.getText().toString());
-
-                //data = String.format("%s,%s", data, grndClearance.getText().toString());
 
                 String autoString = null;
                 if (noAuto.isChecked()) {
@@ -179,12 +171,9 @@ public class pitscouting extends AppCompatActivity {
                         ((RadioButton) findViewById(Climber.getCheckedRadioButtonId())).getText().toString(),
                         comments.getText().toString());
 
-
-                //data = String.format("%s,%s", data, );
-
                 Log.e("Output", data);
                 transmit transmit = new transmit();
-                transmit.sendData(data);
+                transmit.sendData();
                 Toast.makeText(pitscouting.this, "Success!", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(pitscouting.this, main_activity.class));
                 finish();

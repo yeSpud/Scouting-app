@@ -13,4 +13,6 @@
         <item name="colorControlActivated">@color/white</item>
     </style>
 
+    <style name="Theme">DarkActionBar</style>
+
 </resources>

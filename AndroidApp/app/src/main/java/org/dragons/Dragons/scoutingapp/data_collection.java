@@ -2,7 +2,6 @@ package org.dragons.Dragons.scoutingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,25 +22,37 @@ import static org.dragons.Dragons.scoutingapp.main_activity.data;
  * FRC 1595
  */
 
+// Most of this is extremely likely subject to change depending on what data you want, so I will comment only that which is likely to remain the same throughout
+
 public class data_collection extends AppCompatActivity {
 
     final int MAX_CUBE = 25;
     CheckBox basicAuto, switchAuto, scaleAuto;
+    @SuppressWarnings("SpellCheckingInspection")
     TextView teleSwitchHeaderText, teleSwitchNumberText, teleScaleHeaderText, teleScaleNumberText, exchangeNumber;
+    @SuppressWarnings("SpellCheckingInspection")
     Button teleSwitchSubtract, teleSwitchAdd, teleScaleSubtract, teleScaleAdd, exchangeSubtract, exchangeAdd;
     RadioButton noC, oneCS, oneCC, twoCS, twoCC, threeCS, threeCC, rampC;
     EditText comment;
     Button back_btn;
     Button send_btn;
+    @SuppressWarnings("SpellCheckingInspection")
     byte teleSwitchCube = 0, teleScaleCube = 0, exchangeCube = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.data_collection);
+
+        // For a nice little accessibility feature, we can set the top bar to display the team number that the user is scouting
+        // That way, they don't forget, or scout the wrong team :P
         setTitle(getResources().getString(R.string.teamToScout) + main_activity.number);
 
-        back_btn = (Button) findViewById(R.id.cancel);
+        // If for what ever reason they entered the wrong number, or just need to stop scouting, we can add a back/cancel button for them
+        // So, get the button from the view
+        back_btn = findViewById(R.id.cancel);
+
+        // Then add a listener to that which will return the user to the main page, and display "Scouting canceled." via toast
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,24 +61,24 @@ public class data_collection extends AppCompatActivity {
             }
         });
 
-        noC = (RadioButton) findViewById(R.id.noClimb);
-        oneCS = (RadioButton) findViewById(R.id.oneClimbSide);
-        oneCC = (RadioButton) findViewById(R.id.oneClimbCenter);
-        twoCS = (RadioButton) findViewById(R.id.twoClimbSide);
-        twoCC = (RadioButton) findViewById(R.id.twoClimbCenter);
-        threeCS = (RadioButton) findViewById(R.id.threeClimbSide);
-        threeCC = (RadioButton) findViewById(R.id.threeClimbCenter);
-        rampC = (RadioButton) findViewById(R.id.rampClimb);
+        noC = findViewById(R.id.noClimb);
+        oneCS = findViewById(R.id.oneClimbSide);
+        oneCC = findViewById(R.id.oneClimbCenter);
+        twoCS = findViewById(R.id.twoClimbSide);
+        twoCC = findViewById(R.id.twoClimbCenter);
+        threeCS = findViewById(R.id.threeClimbSide);
+        threeCC = findViewById(R.id.threeClimbCenter);
+        rampC = findViewById(R.id.rampClimb);
 
-        comment = (EditText) findViewById(R.id.comment);
+        comment = findViewById(R.id.comment);
 
-        teleSwitchHeaderText = (TextView) findViewById(R.id.teleSwitchHeader);
-        teleScaleHeaderText = (TextView) findViewById(R.id.teleScaleHeader);
+        teleSwitchHeaderText = findViewById(R.id.teleSwitchHeader);
+        teleScaleHeaderText = findViewById(R.id.teleScaleHeader);
 
 
-        basicAuto = (CheckBox) findViewById(R.id.autoCheck);
+        basicAuto = findViewById(R.id.autoCheck);
 
-        switchAuto = (CheckBox) findViewById(R.id.autoBalanceCheck);
+        switchAuto = findViewById(R.id.autoBalanceCheck);
         switchAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -80,7 +90,7 @@ public class data_collection extends AppCompatActivity {
             }
         });
 
-        scaleAuto = (CheckBox) findViewById(R.id.autoScaleCheck);
+        scaleAuto = findViewById(R.id.autoScaleCheck);
         scaleAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -93,8 +103,8 @@ public class data_collection extends AppCompatActivity {
         });
 
 
-        teleSwitchNumberText = (TextView) findViewById(R.id.teleSwitchNumber);
-        teleSwitchSubtract = (Button) findViewById(R.id.teleSwitchSubtract);
+        teleSwitchNumberText = findViewById(R.id.teleSwitchNumber);
+        teleSwitchSubtract = findViewById(R.id.teleSwitchSubtract);
         teleSwitchSubtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +114,7 @@ public class data_collection extends AppCompatActivity {
                 }
             }
         });
-        teleSwitchAdd = (Button) findViewById(R.id.teleSwitchAdd);
+        teleSwitchAdd = findViewById(R.id.teleSwitchAdd);
         teleSwitchAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,8 +125,8 @@ public class data_collection extends AppCompatActivity {
             }
         });
 
-        teleScaleNumberText = (TextView) findViewById(R.id.teleScaleNumber);
-        teleScaleSubtract = (Button) findViewById(R.id.teleScaleSubtract);
+        teleScaleNumberText = findViewById(R.id.teleScaleNumber);
+        teleScaleSubtract = findViewById(R.id.teleScaleSubtract);
         teleScaleSubtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +136,7 @@ public class data_collection extends AppCompatActivity {
                 }
             }
         });
-        teleScaleAdd = (Button) findViewById(R.id.teleScaleAdd);
+        teleScaleAdd = findViewById(R.id.teleScaleAdd);
         teleScaleAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,8 +148,8 @@ public class data_collection extends AppCompatActivity {
         });
 
 
-        exchangeNumber = (TextView) findViewById(R.id.teleExchangeNumber);
-        exchangeSubtract = (Button) findViewById(R.id.teleExchangeSubtract);
+        exchangeNumber = findViewById(R.id.teleExchangeNumber);
+        exchangeSubtract = findViewById(R.id.teleExchangeSubtract);
         exchangeSubtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,7 +159,7 @@ public class data_collection extends AppCompatActivity {
                 }
             }
         });
-        exchangeAdd = (Button) findViewById(R.id.teleExchangeAdd);
+        exchangeAdd = findViewById(R.id.teleExchangeAdd);
         exchangeAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,13 +170,19 @@ public class data_collection extends AppCompatActivity {
             }
         });
 
-        send_btn = (Button) findViewById(R.id.submit);
+        // Final stretch, now its time to get the data entered and submit it.
+        // First get the send button from the view
+        send_btn = findViewById(R.id.submit);
+
+        // Then add a listener to the button
         send_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                data = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,\"%s\"",
+                // This is where things get interesting. For this is the part where we send the string to a process that will send it to the server via bluetooth
+                // First, set the string to that of which we want the receiver to parse. I HIGHLY recommend that we format it for ease of readability
+                data = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
                         main_activity.number,
                         (byte) (basicAuto.isChecked() ? 1 : 0),
                         (byte) (switchAuto.isChecked() ? 1 : 0),
@@ -181,11 +197,16 @@ public class data_collection extends AppCompatActivity {
                         (byte) (threeCS.isChecked() ? 1:0),
                         (byte) (threeCC.isChecked() ? 1:0),
                         (byte) (rampC.isChecked() ? 1:0),
-                        comment.getText().toString());
+                        comment.getText().toString().replace(",",".")); // Because its a CSV, we need to replace any non-essential commas with something else
 
+                // If the phone used for testing is hooked up to a debugger, we can view the data being sent by printing it to the log
                 Log.e("Output", data);
+
+                // This is how the data is transmitted, so for all the details for that, look at transmit.java
                 transmit transmit = new transmit();
-                transmit.sendData(data);
+                transmit.sendData();
+
+                // On completion, display "Success!" via toast, and return the user to the main activity
                 Toast.makeText(data_collection.this, "Success!", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(data_collection.this, main_activity.class));
                 finish();

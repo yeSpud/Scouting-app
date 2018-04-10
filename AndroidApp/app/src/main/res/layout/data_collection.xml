@@ -457,7 +457,7 @@
                 android:imeOptions="actionDone"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@id/commentHeader"
-                />
+                tools:ignore="LabelFor" />
 
 
         </android.support.constraint.ConstraintLayout>

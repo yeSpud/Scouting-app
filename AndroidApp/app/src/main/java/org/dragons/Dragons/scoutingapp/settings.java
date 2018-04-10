@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.io.OutputStream;
-
 /**
  * Created by Stephen Ogden on 5/27/17.
  * FTC 6128 | 7935
@@ -21,52 +19,72 @@ import java.io.OutputStream;
 
 public class settings extends AppCompatActivity {
 
-    public static BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();;
+    // Instead of the test bluetooth adapter, well use the official one here, since this will only be used when the device is shown to support bluetooth
+    public static BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+
+    // This is the socket for said bluetooth server.
+    // We'll define what exactly that will be later, but were just creating it here
     public static BluetoothSocket btSocket;
+
+    // We will need a string to store the macaddress
+    @SuppressWarnings("SpellCheckingInspection")
     public static String MACADDR;
+
+    // In order to get the text entered, we need to get data from the EditText element
+    // We'll define what exactly this is when the activity is created
+    @SuppressWarnings("SpellCheckingInspection")
     EditText macAddr;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
-        Button back_btn = (Button) findViewById(R.id.back);
-        Button auto = (Button) findViewById(R.id.autoEnter);
-        macAddr = (EditText) findViewById(R.id.MAC);
+        // Get the back button in order to return to main_activity.java
+        Button back_btn = findViewById(R.id.back);
+
+        // Ill be honest: Im lazy and don't like entering the same thing over and over, so I created a button that auto-enters the MAC of my laptop to speed things up
+        Button auto = findViewById(R.id.autoEnter);
+
+        // Here is where we define that editable text from earlier
+        // If the MAC address was entered before however, we will want to set the text to that entered prior, for continuity reasons
+        macAddr = findViewById(R.id.MAC);
         macAddr.setText(MACADDR);
 
+        // In order to set the string for the MAC address as the text entered, well need to add a listener to the element
         macAddr.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
+                // This is when the string gets set to whatever is entered
                 MACADDR = s.toString();
             }
         });
 
+        // Remember that lazy button I added earlier? Lets create that action for when its pressed.
+        // What it will do is auto compete the MAC address to what is entered below.
         auto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // MAC address of my laptop
                 MACADDR = "AC:BC:32:8E:CC:1A";
+
+                // This is what sets the text to the MAC address set above
                 macAddr.setText(MACADDR);
             }
         });
 
+        // In order to return to the previous activity when the back button is pressed, we need to create a listener for the button
+        // So, when the back button is pressed, it will return to main_activity.java
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(settings.this, main_activity.class));
             }
         });
-
-
     }
 }
