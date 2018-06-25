@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">1595 Scouting App</string>
     <string name="logo">Logo</string>
+    <string name="error_icon">Error icon</string>
 
     <string name="settings">Enter MAC Address</string>
     <string name="startScout">Scout new team</string>
@@ -38,7 +39,13 @@
     <string name="datapending">Sending data over bluetooth</string>
 
     <string name="commentHeader">Additional comments (Optional)</string>
-    
+
+    <string name="type_of_error">Type of error:</string>
+    <string name="full_stack_trace">Full stack-trace:</string>
+    <string name="return_to_start">Return to start</string>
+
+
+    <!-- TODO: Deprecate -->
     <string name="pitScoutTeamNumber">Team number:</string>
     <string name="pitScoutTeamName">Team name (Optional):</string>
     <string name="pitScoutDTConfigHeader">Drive train configuration</string>
@@ -71,5 +78,6 @@
     <string name="onlyClimb">Only them (Leaves no room for other bots)</string>
     <string name="noClimb">No climber :(</string>
     <string name="otherClimb">Other kind of climber</string>
+
 
 </resources>
