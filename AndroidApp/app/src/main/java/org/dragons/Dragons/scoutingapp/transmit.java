@@ -34,17 +34,17 @@ public class transmit extends AppCompatActivity {
         try {
 
             // Using that OutputStream defined before, set it to the bluetooth's outputstream
-            outStream = settings.btSocket.getOutputStream();
+            outStream = Core.btSocket.getOutputStream();
 
             // Write that data to the data stream, dont have an offset, and set the length to that of the length of the data
-            outStream.write(main_activity.data.getBytes(), 0, main_activity.data.getBytes().length);
+            outStream.write(Core.data.getBytes(), 0, Core.data.getBytes().length);
 
             // Be sure to flush the stream, that way everything gets output to the reciever, and then it can parse the data from there
             outStream.flush();
 
             // If the phone used for testing is hooked up to a debugger, we can view the data being sent, and the bytes sent, by printing it to the log
-            Log.e("outString", main_activity.data);
-            Log.e("outBytes", Arrays.toString(main_activity.data.getBytes()));
+            Log.e("outString", Core.data);
+            Log.e("outBytes", Arrays.toString(Core.data.getBytes()));
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -60,7 +60,7 @@ public class transmit extends AppCompatActivity {
         }
 
         // Set the data to be null at this point, to reset the string
-        main_activity.data = null;
+        Core.data = null;
 
         // Let the thread do anything else it has been waiting to do
         Thread.yield();

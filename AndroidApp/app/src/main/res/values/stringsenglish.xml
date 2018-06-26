@@ -40,7 +40,7 @@
 
     <string name="commentHeader">Additional comments (Optional)</string>
 
-    <string name="type_of_error">Type of error:</string>
+    <string name="type_of_error">Error message:</string>
     <string name="full_stack_trace">Full stack-trace:</string>
     <string name="return_to_start">Return to start</string>
 

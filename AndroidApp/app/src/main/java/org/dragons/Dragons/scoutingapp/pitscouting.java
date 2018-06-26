@@ -13,7 +13,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import static org.dragons.Dragons.scoutingapp.main_activity.data;
+import static org.dragons.Dragons.scoutingapp.Core.data;
 
 /**
  * Created by Stephen Ogden on 3/6/18.
@@ -21,6 +21,7 @@ import static org.dragons.Dragons.scoutingapp.main_activity.data;
  * FRC 1595
  */
 
+@Deprecated
 public class pitscouting extends AppCompatActivity {
 
     Button cancel, submit;

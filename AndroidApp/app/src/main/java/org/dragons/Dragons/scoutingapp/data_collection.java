@@ -13,7 +13,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static org.dragons.Dragons.scoutingapp.main_activity.data;
+import static org.dragons.Dragons.scoutingapp.Core.data;
 
 
 /**
@@ -46,7 +46,7 @@ public class data_collection extends AppCompatActivity {
 
         // For a nice little accessibility feature, we can set the top bar to display the team number that the user is scouting
         // That way, they don't forget, or scout the wrong team :P
-        setTitle(getResources().getString(R.string.teamToScout) + main_activity.number);
+        setTitle(getResources().getString(R.string.teamToScout) + Core.number);
 
         // If for what ever reason they entered the wrong number, or just need to stop scouting, we can add a back/cancel button for them
         // So, get the button from the view
@@ -183,7 +183,7 @@ public class data_collection extends AppCompatActivity {
                 // This is where things get interesting. For this is the part where we send the string to a process that will send it to the server via bluetooth
                 // First, set the string to that of which we want the receiver to parse. I HIGHLY recommend that we format it for ease of readability
                 data = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
-                        main_activity.number,
+                        Core.number,
                         (byte) (basicAuto.isChecked() ? 1 : 0),
                         (byte) (switchAuto.isChecked() ? 1 : 0),
                         (byte) (scaleAuto.isChecked() ? 1 : 0),

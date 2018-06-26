@@ -19,13 +19,6 @@ import android.widget.EditText;
 
 public class settings extends AppCompatActivity {
 
-    // Instead of the test bluetooth adapter, well use the official one here, since this will only be used when the device is shown to support bluetooth
-    public static BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-
-    // This is the socket for said bluetooth server.
-    // We'll define what exactly that will be later, but were just creating it here
-    public static BluetoothSocket btSocket;
-
     // We will need a string to store the macaddress
     @SuppressWarnings("SpellCheckingInspection")
     public static String MACADDR;
