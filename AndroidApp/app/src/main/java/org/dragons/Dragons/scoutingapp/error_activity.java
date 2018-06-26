@@ -26,6 +26,14 @@ public class error_activity extends AppCompatActivity {
         findViewById(R.id.ReturnButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    Core.number = 0;
+                    Core.data = null;
+                    settings.MACADDR = null;
+                } catch (Exception e) {
+                    return;
+                }
+
                 startActivity(new Intent(error_activity.this, main_activity.class));
             }
         });

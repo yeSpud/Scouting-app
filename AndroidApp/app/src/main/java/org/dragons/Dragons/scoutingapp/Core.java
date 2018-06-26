@@ -107,7 +107,7 @@ public class Core {
             assert device != null;
             btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
 
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             error.caughtError(context, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
 
@@ -120,10 +120,13 @@ public class Core {
         // Establish the connection.  This will block until it connects.
         try {
             btSocket.connect();
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             String msg = "An exception occurred during connection, socket closed: " + e.getMessage();
             error.caughtError(context, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
     }
+
+    // TODO: Add a check for language
+    // Locale.getDefault().getDisplayLanguage();
 
 }
