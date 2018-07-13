@@ -1,77 +1,45 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- TODO: Finsihs translation -->
-
-    <string name="app_nameCN">1595侦察应用程序</string>
-    <string name="logoCN">商标</string>
+<resources>
+    <string name="app_name_CN">1595侦察应用程序</string>
+    <string name="logo_CN">商标</string>
+    <string name="error_icon_CN">错误图标</string>
 
     <string name="settingsCN">输入MAC地址</string>
     <string name="startScoutCN">侦察一个新的团队</string>
-    <string name="startPitCn">Pit-Scout一支新球队</string>
     <string name="backCN">◀ 退回</string>
     <string name="CancelCN">取消</string>
     <string name="SubmitCN">寄送</string>
 
     <string name="teamNumberHeaderCN">输入球队号码进行球探：</string>
-    <string name="warningCN">您需要将此设备与将要首先接收数据的笔记本电脑/服务器配对！</string>
+    <string name="warningCN">您需要将此设备与将要首先接收数据的笔记本电脑/服务器配对!</string>
     <string name="macAddrCN">服务器的MAC地址：</string>
 
+    <string name="teamToScoutCN">球探队伍：</string>
+    <string name="autoHeaderTextCN">自主性</string>
+    <string name="hasAutoCN">该团队具有自主职能\n(可以越过基线)</string>
+    <string name="autoBalanceCN">团队可以在交换机上放置一个多维数据集</string>
+    <string name="autoScaleCN">团队可以在规模上放置一个立方体</string>
+    <string name="teleHeaderTextCN">遥控操作</string>
+    <string name="teleSwitchCN">放置在交换机上的立方体数量</string>
+    <string name="teleScaleCN">放在秤上的立方体数量</string>
+    <string name="teleExchangeCN">放置在交易所上的立方体数量</string>
 
-    <string name="teamToScoutCN">Team to scout: </string>
-    <string name="autoHeaderTextCN">Autonomous</string>
-    <string name="hasAutoCN">This team has an auto\n(Can cross baseline)</string>
-    <string name="autoBalanceCN">Team can place a cube on switch</string>
-    <string name="autoScaleCN">Team can place cube on scale</string>
-    <string name="teleHeaderTextCN">TeleOp</string>
-    <string name="teleSwitchCN">Number of cubes placed on switch</string>
-    <string name="teleScaleCN">Number of cubes placed on scale</string>
-    <string name="teleExchangeCN">Number of cubes placed in exchange</string>
+    <string name="climbHeaderCN">攀登</string>
+    <string name="didntClimbCN">这个机器人无法攀爬</string>
+    <string name="oneSideClimbCN">这是唯一一个爬到酒吧一侧的机器人</string>
+    <string name="oneCenterClimbCN">这是唯一一个爬上酒吧中心的机器人</string>
+    <string name="twoSideClimbCN">这个机器人爬到了酒吧的一侧, 帮助另一个机器人爬上去</string>
+    <string name="twoCenterClimbCN">这个机器人爬上了酒吧的中心, 帮助另一个机器人爬上去</string>
+    <string name="threeSideClimbCN">这个机器人爬到了酒吧的一侧, 帮助另外两个机器人爬上去</string>
+    <string name="threeCenterClimbCN">这个机器人爬上了酒吧的中心, 帮助另外两个机器人爬上去</string>
+    <string name="rampClimberCN">这个机器人使用斜坡来帮助其他人爬 (他们不爬自己)</string>
 
-    <string name="climbHeaderCN">Climbing</string>
-    <string name="didntClimbCN">This bot failed to climb</string>
-    <string name="oneSideClimbCN">This bot did a single climb on the side of the bar</string>
-    <string name="oneCenterClimbCN">This bot did a single climb on the center of the bar</string>
-    <string name="twoSideClimbCN">This bot climbed on the side and helped another bot climb</string>
-    <string name="twoCenterClimbCN">This bot climbed on the center and helped another bot climb</string>
-    <string name="threeSideClimbCN">This bot climbed on the side and helped two other bots climb</string>
-    <string name="threeCenterClimbCN">This bot climbed on the center and helped two other bots climb</string>
-    <string name="rampClimberCN">This bot used a ramp to help others climb</string>
+    <string name="connectingCN">建立与服务器的连接</string>
+    <string name="datapendingCN">通过蓝牙发送数据</string>
 
-    <string name="connectingCN">Connecting to Server</string>
-    <string name="datapendingCN">Sending data over bluetooth</string>
+    <string name="commentHeaderCN">附加说明 (可选)</string>
 
-    <string name="commentHeaderCN">Additional comments (Optional)</string>
-
-    <string name="pitScoutTeamNumberCN">Team number:</string>
-    <string name="pitScoutTeamNameCN">Team name (Optional):</string>
-    <string name="pitScoutDTConfigHeaderCN">Drive train configuration</string>
-    <string name="DTConfig_StandardCN">Tank drive/west coast (Standard)</string>
-    <string name="DTConfig_MecanumCN">Mecanum</string>
-    <string name="DTConfig_SwerveCN">Swerve</string>
-    <string name="DTConfig_HolonomicCN">Holonimic</string>
-    <string name="DTConfig_SlideCN">Slide or H-Drive</string>
-    <string name="DTConfig_ButterflyCN">Butterfly</string>
-    <string name="DTConfig_GrasshopperCN">Grasshopper</string>
-    <string name="DTConfig_KiwiCN">Kiwi</string>
-    <string name="DTConfig_NonadriveCN">Nonadrive/Butterslide</string>
-    <string name="DTConfig_OctocanumCN">Octocanum</string>
-    <string name="DTConfig_OtherCN">Other</string>
-    <string name="WheelsizeHeaderCN">Wheel size (Inches)</string>
-    <string name="WheelspacingHeaderCN">Wheel spacing (Inches)</string>
-    <string name="GroundClearanceHeaderCN">Ground clearance (Inches)</string>
-    <string name="pitScoutingNoAutoCN">No Auto</string>
-    <string name="pitScoutingBasicAutoCN">Can cross baseline</string>
-    <string name="pitScoutingSwitchAutoCN">Can place cube on switch</string>
-    <string name="pitScoutingScaleAutoCN">Can place cube on scale</string>
-    <string name="pitScoutingNoTeleCN">No teleOp</string>
-    <string name="pitScoutingSwitchTeleCN">Can place cube on switch</string>
-    <string name="pitScoutingScaleTeleCN">Can place cube on scale</string>
-    <string name="pitScoutingClimberHeaderCN">Type of climber</string>
-    <string name="rampClimbCN">Ramp climber (Dont climb themselves)</string>
-    <string name="TrippleClimbCN">Triple climber (Can hoist both robots and climb themselves)</string>
-    <string name="DoubleClimbCN">Double climber (Can hoist one other robot, and climb themselves)</string>
-    <string name="shareClimbCN">Sharing is caring :)      (Leaves room on the bar for other bots</string>
-    <string name="onlyClimbCN">Only them (Leaves no room for other bots)</string>
-    <string name="noClimbCN">No climber :(</string>
-    <string name="otherClimbCN">Other kind of climber</string>
-
+    <string name="error_CN">故障</string>
+    <string name="type_of_error_CN">错误信息：</string>
+    <string name="full_stack_trace_CN">完整堆栈跟踪：</string>
+    <string name="return_to_start_CN">返回主页</string>
 </resources>

@@ -33,14 +33,9 @@
             android:name="org.dragons.Dragons.scoutingapp.transmit"
             android:label="@string/app_name">
         </activity>
-
-        <activity
-            android:name="org.dragons.Dragons.scoutingapp.pitscouting"
-            android:label="@string/app_name">
-        </activity>
         <activity
             android:name=".error_activity"
-            android:label="Error">
+            android:label="@string/error_EN">
         </activity>
     </application>
 

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -127,6 +128,9 @@ public class Core {
     }
 
     // TODO: Add a check for language
+    public static boolean isSetInChinese() {
+        return Locale.getDefault().getDisplayLanguage().equals(Locale.CHINESE.getDisplayLanguage());
+    }
     // Locale.getDefault().getDisplayLanguage();
 
 }

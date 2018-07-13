@@ -36,31 +36,6 @@ public class main_activity extends AppCompatActivity {
             }
         });
 
-
-        //<editor-fold desc="Pit scout">
-        /*
-        // Yet another button. This ones for pit-scouting though, and as such has different actions to be executed
-        // So do the usual: get the button from the activity, and add a listener
-        pit_button = findViewById(R.id.pitScout);
-        pit_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // This is where things get interesting. We want to check if there is a MAC address entered or not
-                if (enteredMac()) {
-
-                    // If there isn't a MAC address entered, use Toast to notify the user that they need to enter one
-                    Toast.makeText(main_activity.this, "Please enter a MAC address first!", Toast.LENGTH_LONG).show();
-                } else {
-
-                    // If there was a MAC address entered however, then the app can precede and start the pit scouting activity
-                    startActivity(new Intent(main_activity.this, pitscouting.class));
-                }
-            }
-        });
-        */
-        //</editor-fold>
-
         // Final button, this one is the important one.
         // For scouting a few more things need to happen, but first, we need to get the button itself, and then add a listener
         findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
@@ -69,6 +44,10 @@ public class main_activity extends AppCompatActivity {
                 startScouting();
             }
         });
+
+        if (Core.isSetInChinese()) {
+            setTitle(getResources().getString(R.string.app_name_CN));
+        }
     }
 
 

@@ -1,11 +1,10 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">1595 Scouting App</string>
     <string name="logo">Logo</string>
     <string name="error_icon">Error icon</string>
 
     <string name="settings">Enter MAC Address</string>
     <string name="startScout">Scout new team</string>
-    <string name="startPit">Pit scout a team</string>
     <string name="back">◀ Back</string>
     <string name="Cancel">Cancel</string>
     <string name="Submit">Submit</string>
@@ -14,8 +13,7 @@
     <string name="warning">You will need to pair this device to the laptop/server that is going to be receiving the data first!</string>
     <string name="macAddr">MAC Address of server:</string>
 
-
-    <string name="teamToScout">Team to scout: </string>
+    <string name="teamToScout">Scouting team: </string>
     <string name="autoHeaderText">Autonomous</string>
     <string name="hasAuto">This team has an auto\n(Can cross baseline)</string>
     <string name="autoBalance">Team can place a cube on switch</string>
@@ -40,44 +38,8 @@
 
     <string name="commentHeader">Additional comments (Optional)</string>
 
-    <string name="type_of_error">Error message:</string>
+    <string name="error_EN">Error</string>
+    <string name="type_of_error">Error message: </string>
     <string name="full_stack_trace">Full stack-trace:</string>
     <string name="return_to_start">Return to start</string>
-
-
-    <!-- TODO: Deprecate -->
-    <string name="pitScoutTeamNumber">Team number:</string>
-    <string name="pitScoutTeamName">Team name (Optional):</string>
-    <string name="pitScoutDTConfigHeader">Drive train configuration</string>
-    <string name="DTConfig_Standard">Tank drive/west coast (Standard)</string>
-    <string name="DTConfig_Mecanum">Mecanum</string>
-    <string name="DTConfig_Swerve">Swerve</string>
-    <string name="DTConfig_Holonomic">Holonimic</string>
-    <string name="DTConfig_Slide">Slide or H-Drive</string>
-    <string name="DTConfig_Butterfly">Butterfly</string>
-    <string name="DTConfig_Grasshopper">Grasshopper</string>
-    <string name="DTConfig_Kiwi">Kiwi</string>
-    <string name="DTConfig_Nonadrive">Nonadrive/Butterslide</string>
-    <string name="DTConfig_Octocanum">Octocanum</string>
-    <string name="DTConfig_Other">Other</string>
-    <string name="WheelsizeHeader">Wheel size (Inches)</string>
-    <string name="WheelspacingHeader">Wheel spacing (Inches)</string>
-    <string name="GroundClearanceHeader">Ground clearance (Inches)</string>
-    <string name="pitScoutingNoAuto">No Auto</string>
-    <string name="pitScoutingBasicAuto">Can cross baseline</string>
-    <string name="pitScoutingSwitchAuto">Can place cube on switch</string>
-    <string name="pitScoutingScaleAuto">Can place cube on scale</string>
-    <string name="pitScoutingNoTele">No teleOp</string>
-    <string name="pitScoutingSwitchTele">Can place cube on switch</string>
-    <string name="pitScoutingScaleTele">Can place cube on scale</string>
-    <string name="pitScoutingClimberHeader">Type of climber</string>
-    <string name="rampClimb">Ramp climber (Dont climb themselves)</string>
-    <string name="TrippleClimb">Triple climber (Can hoist both robots and climb themselves)</string>
-    <string name="DoubleClimb">Double climber (Can hoist one other robot, and climb themselves)</string>
-    <string name="shareClimb">Sharing is caring :)      (Leaves room on the bar for other bots</string>
-    <string name="onlyClimb">Only them (Leaves no room for other bots)</string>
-    <string name="noClimb">No climber :(</string>
-    <string name="otherClimb">Other kind of climber</string>
-
-
 </resources>

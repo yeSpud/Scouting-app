@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -37,6 +38,12 @@ public class error_activity extends AppCompatActivity {
                 startActivity(new Intent(error_activity.this, main_activity.class));
             }
         });
+        if (Core.isSetInChinese()) {
+            setTitle(getResources().getString(R.string.error_CN));
+            ((ImageView) (findViewById(R.id.ErrorImage))).setImageResource(R.mipmap.erroricon_cn);
+            ((findViewById(R.id.ErrorImage))).setContentDescription(getString(R.string.error_icon_CN));
+            ((TextView) (findViewById(R.id.fillStackHeader))).setText(getResources().getString(R.string.full_stack_trace_CN));
+        }
         errorTypeText = findViewById(R.id.errorType);
         stackTraceText = findViewById(R.id.stackText);
     }
@@ -44,7 +51,11 @@ public class error_activity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     protected void onResume() {
         super.onResume();
-        errorTypeText.setText("Type of error: " + CatchError.errorType);
+        if (Core.isSetInChinese()) {
+            errorTypeText.setText("错误信息：" + CatchError.errorType);
+        } else {
+            errorTypeText.setText("Error message: " + CatchError.errorType);
+        }
         stackTraceText.setText(CatchError.errorStackTrace);
     }
 }
