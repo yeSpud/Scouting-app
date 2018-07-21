@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import static org.dragons.Dragons.scoutingapp.Core.data;
+import static org.dragons.Dragons.scoutingapp.Core.isSetInChinese;
 
 
 /**
@@ -46,20 +47,38 @@ public class data_collection extends AppCompatActivity {
 
         // For a nice little accessibility feature, we can set the top bar to display the team number that the user is scouting
         // That way, they don't forget, or scout the wrong team :P
-        setTitle(getResources().getString(R.string.teamToScout) + Core.number);
+        if (isSetInChinese()) {
+            setTitle(R.string.teamToScoutCN + Core.number);
+        } else {
+            setTitle(R.string.teamToScout + Core.number);
+        }
 
         // If for what ever reason they entered the wrong number, or just need to stop scouting, we can add a back/cancel button for them
         // So, get the button from the view
         back_btn = findViewById(R.id.cancel);
 
-        // Then add a listener to that which will return the user to the main page, and display "Scouting canceled." via toast
-        back_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(data_collection.this, main_activity.class));
-                Toast.makeText(data_collection.this, "Scouting canceled.", Toast.LENGTH_LONG).show();
-            }
-        });
+        if (isSetInChinese()) {
+            back_btn.setText(R.string.backCN);
+        }
+
+        // Then add a listener to that which will return the user to the main page, and display "Scouting canceled" via toast
+        if (isSetInChinese()) {
+            back_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(data_collection.this, main_activity.class));
+                    Toast.makeText(data_collection.this, getString(R.string.scoutingCanceled_CN), Toast.LENGTH_LONG).show();
+                }
+            });
+        } else {
+            back_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(data_collection.this, main_activity.class));
+                    Toast.makeText(data_collection.this, getString(R.string.scoutingCanceled), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
 
         noC = findViewById(R.id.noClimb);
         oneCS = findViewById(R.id.oneClimbSide);
@@ -79,28 +98,54 @@ public class data_collection extends AppCompatActivity {
         basicAuto = findViewById(R.id.autoCheck);
 
         switchAuto = findViewById(R.id.autoBalanceCheck);
-        switchAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    teleSwitchHeaderText.setText(String.format("%s (+1 from auto)", teleSwitchHeaderText.getText().toString()));
-                } else {
-                    teleSwitchHeaderText.setText(teleSwitchHeaderText.getText().toString().replace(" (+1 from auto)", ""));
+        if (isSetInChinese()) {
+            switchAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        teleSwitchHeaderText.setText(String.format("%s" + getString(R.string.autoCubeReference_CN), teleSwitchHeaderText.getText().toString()));
+                    } else {
+                        teleSwitchHeaderText.setText(teleSwitchHeaderText.getText().toString().replace(getString(R.string.autoCubeReference_CN), ""));
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            switchAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        teleSwitchHeaderText.setText(String.format("%s" + getString(R.string.autoCubeReference), teleSwitchHeaderText.getText().toString()));
+                    } else {
+                        teleSwitchHeaderText.setText(teleSwitchHeaderText.getText().toString().replace(getString(R.string.autoCubeReference), ""));
+                    }
+                }
+            });
+        }
 
         scaleAuto = findViewById(R.id.autoScaleCheck);
-        scaleAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    teleScaleHeaderText.setText(String.format("%s (+1 from auto)", teleScaleHeaderText.getText().toString()));
-                } else {
-                    teleScaleHeaderText.setText(teleScaleHeaderText.getText().toString().replace(" (+1 from auto)", ""));
+        if (isSetInChinese()) {
+            scaleAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        teleScaleHeaderText.setText(String.format("%s" + getString(R.string.autoCubeReference_CN), teleScaleHeaderText.getText().toString()));
+                    } else {
+                        teleScaleHeaderText.setText(teleScaleHeaderText.getText().toString().replace(getString(R.string.autoCubeReference_CN), ""));
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            scaleAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        teleScaleHeaderText.setText(String.format("%s" + getString(R.string.autoCubeReference), teleScaleHeaderText.getText().toString()));
+                    } else {
+                        teleScaleHeaderText.setText(teleScaleHeaderText.getText().toString().replace(getString(R.string.autoCubeReference), ""));
+                    }
+                }
+            });
+        }
 
 
         teleSwitchNumberText = findViewById(R.id.teleSwitchNumber);
@@ -207,7 +252,11 @@ public class data_collection extends AppCompatActivity {
                 transmit.sendData();
 
                 // On completion, display "Success!" via toast, and return the user to the main activity
-                Toast.makeText(data_collection.this, "Success!", Toast.LENGTH_LONG).show();
+                if (isSetInChinese()) {
+                    Toast.makeText(data_collection.this, getString(R.string.scoutingSuccess_CN), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(data_collection.this, getString(R.string.scoutingSuccess), Toast.LENGTH_LONG).show();
+                }
                 startActivity(new Intent(data_collection.this, main_activity.class));
                 finish();
             }

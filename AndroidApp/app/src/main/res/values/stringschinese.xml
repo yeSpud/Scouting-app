@@ -26,6 +26,9 @@
     <string name="teleSwitchCN">放置在交换机上的立方体数量</string>
     <string name="teleScaleCN">放在秤上的立方体数量</string>
     <string name="teleExchangeCN">放置在交易所上的立方体数量</string>
+    <string name="autoCubeReference_CN"> (+1 从自主性)</string>
+    <string name="scoutingSuccess_CN">成功！</string>
+    <string name="scoutingCanceled_CN">侦察失败</string>
 
     <string name="climbHeaderCN">攀登</string>
     <string name="didntClimbCN">这个机器人无法攀爬</string>

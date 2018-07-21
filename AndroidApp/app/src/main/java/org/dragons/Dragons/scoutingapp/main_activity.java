@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import java.util.Arrays;
 
+import static org.dragons.Dragons.scoutingapp.Core.isSetInChinese;
+
 /**
  * Created by Stephen Ogden on 3/23/17.
  * FTC 6128 | 7935
@@ -33,7 +35,7 @@ public class main_activity extends AppCompatActivity {
         findViewById(R.id.settings).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Replace setting page with popup dialog
+                // TODO: Replace setting page with popup dialog, or add more options
                 startActivity(new Intent(main_activity.this, settings.class));
             }
         });
@@ -47,7 +49,7 @@ public class main_activity extends AppCompatActivity {
             }
         });
 
-        if (Core.isSetInChinese()) {
+        if (isSetInChinese()) {
             setTitle(getResources().getString(R.string.app_name_CN));
             ((ImageView) (findViewById(R.id.imageView))).setImageResource(R.mipmap.scoutingappbanner_cn);
             findViewById(R.id.imageView).setContentDescription(getString(R.string.logo_CN));
@@ -148,7 +150,7 @@ public class main_activity extends AppCompatActivity {
             if (!Core.enteredMac()) {
 
                 // If there isn't a MAC address entered, use Toast to notify the user that they need to enter one
-                if (Core.isSetInChinese()) {
+                if (isSetInChinese()) {
                     Toast.makeText(main_activity.this, getString(R.string.macWarning_CN), Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(main_activity.this, getString(R.string.macWarning), Toast.LENGTH_LONG).show();
@@ -168,7 +170,7 @@ public class main_activity extends AppCompatActivity {
 
                 // Few more things to set up for the dialog builder, such as setting the start button to say "Start scouting", and adding a listener to the start button
 
-                if (Core.isSetInChinese()) {
+                if (isSetInChinese()) {
 
                     alertDialogBuilder.setCancelable(false).setPositiveButton(getString(R.string.startScoutButton_CN), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {

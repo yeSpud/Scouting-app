@@ -26,6 +26,9 @@
     <string name="teleSwitch">Number of cubes placed on switch</string>
     <string name="teleScale">Number of cubes placed on scale</string>
     <string name="teleExchange">Number of cubes placed in exchange</string>
+    <string name="autoCubeReference"> (+1 from auto)</string>
+    <string name="scoutingSuccess">Success!</string>
+    <string name="scoutingCanceled">Scouting canceled</string>
 
     <string name="climbHeader">Climbing</string>
     <string name="didntClimb">This bot failed to climb</string>
