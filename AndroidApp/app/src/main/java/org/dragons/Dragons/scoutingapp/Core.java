@@ -127,10 +127,8 @@ public class Core {
         }
     }
 
-    // TODO: Add a check for language
     public static boolean isSetInChinese() {
         return Locale.getDefault().getDisplayLanguage().equals(Locale.CHINESE.getDisplayLanguage());
     }
-    // Locale.getDefault().getDisplayLanguage();
 
 }

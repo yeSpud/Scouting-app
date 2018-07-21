@@ -9,6 +9,10 @@
     <string name="CancelCN">取消</string>
     <string name="SubmitCN">寄送</string>
 
+    <string name="macWarning_CN">请先输入MAC地址！</string>
+    <string name="scoutWarning_CN">请先输入球队号码进行球探</string>
+    <string name="startScoutButton_CN">开始 侦察！</string>
+
     <string name="teamNumberHeaderCN">输入球队号码进行球探：</string>
     <string name="warningCN">您需要将此设备与将要首先接收数据的笔记本电脑/服务器配对!</string>
     <string name="macAddrCN">服务器的MAC地址：</string>

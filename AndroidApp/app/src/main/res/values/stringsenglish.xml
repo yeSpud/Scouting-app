@@ -9,6 +9,10 @@
     <string name="Cancel">Cancel</string>
     <string name="Submit">Submit</string>
 
+    <string name="macWarning">Please enter a MAC address first!</string>
+    <string name="scoutWarning">Please enter a team number to scout</string>
+    <string name="startScoutButton">Start scouting!</string>
+
     <string name="teamNumberHeader">Enter team number to scout: </string>
     <string name="warning">You will need to pair this device to the laptop/server that is going to be receiving the data first!</string>
     <string name="macAddr">MAC Address of server:</string>

@@ -6,10 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.Arrays;
@@ -32,6 +33,7 @@ public class main_activity extends AppCompatActivity {
         findViewById(R.id.settings).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO: Replace setting page with popup dialog
                 startActivity(new Intent(main_activity.this, settings.class));
             }
         });
@@ -47,6 +49,10 @@ public class main_activity extends AppCompatActivity {
 
         if (Core.isSetInChinese()) {
             setTitle(getResources().getString(R.string.app_name_CN));
+            ((ImageView) (findViewById(R.id.imageView))).setImageResource(R.mipmap.scoutingappbanner_cn);
+            findViewById(R.id.imageView).setContentDescription(getString(R.string.logo_CN));
+            ((Button) findViewById(R.id.start)).setText(R.string.startScoutCN);
+            ((Button) findViewById(R.id.settings)).setText(R.string.settingsCN);
         }
     }
 
@@ -142,7 +148,11 @@ public class main_activity extends AppCompatActivity {
             if (!Core.enteredMac()) {
 
                 // If there isn't a MAC address entered, use Toast to notify the user that they need to enter one
-                Toast.makeText(main_activity.this, "Please enter a MAC address first!", Toast.LENGTH_LONG).show();
+                if (Core.isSetInChinese()) {
+                    Toast.makeText(main_activity.this, getString(R.string.macWarning_CN), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(main_activity.this, getString(R.string.macWarning), Toast.LENGTH_LONG).show();
+            }
             } else {
 
                 // To get a popup window for entering the team number to scout, we'll start by making a LayoutInflater, and then creating a view off of that
@@ -157,31 +167,62 @@ public class main_activity extends AppCompatActivity {
                 final EditText userInput = promptsView.findViewById(R.id.editTextDialogUserInput);
 
                 // Few more things to set up for the dialog builder, such as setting the start button to say "Start scouting", and adding a listener to the start button
-                alertDialogBuilder.setCancelable(false).setPositiveButton("Start scouting!", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
 
-                        // Lets add some checks to see if there was anything entered in the first place
-                        // If there wasn't, Toast should display "Please enter a team number to scout"
-                        if (userInput.getText().length() == 0) {
-                            Toast.makeText(main_activity.this, "Please enter a team number to scout", Toast.LENGTH_LONG).show();
-                        } else {
+                if (Core.isSetInChinese()) {
 
-                            // When the number entered is valid, we can set the number to the entered value, and then start the data collection activity
-                            Core.number = Integer.parseInt(userInput.getText().toString());
-                            startActivity(new Intent(main_activity.this, data_collection.class));
+                    alertDialogBuilder.setCancelable(false).setPositiveButton(getString(R.string.startScoutButton_CN), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            // Lets add some checks to see if there was anything entered in the first place
+                            // If there wasn't, Toast should display "Please enter a team number to scout"
+                            if (userInput.getText().length() == 0) {
+                                Toast.makeText(main_activity.this, getString(R.string.scoutWarning_CN), Toast.LENGTH_LONG).show();
+                            } else {
+
+                                // When the number entered is valid, we can set the number to the entered value, and then start the data collection activity
+                                Core.number = Integer.parseInt(userInput.getText().toString());
+                                startActivity(new Intent(main_activity.this, data_collection.class));
+                            }
                         }
-                    }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // This is where we set up actions and behaviors for when the user clicks "Cancel"
-                        dialog.cancel();
-                    }
-                });
+                    }).setNegativeButton(getString(R.string.CancelCN), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // This is where we set up actions and behaviors for when the user clicks "Cancel"
+                            dialog.cancel();
+                        }
+                    });
 
-                // All those steps to create a simple popup window, welcome to the life of a back end developer :P
-                // Anyways, after all that, you can then create and then show the dialog box for user input
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
+                    // All those steps to create a simple popup window, welcome to the life of a back end developer :P
+                    // Anyways, after all that, you can then create and then show the dialog box for user input
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+
+                } else {
+                    alertDialogBuilder.setCancelable(false).setPositiveButton(getString(R.string.startScoutButton), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            // Lets add some checks to see if there was anything entered in the first place
+                            // If there wasn't, Toast should display "Please enter a team number to scout"
+                            if (userInput.getText().length() == 0) {
+                                Toast.makeText(main_activity.this, getString(R.string.scoutWarning), Toast.LENGTH_LONG).show();
+                            } else {
+
+                                // When the number entered is valid, we can set the number to the entered value, and then start the data collection activity
+                                Core.number = Integer.parseInt(userInput.getText().toString());
+                                startActivity(new Intent(main_activity.this, data_collection.class));
+                            }
+                        }
+                    }).setNegativeButton(getString(R.string.Cancel), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // This is where we set up actions and behaviors for when the user clicks "Cancel"
+                            dialog.cancel();
+                        }
+                    });
+
+                    // All those steps to create a simple popup window, welcome to the life of a back end developer :P
+                    // Anyways, after all that, you can then create and then show the dialog box for user input
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
             }
         }
 
