@@ -10,6 +10,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import static org.dragons.Dragons.scoutingapp.Core.isSetInChinese;
 
 /**
  * Created by Stephen Ogden on 5/27/17.
@@ -34,6 +37,13 @@ public class settings extends AppCompatActivity {
 
         // Get the back button in order to return to main_activity.java
         Button back_btn = findViewById(R.id.back);
+        if (isSetInChinese()) {
+            back_btn.setText(R.string.backCN);
+            ((TextView) findViewById(R.id.settings_header)).setText(R.string.settingsCN);
+            ((TextView) findViewById(R.id.warning)).setText(R.string.warningCN);
+            ((TextView) findViewById(R.id.macAddrHeader)).setText(R.string.macAddrCN);
+            setTitle(R.string.app_name_CN);
+        }
 
         // Ill be honest: Im lazy and don't like entering the same thing over and over, so I created a button that auto-enters the MAC of my laptop to speed things up
         Button auto = findViewById(R.id.autoEnter);
