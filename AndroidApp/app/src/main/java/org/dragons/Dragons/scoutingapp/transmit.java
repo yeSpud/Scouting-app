@@ -21,8 +21,8 @@ public class transmit extends AppCompatActivity {
     // To start, well need a stream to send the data over, so create an OutputStream
     public static OutputStream outStream;
 
-    public void AlertBox(@SuppressWarnings("SameParameterValue") String title, String message ) {
-        new AlertDialog.Builder(this).setTitle(title).setMessage(message + " Press OK to exit." ).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+    public void AlertBox(@SuppressWarnings("SameParameterValue") String title, String message) {
+        new AlertDialog.Builder(this).setTitle(title).setMessage(message + " Press OK to exit.").setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
                 finish();
             }
@@ -48,6 +48,8 @@ public class transmit extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
 
+
+            // TODO: Make custom error
             // There was an error during write? FUCK! Let the user know by creating an alert box with the error message, and then showing that for 3 seconds
             String msg = "An exception occurred during write: " + e.getMessage();
             msg = msg + ".\n\nCheck that the SPP UUID exists on server.\n\n";

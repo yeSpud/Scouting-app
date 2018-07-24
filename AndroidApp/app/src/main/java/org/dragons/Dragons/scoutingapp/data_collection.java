@@ -23,7 +23,6 @@ import static org.dragons.Dragons.scoutingapp.Core.isSetInChinese;
  * FRC 1595
  */
 
-// TODO: Update comments
 // Most of this is extremely likely subject to change depending on what data you want, so I will comment only that which is likely to remain the same throughout
 
 public class data_collection extends AppCompatActivity {

@@ -21,114 +21,126 @@ import java.util.UUID;
 
 public class Core {
 
-    // Instead of the test bluetooth adapter, well use the official one here, since this will only be used when the device is shown to support bluetooth
-    public static BluetoothAdapter btAdapter;
-
-    // This is the socket for said bluetooth server.
-    // We'll define what exactly that will be later, but were just creating it here
+    // Bluetooth socket (think of this as a sort of web based server connection)
     public static BluetoothSocket btSocket;
-
     // String for the data that will be sent to the receiver
     public static String data;
-
     // The number of the team to scout
     public static int number;
+    // Bluetooth adapter (think of it as the specific microchip on the phone)
+    private static BluetoothAdapter btAdapter;
 
+    // Bluetooth device (The receiver that the phone connects and sends data to)
+    private static BluetoothDevice device;
 
-    public UUID MY_UUID;
+    // The declared, but uninitialized UUID for the server
+    private UUID MY_UUID;
 
-    public Core() throws BluetoothSupportError {
+    Core() throws BluetoothSupportError {
         try {
             btAdapter = BluetoothAdapter.getDefaultAdapter();
             // Well known SPP UUID
             MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
         } catch (Exception e) {
+            // The only reason why this should fail, is if bluetooth is not supported on the device
             throw new BluetoothSupportError();
         }
     }
 
+    // Function that checks if a MAC address has been entered
+    public static boolean enteredMac() {
+        try {
+            // Try to return if its NOT empty
+            return !settings.MACADDR.isEmpty();
+        } catch (Exception e) {
+            // If that fails, then it is not entered, so return false
+            return false;
+        }
+    }
+
+    // Function that checks if the current phone language is set to chinese
+    public static boolean isSetInChinese() {
+        // 你好？
+        return Locale.getDefault().getDisplayLanguage().equals(Locale.CHINESE.getDisplayLanguage());
+    }
+
+    // Function to check if bluetooth is enabled
     public boolean isBluetoothOn() {
+        // For starters, set it to false, as a fail-safe
         boolean isOn = false;
         try {
+            // Check of the adapter is enabled or not
             isOn = btAdapter.isEnabled();
         } catch (Exception NullPointerException) {
             try {
+                // If its null, one cause is that its just turned off, so try re-enabling it
                 requestBluetoothToggle();
             } catch (Exception BluetoothSupportError) {
+                // The other cause is that its not supported on the device, in which case, it says false
                 isOn = false;
             }
         }
         return isOn;
     }
 
-    public static boolean enteredMac() {
-        try {
-            return !settings.MACADDR.isEmpty();
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
+    // Function that checks if the bluetooth socket is connect to the receiver
     public boolean isBluetoothConnected() {
         try {
+            // Simply try to return whether or not the socket is connected
             return btSocket.isConnected();
-        } catch (Exception NullPointerException) {
+        } catch (NullPointerException NPE) {
+            // If it throws a NPE, then its not connected, so return false
             return false;
         }
     }
 
+    // Function that prompts the user to turn on bluetooth
     public void requestBluetoothToggle() throws BluetoothSupportError {
         try {
             // Prompt user to turn on Bluetooth
-            AppCompatActivity actvty = new AppCompatActivity();
+            AppCompatActivity activity = new AppCompatActivity();
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            actvty.startActivityForResult(enableBtIntent, 1);
+            activity.startActivityForResult(enableBtIntent, 1);
+            // TODO: Simply close the app if the user denies the request
         } catch (Exception e) {
+            // If that fails, then throw an error, as the device does not support bluetooth
             throw new BluetoothSupportError();
         }
     }
 
+    // Function to establish a connection with the receiver. The context provided is simply for error catching
     public void establishConnection(Context context) {
 
         CatchError error = new CatchError();
 
-        // Set up a pointer to the remote node using it's address.
-        BluetoothDevice device = null;
-
         try {
+            // Try to set the receiver based on the MAC address entered
             device = btAdapter.getRemoteDevice(settings.MACADDR);
         } catch (Exception e) {
             error.caughtError(context, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
 
-        // Two things are needed to make a connection:
-        // A MAC address, which we got above.
-        // A Service ID or UUID.  In this case we are using the UUID for SPP.
         try {
             assert device != null;
+            // Try setting the bluetooth socket that of the receiver (the device)
             btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
-
         } catch (IOException | NullPointerException e) {
             error.caughtError(context, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
 
-        Toast.makeText(context, "Connecting to server", Toast.LENGTH_LONG).show();
-
-        // Discovery is resource intensive.  Make sure it isn't going on
-        // when you attempt to connect and pass your message.
+        // Make sure that discovery is off, as its fairly resource intensive
         btAdapter.cancelDiscovery();
 
-        // Establish the connection.  This will block until it connects.
+        // TODO: Replace with a better loading overlay
+        // Give the user a heads up that the connection is being established
+        Toast.makeText(context, "Connecting to server", Toast.LENGTH_LONG).show();
+
+        // Establish the connection with the receiver. This will block until it connects.
         try {
             btSocket.connect();
         } catch (IOException | NullPointerException e) {
-            String msg = "An exception occurred during connection, socket closed: " + e.getMessage();
             error.caughtError(context, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
-    }
-
-    public static boolean isSetInChinese() {
-        return Locale.getDefault().getDisplayLanguage().equals(Locale.CHINESE.getDisplayLanguage());
     }
 
 }

@@ -30,37 +30,43 @@ public class main_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        // One of the buttons to finish setting up is the button for the settings page, or where the user will enter the MAC address of the server
-        // So when the button is clicked, se want to start the settings activity
+        // Find and then add a listener to the settings button
         findViewById(R.id.settings).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: Replace setting page with popup dialog, or add more options
+                // Once clicked, launch the settings page
                 startActivity(new Intent(main_activity.this, settings.class));
             }
         });
 
-        // Final button, this one is the important one.
-        // For scouting a few more things need to happen, but first, we need to get the button itself, and then add a listener
+        // Find and then add a listener to the start button
         findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Once clicked, start bring up the team number prompt, and then start scouting
                 startScouting();
             }
         });
 
+        // Check if the language is chinese
         if (isSetInChinese()) {
+            // Change the title
             setTitle(getResources().getString(R.string.app_name_CN));
+            // Change the app banner
             ((ImageView) (findViewById(R.id.imageView))).setImageResource(R.mipmap.scoutingappbanner_cn);
+            // Change the description of the icon (banner)
             findViewById(R.id.imageView).setContentDescription(getString(R.string.logo_CN));
+            // Change the text on the start button
             ((Button) findViewById(R.id.start)).setText(R.string.startScoutCN);
+            // Change the text on the settings button
             ((Button) findViewById(R.id.settings)).setText(R.string.settingsCN);
         }
     }
 
-
     public void onResume() {
         super.onResume();
+
         CatchError error = new CatchError();
         Core core = null;
         try {
@@ -70,96 +76,46 @@ public class main_activity extends AppCompatActivity {
         }
 
         assert core != null;
+        // Check if bluetooth is not enabled
+        // TODO: This might be redundant
         if (!core.isBluetoothOn()) {
             try {
+                // Attempt to prompt the user to enable bluetooth
                 core.requestBluetoothToggle();
             } catch (BluetoothSupportError bluetoothSupportError) {
-                //bluetoothSupportError.printStackTrace();
-                //Log.e("What is null?", Boolean.toString((boolean) (Arrays.toString(bluetoothSupportError.getStackTrace()) == null)));
                 error.caughtError(main_activity.this, bluetoothSupportError.getMessage(), Arrays.toString(bluetoothSupportError.getStackTrace()));
             }
         }
 
-
+        // Check if bluetooth is on
         if (core.isBluetoothOn()) {
+            // Check if there is a MAC address entered
             if (Core.enteredMac()) {
+                // Check if the device is not connected to the receiver
                 if (!core.isBluetoothConnected()) {
+                    // Establish a connection with the receiver
                     core.establishConnection(main_activity.this);
                 }
+                // Change the start button to be visible
                 findViewById(R.id.start).setVisibility(View.VISIBLE);
-            } else  {
+            } else {
+                // Hide the start button
                 findViewById(R.id.start).setVisibility(View.GONE);
             }
         }
-
-
-        // This is where the actual adapter gets setup for use
-        //settings.btAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        /*
-        // Attempt to activate bluetooth, but will obviously fail if bluetooth is not supported
-        CheckBTState();
-
-
-
-        // Checks if the bluetooth device is supported and on
-        if (isSupportedandOn()) {
-
-            // Checks if there is a MAC address entered
-            if (enteredMac()) {
-
-                // Checks if it is connected to a bluetooth SPP server
-                if (isConnected()) {
-
-                    // If all of these checks pass, then let the user know via toast
-                    Toast.makeText(main_activity.this, "Already connected to server", Toast.LENGTH_LONG).show();
-                } else {
-
-                    // If its not connected, then attempt to establish a connection with the server
-                    establishConnection();
-                }
-            } else {
-                // If there isn't a MAC address, or its invalid, let the user know via toast
-                Toast.makeText(main_activity.this, "Invalid MAC", Toast.LENGTH_LONG).show();
-            }
-        } else {
-
-            // If bluetooth isn't supported in the first place (Probably an emulator lol), let the user know via toast
-            Toast.makeText(main_activity.this, "Bluetooth not supported/on", Toast.LENGTH_LONG).show();
-        }
-        */
-
     }
 
-
-
-    /*
-    private void CheckBTState() {
-        // Check for Bluetooth support and then check to make sure it is turned on
-        // Emulator doesn't support Bluetooth and will return null
-        if (TestBT == null) {
-            AlertBox("Error", "Bluetooth Not supported. Aborting.");
-        } else {
-            if (!isSupportedandOn()) {
-
-
-            }
-        }
-    }*/
-
     void startScouting() {
-        // Like for the pit-scouting button, we need a try-catch method here for checking the MAC address
         try {
-
             if (!Core.enteredMac()) {
-
-                // If there isn't a MAC address entered, use Toast to notify the user that they need to enter one
+                // If there isn't a MAC address entered, use Toast to notify the user in the respective language
                 if (isSetInChinese()) {
                     Toast.makeText(main_activity.this, getString(R.string.macWarning_CN), Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(main_activity.this, getString(R.string.macWarning), Toast.LENGTH_LONG).show();
                 }
             } else {
+                // Prompt the user for the team number in the respective language
                 if (isSetInChinese()) {
                     // To get a popup window for entering the team number to scout, we'll start by making a LayoutInflater, and then creating a view off of that
                     LayoutInflater li = LayoutInflater.from(main_activity.this);
@@ -245,17 +201,4 @@ public class main_activity extends AppCompatActivity {
             err.caughtError(main_activity.this, ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
-
-
-
-
-    /*
-    public void AlertBox(@SuppressWarnings("SameParameterValue") String title, String message) {
-        new AlertDialog.Builder(this).setTitle(title).setMessage(message + " Press OK to exit.").setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                finish();
-            }
-        }).show();
-    }
-   */
 }
