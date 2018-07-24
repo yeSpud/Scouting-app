@@ -69,7 +69,7 @@ public class main_activity extends AppCompatActivity {
             error.caughtError(main_activity.this, bluetoothSupportError.getMessage(), Arrays.toString(bluetoothSupportError.getStackTrace()));
         }
 
-
+        assert core != null;
         if (!core.isBluetoothOn()) {
             try {
                 core.requestBluetoothToggle();
@@ -79,6 +79,7 @@ public class main_activity extends AppCompatActivity {
                 error.caughtError(main_activity.this, bluetoothSupportError.getMessage(), Arrays.toString(bluetoothSupportError.getStackTrace()));
             }
         }
+
 
         if (core.isBluetoothOn()) {
             if (Core.enteredMac()) {
@@ -90,6 +91,7 @@ public class main_activity extends AppCompatActivity {
                 findViewById(R.id.start).setVisibility(View.GONE);
             }
         }
+
 
         // This is where the actual adapter gets setup for use
         //settings.btAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -146,7 +148,9 @@ public class main_activity extends AppCompatActivity {
     }*/
 
     void startScouting() {
-            // Like for the pit-scouting button, we need a try-catch method here for checking the MAC address
+        // Like for the pit-scouting button, we need a try-catch method here for checking the MAC address
+        try {
+
             if (!Core.enteredMac()) {
 
                 // If there isn't a MAC address entered, use Toast to notify the user that they need to enter one
@@ -154,23 +158,21 @@ public class main_activity extends AppCompatActivity {
                     Toast.makeText(main_activity.this, getString(R.string.macWarning_CN), Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(main_activity.this, getString(R.string.macWarning), Toast.LENGTH_LONG).show();
-            }
+                }
             } else {
-
-                // To get a popup window for entering the team number to scout, we'll start by making a LayoutInflater, and then creating a view off of that
-                LayoutInflater li = LayoutInflater.from(main_activity.this);
-                @SuppressLint("InflateParams") View promptsView = li.inflate(R.layout.teamselection, null);
-
-                // After that, we'll use an AlertDialog builder to create
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(main_activity.this);
-                alertDialogBuilder.setView(promptsView);
-
-                // In order to get the text entered by the user, we'll can to use the EditText prompt
-                final EditText userInput = promptsView.findViewById(R.id.editTextDialogUserInput);
-
-                // Few more things to set up for the dialog builder, such as setting the start button to say "Start scouting", and adding a listener to the start button
-
                 if (isSetInChinese()) {
+                    // To get a popup window for entering the team number to scout, we'll start by making a LayoutInflater, and then creating a view off of that
+                    LayoutInflater li = LayoutInflater.from(main_activity.this);
+                    @SuppressLint("InflateParams") View promptsView = li.inflate(R.layout.teamselection_cn, null);
+
+                    // After that, we'll use an AlertDialog builder to create
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(main_activity.this);
+                    alertDialogBuilder.setView(promptsView);
+
+                    // In order to get the text entered by the user, we'll can to use the EditText prompt
+                    final EditText userInput = promptsView.findViewById(R.id.editTextDialogUserInput_cn);
+
+                    // Few more things to set up for the dialog builder, such as setting the start button to say "Start scouting", and adding a listener to the start button
 
                     alertDialogBuilder.setCancelable(false).setPositiveButton(getString(R.string.startScoutButton_CN), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -199,6 +201,18 @@ public class main_activity extends AppCompatActivity {
                     alertDialog.show();
 
                 } else {
+                    // To get a popup window for entering the team number to scout, we'll start by making a LayoutInflater, and then creating a view off of that
+                    LayoutInflater li = LayoutInflater.from(main_activity.this);
+                    @SuppressLint("InflateParams") View promptsView = li.inflate(R.layout.teamselection, null);
+
+                    // After that, we'll use an AlertDialog builder to create
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(main_activity.this);
+                    alertDialogBuilder.setView(promptsView);
+
+                    // In order to get the text entered by the user, we'll can to use the EditText prompt
+                    final EditText userInput = promptsView.findViewById(R.id.editTextDialogUserInput);
+
+                    // Few more things to set up for the dialog builder, such as setting the start button to say "Start scouting", and adding a listener to the start button
                     alertDialogBuilder.setCancelable(false).setPositiveButton(getString(R.string.startScoutButton), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
 
@@ -226,7 +240,11 @@ public class main_activity extends AppCompatActivity {
                     alertDialog.show();
                 }
             }
+        } catch (Exception ex) {
+            CatchError err = new CatchError();
+            err.caughtError(main_activity.this, ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
+    }
 
 
 

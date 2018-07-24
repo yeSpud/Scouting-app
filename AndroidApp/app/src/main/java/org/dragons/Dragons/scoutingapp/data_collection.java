@@ -23,6 +23,7 @@ import static org.dragons.Dragons.scoutingapp.Core.isSetInChinese;
  * FRC 1595
  */
 
+// TODO: Update comments
 // Most of this is extremely likely subject to change depending on what data you want, so I will comment only that which is likely to remain the same throughout
 
 public class data_collection extends AppCompatActivity {
@@ -48,17 +49,37 @@ public class data_collection extends AppCompatActivity {
         // For a nice little accessibility feature, we can set the top bar to display the team number that the user is scouting
         // That way, they don't forget, or scout the wrong team :P
         if (isSetInChinese()) {
-            setTitle(R.string.teamToScoutCN + Core.number);
+            setTitle(getResources().getString(R.string.teamToScoutCN) + Core.number);
         } else {
-            setTitle(R.string.teamToScout + Core.number);
+            setTitle(getResources().getString(R.string.teamToScout) + Core.number);
         }
 
         // If for what ever reason they entered the wrong number, or just need to stop scouting, we can add a back/cancel button for them
         // So, get the button from the view
         back_btn = findViewById(R.id.cancel);
+        send_btn = findViewById(R.id.submit);
 
         if (isSetInChinese()) {
-            back_btn.setText(R.string.backCN);
+            back_btn.setText(R.string.CancelCN);
+            send_btn.setText(R.string.SubmitCN);
+            ((TextView) findViewById(R.id.autoHeader)).setText(R.string.autoHeaderTextCN);
+            ((CheckBox) findViewById(R.id.autoCheck)).setText(R.string.hasAutoCN);
+            ((CheckBox) findViewById(R.id.autoBalanceCheck)).setText(R.string.autoBalanceCN);
+            ((CheckBox) findViewById(R.id.autoScaleCheck)).setText(R.string.autoScaleCN);
+            ((TextView) findViewById(R.id.teleHeader)).setText(R.string.teleHeaderTextCN);
+            ((TextView) findViewById(R.id.teleSwitchHeader)).setText(R.string.teleSwitchCN);
+            ((TextView) findViewById(R.id.teleScaleHeader)).setText(R.string.teleScaleCN);
+            ((TextView) findViewById(R.id.teleExchangeHeader)).setText(R.string.teleExchangeCN);
+            ((TextView) findViewById(R.id.climbHeader)).setText(R.string.climbHeaderCN);
+            ((TextView) findViewById(R.id.noClimb)).setText(R.string.didntClimbCN);
+            ((TextView) findViewById(R.id.oneClimbSide)).setText(R.string.oneSideClimbCN);
+            ((TextView) findViewById(R.id.oneClimbCenter)).setText(R.string.oneCenterClimbCN);
+            ((TextView) findViewById(R.id.twoClimbSide)).setText(R.string.twoSideClimbCN);
+            ((TextView) findViewById(R.id.twoClimbCenter)).setText(R.string.twoCenterClimbCN);
+            ((TextView) findViewById(R.id.threeClimbSide)).setText(R.string.threeSideClimbCN);
+            ((TextView) findViewById(R.id.threeClimbCenter)).setText(R.string.threeCenterClimbCN);
+            ((TextView) findViewById(R.id.rampClimb)).setText(R.string.rampClimberCN);
+            ((TextView) findViewById(R.id.commentHeader)).setText(R.string.commentHeaderCN);
         }
 
         // Then add a listener to that which will return the user to the main page, and display "Scouting canceled" via toast
@@ -217,7 +238,6 @@ public class data_collection extends AppCompatActivity {
 
         // Final stretch, now its time to get the data entered and submit it.
         // First get the send button from the view
-        send_btn = findViewById(R.id.submit);
 
         // Then add a listener to the button
         send_btn.setOnClickListener(new View.OnClickListener() {
