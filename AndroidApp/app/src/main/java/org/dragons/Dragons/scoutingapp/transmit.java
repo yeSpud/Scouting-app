@@ -21,7 +21,7 @@ public class transmit extends AppCompatActivity {
     // To start, well need a stream to send the data over, so create an OutputStream
     public static OutputStream outStream;
 
-    public void AlertBox(@SuppressWarnings("SameParameterValue") String title, String message) {
+    public void AlertBox(String title, String message) {
         new AlertDialog.Builder(this).setTitle(title).setMessage(message + " Press OK to exit.").setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
                 finish();
@@ -33,13 +33,13 @@ public class transmit extends AppCompatActivity {
     public void sendData() {
         try {
 
-            // Using that OutputStream defined before, set it to the bluetooth's outputstream
+            // Using that OutputStream defined before, set it to the bluetooth's output stream
             outStream = Core.btSocket.getOutputStream();
 
-            // Write that data to the data stream, dont have an offset, and set the length to that of the length of the data
+            // Write that data to the data stream, don't have an offset, and set the length to that of the length of the data
             outStream.write(Core.data.getBytes(), 0, Core.data.getBytes().length);
 
-            // Be sure to flush the stream, that way everything gets output to the reciever, and then it can parse the data from there
+            // Be sure to flush the stream, that way everything gets output to the receiver, and then it can parse the data from there
             outStream.flush();
 
             // If the phone used for testing is hooked up to a debugger, we can view the data being sent, and the bytes sent, by printing it to the log
