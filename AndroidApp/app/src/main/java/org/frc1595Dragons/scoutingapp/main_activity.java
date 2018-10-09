@@ -1,4 +1,4 @@
-package org.dragons.Dragons.scoutingapp;
+package org.frc1595Dragons.scoutingapp;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import java.util.Arrays;
 
-import static org.dragons.Dragons.scoutingapp.Core.isSetInChinese;
+import static org.frc1595Dragons.scoutingapp.Core.isSetInChinese;
 
 /**
  * Created by Stephen Ogden on 3/23/17.

@@ -1,4 +1,4 @@
-package org.dragons.Dragons.scoutingapp;
+package org.frc1595Dragons.scoutingapp;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;

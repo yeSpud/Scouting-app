@@ -1,4 +1,4 @@
-package org.dragons.Dragons.scoutingapp;
+package org.frc1595Dragons.scoutingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import static org.dragons.Dragons.scoutingapp.Core.isSetInChinese;
+import static org.frc1595Dragons.scoutingapp.Core.isSetInChinese;
 
 /**
  * Created by Stephen Ogden on 6/24/18.

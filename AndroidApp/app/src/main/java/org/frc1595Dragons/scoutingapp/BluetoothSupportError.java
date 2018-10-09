@@ -1,4 +1,4 @@
-package org.dragons.Dragons.scoutingapp;
+package org.frc1595Dragons.scoutingapp;
 
 /**
  * Created by Stephen Ogden on 7/17/2018.

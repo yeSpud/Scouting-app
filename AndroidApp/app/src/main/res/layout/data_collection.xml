@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/black"
-    tools:context="org.dragons.Dragons.scoutingapp.main_activity"
+    tools:context="org.frc1595Dragons.Dragons.scoutingapp.main_activity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 

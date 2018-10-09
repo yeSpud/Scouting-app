@@ -1,4 +1,4 @@
-package org.dragons.Dragons.scoutingapp;
+package org.frc1595Dragons.scoutingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +13,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static org.dragons.Dragons.scoutingapp.Core.data;
-import static org.dragons.Dragons.scoutingapp.Core.isSetInChinese;
+import static org.frc1595Dragons.scoutingapp.Core.data;
+import static org.frc1595Dragons.scoutingapp.Core.isSetInChinese;
 
 
 /**
