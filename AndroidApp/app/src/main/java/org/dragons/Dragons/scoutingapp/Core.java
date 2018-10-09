@@ -21,12 +21,12 @@ import java.util.UUID;
 
 public class Core {
 
-    // Bluetooth socket (think of this as a sort of web based server connection)
-    public static BluetoothSocket btSocket;
     // String for the data that will be sent to the receiver
     public static String data;
     // The number of the team to scout
     public static int number;
+    // Bluetooth socket (think of this as a sort of web based server connection)
+    static BluetoothSocket btSocket;
     // Bluetooth adapter (think of it as the specific microchip on the phone)
     private static BluetoothAdapter btAdapter;
 
@@ -48,7 +48,7 @@ public class Core {
     }
 
     // Function that checks if a MAC address has been entered
-    public static boolean enteredMac() {
+    static boolean enteredMac() {
         try {
             // Try to return if its NOT empty
             return !settings.MACADDR.isEmpty();
@@ -59,13 +59,13 @@ public class Core {
     }
 
     // Function that checks if the current phone language is set to chinese
-    public static boolean isSetInChinese() {
+    static boolean isSetInChinese() {
         // 你好？
         return Locale.getDefault().getDisplayLanguage().equals(Locale.CHINESE.getDisplayLanguage());
     }
 
     // Function to check if bluetooth is enabled
-    public boolean isBluetoothOn() {
+    boolean isBluetoothOn() {
         // For starters, set it to false, as a fail-safe
         boolean isOn = false;
         try {
@@ -84,7 +84,7 @@ public class Core {
     }
 
     // Function that checks if the bluetooth socket is connect to the receiver
-    public boolean isBluetoothConnected() {
+    boolean isBluetoothConnected() {
         try {
             // Simply try to return whether or not the socket is connected
             return btSocket.isConnected();
@@ -95,7 +95,7 @@ public class Core {
     }
 
     // Function that prompts the user to turn on bluetooth
-    public void requestBluetoothToggle() throws BluetoothSupportError {
+    void requestBluetoothToggle() {
         try {
             // Prompt user to turn on Bluetooth
             AppCompatActivity activity = new AppCompatActivity();
@@ -104,12 +104,13 @@ public class Core {
             // TODO: Simply close the app if the user denies the request
         } catch (Exception e) {
             // If that fails, then throw an error, as the device does not support bluetooth
-            throw new BluetoothSupportError();
+            System.exit(-1);
+            ;
         }
     }
 
     // Function to establish a connection with the receiver. The context provided is simply for error catching
-    public void establishConnection(Context context) {
+    void establishConnection(Context context) {
 
         CatchError error = new CatchError();
 

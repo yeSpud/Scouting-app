@@ -30,7 +30,7 @@ public class transmit extends AppCompatActivity {
     }
 
 
-    public void sendData() {
+    public void sendData() throws BluetoothSendError {
         try {
 
             // Using that OutputStream defined before, set it to the bluetooth's output stream
@@ -47,18 +47,7 @@ public class transmit extends AppCompatActivity {
             Log.e("outBytes", Arrays.toString(Core.data.getBytes()));
         } catch (Exception e) {
             e.printStackTrace();
-
-
-            // TODO: Make custom error
-            // There was an error during write? FUCK! Let the user know by creating an alert box with the error message, and then showing that for 3 seconds
-            String msg = "An exception occurred during write: " + e.getMessage();
-            msg = msg + ".\n\nCheck that the SPP UUID exists on server.\n\n";
-            AlertBox("Error", msg);
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
-            }
+            throw new BluetoothSendError();
         }
 
         // Set the data to be null at this point, to reset the string

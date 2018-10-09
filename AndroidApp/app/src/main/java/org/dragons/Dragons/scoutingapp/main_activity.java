@@ -77,14 +77,9 @@ public class main_activity extends AppCompatActivity {
 
         assert core != null;
         // Check if bluetooth is not enabled
-        // TODO: This might be redundant
         if (!core.isBluetoothOn()) {
-            try {
-                // Attempt to prompt the user to enable bluetooth
-                core.requestBluetoothToggle();
-            } catch (BluetoothSupportError bluetoothSupportError) {
-                error.caughtError(main_activity.this, bluetoothSupportError.getMessage(), Arrays.toString(bluetoothSupportError.getStackTrace()));
-            }
+            // Attempt to prompt the user to enable bluetooth
+            core.requestBluetoothToggle();
         }
 
         // Check if bluetooth is on

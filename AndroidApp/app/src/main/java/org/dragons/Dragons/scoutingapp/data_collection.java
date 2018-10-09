@@ -254,21 +254,25 @@ public class data_collection extends AppCompatActivity {
                         teleSwitchCube + (byte) (switchAuto.isChecked() ? 1 : 0),
                         teleScaleCube + (byte) (scaleAuto.isChecked() ? 1 : 0),
                         exchangeCube,
-                        (byte) (oneCS.isChecked() ? 1:0),
-                        (byte) (oneCC.isChecked() ? 1:0),
-                        (byte) (twoCS.isChecked() ? 1:0),
-                        (byte) (twoCC.isChecked() ? 1:0),
-                        (byte) (threeCS.isChecked() ? 1:0),
-                        (byte) (threeCC.isChecked() ? 1:0),
-                        (byte) (rampC.isChecked() ? 1:0),
-                        comment.getText().toString().replace(",",".")); // Because its a CSV, we need to replace any non-essential commas with something else
+                        (byte) (oneCS.isChecked() ? 1 : 0),
+                        (byte) (oneCC.isChecked() ? 1 : 0),
+                        (byte) (twoCS.isChecked() ? 1 : 0),
+                        (byte) (twoCC.isChecked() ? 1 : 0),
+                        (byte) (threeCS.isChecked() ? 1 : 0),
+                        (byte) (threeCC.isChecked() ? 1 : 0),
+                        (byte) (rampC.isChecked() ? 1 : 0),
+                        comment.getText().toString().replace(",", ".")); // Because its a CSV, we need to replace any non-essential commas with something else
 
                 // If the phone used for testing is hooked up to a debugger, we can view the data being sent by printing it to the log
                 Log.e("Output", data);
 
                 // This is how the data is transmitted, so for all the details for that, look at transmit.java
                 transmit transmit = new transmit();
-                transmit.sendData();
+                try {
+                    transmit.sendData();
+                } catch (BluetoothSendError bluetoothSendError) {
+                    bluetoothSendError.printStackTrace();
+                }
 
                 // On completion, display "Success!" via toast, and return the user to the main activity
                 if (isSetInChinese()) {
