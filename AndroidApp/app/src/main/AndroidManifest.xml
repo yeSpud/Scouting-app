@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="org.frc1595Dragons.scoutingapp">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission
-        android:name="android.permission.BLUETOOTH_PRIVILEGED"
-        tools:ignore="ProtectedPermissions" />
 
     <application
-        android:allowBackup="true"
-        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        android:theme="@style/AppTheme">
         <activity
-            android:name="org.frc1595Dragons.Dragons.scoutingapp.main_activity"
+            android:name="org.frc1595Dragons.scoutingapp.main_activity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,16 +20,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.frc1595Dragons.Dragons.scoutingapp.settings"
+            android:name="org.frc1595Dragons.scoutingapp.settings"
             android:label="@string/app_name" />
         <activity
-            android:name="org.frc1595Dragons.Dragons.scoutingapp.data_collection"
+            android:name="org.frc1595Dragons.scoutingapp.data_collection"
             android:label="@string/teamToScout" />
         <activity
-            android:name="org.frc1595Dragons.Dragons.scoutingapp.transmit"
+            android:name="org.frc1595Dragons.scoutingapp.transmit"
             android:label="@string/app_name" />
         <activity
-            android:name="org.frc1595Dragons.Dragons.scoutingapp.error_activity"
+            android:name="org.frc1595Dragons.scoutingapp.error_activity"
             android:label="@string/error_EN" />
     </application>
 

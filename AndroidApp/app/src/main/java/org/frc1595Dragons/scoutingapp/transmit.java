@@ -31,7 +31,10 @@ public class transmit extends AppCompatActivity {
 
 
     public void sendData() throws BluetoothSendError {
+        /*
+
         try {
+
 
             // Using that OutputStream defined before, set it to the bluetooth's output stream
             outStream = Core.btSocket.getOutputStream();
@@ -53,6 +56,7 @@ public class transmit extends AppCompatActivity {
         // Set the data to be null at this point, to reset the string
         Core.data = null;
 
+
         // Let the thread do anything else it has been waiting to do
         Thread.yield();
 
@@ -63,6 +67,7 @@ public class transmit extends AppCompatActivity {
             // If unsuccessful, show the error via toast
             Toast.makeText(transmit.this, "Error closing stream!", Toast.LENGTH_LONG).show();
         }
+        */
     }
 
 }

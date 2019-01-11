@@ -58,7 +58,7 @@
         android:textColor="@color/white"
         android:layout_marginTop="50dp"
         android:fontFamily="@font/arial"
-        android:text="Build date: 13:30; 7/24/2018"
+        android:text="Build date: 23:14; 1/10/2019"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:textSize="15sp"/>

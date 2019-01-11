@@ -6,9 +6,12 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.UUID;
@@ -21,30 +24,32 @@ import java.util.UUID;
 
 public class Core {
 
-    // String for the data that will be sent to the receiver
-    public static String data;
-    // The number of the team to scout
-    public static int number;
+
+    // The teamNumber of the team to scout
+    public static int teamNumber;
+
     // Bluetooth socket (think of this as a sort of web based server connection)
     static BluetoothSocket btSocket;
+
     // Bluetooth adapter (think of it as the specific microchip on the phone)
-    private static BluetoothAdapter btAdapter;
+    private static BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+
+    public static InputStream input;
+
+    public static OutputStream output;
+
+    public static String MAC;
 
     // Bluetooth device (The receiver that the phone connects and sends data to)
-    private static BluetoothDevice device;
+    public static BluetoothDevice device;
 
     // The declared, but uninitialized UUID for the server
-    private UUID MY_UUID;
+    // Well known SPP UUID
+    private UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
-    Core() throws BluetoothSupportError {
-        try {
-            btAdapter = BluetoothAdapter.getDefaultAdapter();
-            // Well known SPP UUID
-            MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-        } catch (Exception e) {
-            // The only reason why this should fail, is if bluetooth is not supported on the device
-            throw new BluetoothSupportError();
-        }
+    Core() {
+        // Make sure bluetooth is on
+        Log.d("BluetoothEnabled?", Boolean.toString(this.isBluetoothOn()));
     }
 
     // Function that checks if a MAC address has been entered
@@ -58,12 +63,6 @@ public class Core {
         }
     }
 
-    // Function that checks if the current phone language is set to chinese
-    static boolean isSetInChinese() {
-        // 你好？
-        return Locale.getDefault().getDisplayLanguage().equals(Locale.CHINESE.getDisplayLanguage());
-    }
-
     // Function to check if bluetooth is enabled
     boolean isBluetoothOn() {
         // For starters, set it to false, as a fail-safe
@@ -74,10 +73,12 @@ public class Core {
         } catch (Exception NullPointerException) {
             try {
                 // If its null, one cause is that its just turned off, so try re-enabling it
-                requestBluetoothToggle();
+                // Prompt user to turn on Bluetooth
+                AppCompatActivity activity = new AppCompatActivity();
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                activity.startActivityForResult(enableBtIntent, 1);
             } catch (Exception BluetoothSupportError) {
                 // The other cause is that its not supported on the device, in which case, it says false
-                isOn = false;
             }
         }
         return isOn;
@@ -91,21 +92,6 @@ public class Core {
         } catch (NullPointerException NPE) {
             // If it throws a NPE, then its not connected, so return false
             return false;
-        }
-    }
-
-    // Function that prompts the user to turn on bluetooth
-    void requestBluetoothToggle() {
-        try {
-            // Prompt user to turn on Bluetooth
-            AppCompatActivity activity = new AppCompatActivity();
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            activity.startActivityForResult(enableBtIntent, 1);
-            // TODO: Simply close the app if the user denies the request
-        } catch (Exception e) {
-            // If that fails, then throw an error, as the device does not support bluetooth
-            System.exit(-1);
-            ;
         }
     }
 

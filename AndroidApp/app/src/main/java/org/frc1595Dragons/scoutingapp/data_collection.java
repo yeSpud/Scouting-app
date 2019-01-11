@@ -13,9 +13,6 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static org.frc1595Dragons.scoutingapp.Core.data;
-import static org.frc1595Dragons.scoutingapp.Core.isSetInChinese;
-
 
 /**
  * Created by Stephen Ogden on 5/27/17.
@@ -45,52 +42,20 @@ public class data_collection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.data_collection);
 
-        // For a nice little accessibility feature, we can set the top bar to display the team number that the user is scouting
+        // For a nice little accessibility feature, we can set the top bar to display the team teamNumber that the user is scouting
         // That way, they don't forget, or scout the wrong team :P
-        if (isSetInChinese()) {
-            setTitle(getResources().getString(R.string.teamToScoutCN) + Core.number);
-        } else {
-            setTitle(getResources().getString(R.string.teamToScout) + Core.number);
-        }
+        this.setTitle(getResources().getString(R.string.teamToScout) + Core.teamNumber);
 
-        // If for what ever reason they entered the wrong number, or just need to stop scouting, we can add a back/cancel button for them
+        // TODO: Generate this page dynamically
+
+
+        // If for what ever reason they entered the wrong teamNumber, or just need to stop scouting, we can add a back/cancel button for them
         // So, get the button from the view
         back_btn = findViewById(R.id.cancel);
         send_btn = findViewById(R.id.submit);
 
-        if (isSetInChinese()) {
-            back_btn.setText(R.string.CancelCN);
-            send_btn.setText(R.string.SubmitCN);
-            ((TextView) findViewById(R.id.autoHeader)).setText(R.string.autoHeaderTextCN);
-            ((CheckBox) findViewById(R.id.autoCheck)).setText(R.string.hasAutoCN);
-            ((CheckBox) findViewById(R.id.autoBalanceCheck)).setText(R.string.autoBalanceCN);
-            ((CheckBox) findViewById(R.id.autoScaleCheck)).setText(R.string.autoScaleCN);
-            ((TextView) findViewById(R.id.teleHeader)).setText(R.string.teleHeaderTextCN);
-            ((TextView) findViewById(R.id.teleSwitchHeader)).setText(R.string.teleSwitchCN);
-            ((TextView) findViewById(R.id.teleScaleHeader)).setText(R.string.teleScaleCN);
-            ((TextView) findViewById(R.id.teleExchangeHeader)).setText(R.string.teleExchangeCN);
-            ((TextView) findViewById(R.id.climbHeader)).setText(R.string.climbHeaderCN);
-            ((TextView) findViewById(R.id.noClimb)).setText(R.string.didntClimbCN);
-            ((TextView) findViewById(R.id.oneClimbSide)).setText(R.string.oneSideClimbCN);
-            ((TextView) findViewById(R.id.oneClimbCenter)).setText(R.string.oneCenterClimbCN);
-            ((TextView) findViewById(R.id.twoClimbSide)).setText(R.string.twoSideClimbCN);
-            ((TextView) findViewById(R.id.twoClimbCenter)).setText(R.string.twoCenterClimbCN);
-            ((TextView) findViewById(R.id.threeClimbSide)).setText(R.string.threeSideClimbCN);
-            ((TextView) findViewById(R.id.threeClimbCenter)).setText(R.string.threeCenterClimbCN);
-            ((TextView) findViewById(R.id.rampClimb)).setText(R.string.rampClimberCN);
-            ((TextView) findViewById(R.id.commentHeader)).setText(R.string.commentHeaderCN);
-        }
 
         // Then add a listener to that which will return the user to the main page, and display "Scouting canceled" via toast
-        if (isSetInChinese()) {
-            back_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(data_collection.this, main_activity.class));
-                    Toast.makeText(data_collection.this, getString(R.string.scoutingCanceled_CN), Toast.LENGTH_LONG).show();
-                }
-            });
-        } else {
             back_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -98,7 +63,7 @@ public class data_collection extends AppCompatActivity {
                     Toast.makeText(data_collection.this, getString(R.string.scoutingCanceled), Toast.LENGTH_LONG).show();
                 }
             });
-        }
+
 
         noC = findViewById(R.id.noClimb);
         oneCS = findViewById(R.id.oneClimbSide);
@@ -118,18 +83,7 @@ public class data_collection extends AppCompatActivity {
         basicAuto = findViewById(R.id.autoCheck);
 
         switchAuto = findViewById(R.id.autoBalanceCheck);
-        if (isSetInChinese()) {
-            switchAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        teleSwitchHeaderText.setText(String.format("%s" + getString(R.string.autoCubeReference_CN), teleSwitchHeaderText.getText().toString()));
-                    } else {
-                        teleSwitchHeaderText.setText(teleSwitchHeaderText.getText().toString().replace(getString(R.string.autoCubeReference_CN), ""));
-                    }
-                }
-            });
-        } else {
+
             switchAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -140,21 +94,10 @@ public class data_collection extends AppCompatActivity {
                     }
                 }
             });
-        }
+
 
         scaleAuto = findViewById(R.id.autoScaleCheck);
-        if (isSetInChinese()) {
-            scaleAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        teleScaleHeaderText.setText(String.format("%s" + getString(R.string.autoCubeReference_CN), teleScaleHeaderText.getText().toString()));
-                    } else {
-                        teleScaleHeaderText.setText(teleScaleHeaderText.getText().toString().replace(getString(R.string.autoCubeReference_CN), ""));
-                    }
-                }
-            });
-        } else {
+
             scaleAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -165,7 +108,7 @@ public class data_collection extends AppCompatActivity {
                     }
                 }
             });
-        }
+
 
 
         teleSwitchNumberText = findViewById(R.id.teleSwitchNumber);
@@ -246,8 +189,9 @@ public class data_collection extends AppCompatActivity {
 
                 // This is where things get interesting. For this is the part where we send the string to a process that will send it to the server via bluetooth
                 // First, set the string to that of which we want the receiver to parse. I HIGHLY recommend that we format it for ease of readability
+                /*
                 data = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
-                        Core.number,
+                        Core.teamNumber,
                         (byte) (basicAuto.isChecked() ? 1 : 0),
                         (byte) (switchAuto.isChecked() ? 1 : 0),
                         (byte) (scaleAuto.isChecked() ? 1 : 0),
@@ -264,7 +208,8 @@ public class data_collection extends AppCompatActivity {
                         comment.getText().toString().replace(",", ".")); // Because its a CSV, we need to replace any non-essential commas with something else
 
                 // If the phone used for testing is hooked up to a debugger, we can view the data being sent by printing it to the log
-                Log.e("Output", data);
+               Log.e("Output", data);
+               */
 
                 // This is how the data is transmitted, so for all the details for that, look at transmit.java
                 transmit transmit = new transmit();
@@ -275,11 +220,8 @@ public class data_collection extends AppCompatActivity {
                 }
 
                 // On completion, display "Success!" via toast, and return the user to the main activity
-                if (isSetInChinese()) {
-                    Toast.makeText(data_collection.this, getString(R.string.scoutingSuccess_CN), Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(data_collection.this, getString(R.string.scoutingSuccess), Toast.LENGTH_LONG).show();
-                }
+                Toast.makeText(data_collection.this, getString(R.string.scoutingSuccess), Toast.LENGTH_LONG).show();
+
                 startActivity(new Intent(data_collection.this, main_activity.class));
                 finish();
             }
