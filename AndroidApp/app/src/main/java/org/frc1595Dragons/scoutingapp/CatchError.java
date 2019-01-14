@@ -9,13 +9,14 @@ import android.content.Intent;
  * FRC 1595
  */
 
-class CatchError {
+// FIXME
+public class CatchError {
 
     // Declare the strings for the type of error, and its stack trace
-    static String errorType = null, errorStackTrace = null;
+    public static String errorType = null, errorStackTrace = null;
 
     // Function to display the error page (hopefully rather than crashing)
-    void caughtError(Context context, String Type, String StackTrace) {
+    public static void caughtError(Context context, String Type, String StackTrace) {
         // Set the errorType to the type argument
         errorType = Type;
         // Set the errorStackTrace to the stackTrace argument, but also replace the enclosing brackets, as it comes out as an array

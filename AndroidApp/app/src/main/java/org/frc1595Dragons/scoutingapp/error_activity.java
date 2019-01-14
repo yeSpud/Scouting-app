@@ -27,9 +27,9 @@ public class error_activity extends AppCompatActivity {
             try {
                 // TODO: Reset all of core
                 // Try setting the team teamNumber back to a default value (0)
-                Core.teamNumber = 0;
+                data_collection.teamNumber = 0;
                 // Reset the MAC address of the receiver.
-                Core.MAC = null;
+                Bluetooth.MAC = null;
             } catch (Exception e) {
                 // If there are any other errors, just dump it to the LogCat, (aka ignore it really)
                 Log.e("Error in error handler", e.getMessage());

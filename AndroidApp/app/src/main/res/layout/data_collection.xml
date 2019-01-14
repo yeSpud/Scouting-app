@@ -1,450 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/black"
-    tools:context="org.frc1595Dragons.Dragons.scoutingapp.main_activity"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="81dp">
+    tools:context="org.frc1595Dragons.scoutingapp.data_collection"
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true">
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
+            android:id="@+id/content"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Space
-                android:id="@+id/AutonomousPad"
-                android:layout_width="50dp"
-                android:layout_height="25dp"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteX="0dp" />
-
-            <Space
-                android:id="@+id/TeleOpPad"
-                android:layout_width="50dp"
-                android:layout_height="220dp"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteX="0dp" />
-
-            <Space
-                android:id="@+id/ButtonsPad"
-                android:layout_width="5dp"
-                android:layout_height="1075dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/autoHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/autoHeaderText"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:fontFamily="@font/arial"
-                app:layout_constraintHorizontal_bias="0.502"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/AutonomousPad" />
-
-            <CheckBox
-                android:id="@+id/autoCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/hasAuto"
-                android:textColor="@color/white"
-                android:fontFamily="@font/arial"
-                android:theme="@style/customBox"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/autoHeader" />
-
-            <CheckBox
-                android:id="@+id/autoBalanceCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/autoBalance"
-                android:fontFamily="@font/arial"
-                android:textColor="@color/white"
-                android:theme="@style/customBox"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/autoCheck" />
-
-            <CheckBox
-                android:id="@+id/autoScaleCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/autoScale"
-                android:fontFamily="@font/arial"
-                android:textColor="@color/white"
-                android:theme="@style/customBox"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/autoBalanceCheck" />
-
-            <TextView
-                android:id="@+id/teleHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/teleHeaderText"
-                android:fontFamily="@font/arial"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/TeleOpPad" />
-
-            <TextView
-                android:id="@+id/teleSwitchHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/teleSwitch"
-                android:fontFamily="@font/arial"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/teleHeader" />
-
-            <LinearLayout
-                android:id="@+id/teleSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintTop_toBottomOf="@id/teleSwitchHeader" >
-
-                <Button
-                    android:id="@+id/teleSwitchSubtract"
-                    android:layout_width="30dp"
-                    android:layout_height="33dp"
-                    android:text="-"
-                    android:fontFamily="@font/arial"
-                    android:textSize="12sp"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:id="@+id/teleSwitchNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/arial"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:text="0"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    tools:ignore="HardcodedText" />
-
-                <Button
-                    android:id="@+id/teleSwitchAdd"
-                    android:layout_width="30dp"
-                    android:layout_height="33dp"
-                    android:fontFamily="@font/arial"
-                    android:text="+"
-                    android:textSize="12sp"
-                    tools:ignore="HardcodedText" />
-
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/teleScaleHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/teleScale"
-                android:fontFamily="@font/arial"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/teleSwitch" />
-
-            <LinearLayout
-                android:id="@+id/teleScale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintTop_toBottomOf="@id/teleScaleHeader" >
-
-                <Button
-                    android:id="@+id/teleScaleSubtract"
-                    android:layout_width="30dp"
-                    android:layout_height="33dp"
-                    android:text="-"
-                    android:fontFamily="@font/arial"
-                    android:textSize="12sp"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:id="@+id/teleScaleNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/arial"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:text="0"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    tools:ignore="HardcodedText" />
-
-                <Button
-                    android:id="@+id/teleScaleAdd"
-                    android:layout_width="30dp"
-                    android:layout_height="33dp"
-                    android:fontFamily="@font/arial"
-                    android:text="+"
-                    android:textSize="12sp"
-                    tools:ignore="HardcodedText" />
-
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/teleExchangeHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/teleExchange"
-                android:fontFamily="@font/arial"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/teleScale" />
-
-            <LinearLayout
-                android:id="@+id/teleExchange"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintTop_toBottomOf="@id/teleExchangeHeader" >
-
-                <Button
-                    android:id="@+id/teleExchangeSubtract"
-                    android:layout_width="30dp"
-                    android:layout_height="33dp"
-                    android:text="-"
-                    android:fontFamily="@font/arial"
-                    android:textSize="12sp"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:id="@+id/teleExchangeNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/arial"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:text="0"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    tools:ignore="HardcodedText" />
-
-                <Button
-                    android:id="@+id/teleExchangeAdd"
-                    android:layout_width="30dp"
-                    android:layout_height="33dp"
-                    android:fontFamily="@font/arial"
-                    android:text="+"
-                    android:textSize="12sp"
-                    tools:ignore="HardcodedText" />
-
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/climbHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="@string/climbHeader"
-                android:fontFamily="@font/arial"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/teleExchange" />
-
-            <RadioGroup
-                android:id="@+id/climbGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/climbHeader">
-
-                <RadioButton
-                    android:id="@+id/noClimb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:checked="true"
-                    android:text="@string/didntClimb"
-                    android:fontFamily="@font/arial"
-                    android:textColor="@color/white"
-                    android:theme="@style/customBox"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/climbHeader" />
-
-                <RadioButton
-                    android:id="@+id/oneClimbSide"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/oneSideClimb"
-                    android:fontFamily="@font/arial"
-                    android:textColor="@color/white"
-                    android:theme="@style/customBox"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/noClimb" />
-
-                <RadioButton
-                    android:id="@+id/oneClimbCenter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/oneCenterClimb"
-                    android:fontFamily="@font/arial"
-                    android:textColor="@color/white"
-                    android:theme="@style/customBox"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/oneClimbSide" />
-
-                <RadioButton
-                    android:id="@+id/twoClimbSide"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/twoSideClimb"
-                    android:fontFamily="@font/arial"
-                    android:textColor="@color/white"
-                    android:theme="@style/customBox"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/oneClimbCenter" />
-
-                <RadioButton
-                    android:id="@+id/twoClimbCenter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/twoCenterClimb"
-                    android:fontFamily="@font/arial"
-                    android:textColor="@color/white"
-                    android:theme="@style/customBox"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/twoClimbSide" />
-
-                <RadioButton
-                    android:id="@+id/threeClimbSide"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/threeSideClimb"
-                    android:fontFamily="@font/arial"
-                    android:textColor="@color/white"
-                    android:theme="@style/customBox"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/twoClimbCenter" />
-
-                <RadioButton
-                    android:id="@+id/threeClimbCenter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/threeCenterClimb"
-                    android:fontFamily="@font/arial"
-                    android:textColor="@color/white"
-                    android:theme="@style/customBox"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/threeClimbSide" />
-
-                <RadioButton
-                    android:id="@+id/rampClimb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/rampClimber"
-                    android:fontFamily="@font/arial"
-                    android:textColor="@color/white"
-                    android:theme="@style/customBox"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/threeClimbCenter" />
-
-            </RadioGroup>
-
-            <Button
-                android:id="@+id/cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/redbutton"
-                android:text="@string/Cancel"
-                android:fontFamily="@font/arial"
-                android:textColor="@color/white"
-                app:layout_constraintRight_toLeftOf="@id/ButtonsPad"
-                app:layout_constraintTop_toBottomOf="@id/ButtonsPad" />
-
-            <Button
-                android:id="@+id/submit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/greenbutton"
-                android:text="@string/Submit"
-                android:fontFamily="@font/arial"
-                android:textColor="@color/white"
-                app:layout_constraintLeft_toRightOf="@id/ButtonsPad"
-                app:layout_constraintTop_toBottomOf="@id/ButtonsPad" />
-
-            <TextView
-                android:id="@+id/commentHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/commentHeader"
-                android:fontFamily="@font/arial"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:layout_marginTop="40dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/climbGroup" />
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
 
             <EditText
                 android:id="@+id/comment"
@@ -455,14 +29,30 @@
                 android:textColor="@color/white"
                 android:inputType="textMultiLine|textAutoCorrect"
                 android:imeOptions="actionDone"
-                android:text=""
-                app:layout_constraintTop_toBottomOf="@id/commentHeader"
-                tools:ignore="LabelFor" />
+                android:text="" />
 
 
-        </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
 
     </ScrollView>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
 
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Cancel"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Submit"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

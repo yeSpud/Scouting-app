@@ -20,14 +20,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.frc1595Dragons.scoutingapp.settings"
-            android:label="@string/app_name" />
-        <activity
             android:name="org.frc1595Dragons.scoutingapp.data_collection"
             android:label="@string/teamToScout" />
-        <activity
-            android:name="org.frc1595Dragons.scoutingapp.transmit"
-            android:label="@string/app_name" />
         <activity
             android:name="org.frc1595Dragons.scoutingapp.error_activity"
             android:label="@string/error_EN" />

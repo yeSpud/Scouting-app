@@ -1,6 +1,7 @@
 package org.frc1595Dragons.scoutingapp;
 
 import android.app.Dialog;
+import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -10,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Arrays;
+import java.util.UUID;
+
 /**
  * Created by Stephen Ogden on 3/23/17.
  * FTC 6128 | 7935
@@ -17,8 +21,6 @@ import android.widget.EditText;
  */
 
 public class main_activity extends AppCompatActivity {
-
-    public Core core;
 
     private Button start;
 
@@ -28,7 +30,7 @@ public class main_activity extends AppCompatActivity {
         // Set the view to the main_activity layout
         this.setContentView(R.layout.main_activity);
 
-        // Find and then add a listener to the settings button
+        // Find and then add a listener to the MAC address button
         findViewById(R.id.settings).setOnClickListener((event) -> this.enterMACAddress().show());
 
         // Find and then add a listener to the start button
@@ -40,7 +42,7 @@ public class main_activity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        start.setVisibility(Core.MAC != null && !Core.MAC.equals("") ? View.VISIBLE : View.GONE);
+        start.setVisibility(Bluetooth.MAC != null && !Bluetooth.MAC.equals("") ? View.VISIBLE : View.GONE);
 
         // TODO: Check if the connection to the bluetooth server still exists
     }
@@ -64,10 +66,10 @@ public class main_activity extends AppCompatActivity {
             String userInput = ((EditText) teamNumberDialog.findViewById(R.id.editTextDialogUserInput)).getText().toString();
             // Lets add some checks to see if there was anything entered in the first place
             // If there wasn't, Toast should display "Please enter a team teamNumber to scout"
-            if (!userInput.equals("") && userInput != null) {
+            if (!userInput.equals("")) {
                 // When the teamNumber entered is valid, we can set the teamNumber to the entered value, and then start the data collection activity
                 try {
-                    Core.teamNumber = Integer.parseInt(userInput);
+                    data_collection.teamNumber = Integer.parseInt(userInput);
                 } catch (NumberFormatException e) {
                     dialog.cancel();
                 }
@@ -95,16 +97,40 @@ public class main_activity extends AppCompatActivity {
 
         // Set the view, along with the positive and negative button actions
         builder.setView(enterMacAddressDialog);
-        // TODO: Attempt to connect once saved
         builder.setPositiveButton("Save", (dialog, id) -> {
-            Core.MAC = ((EditText) enterMacAddressDialog.findViewById(R.id.macAddressInput)).getText().toString();
+            Bluetooth.MAC = ((EditText) enterMacAddressDialog.findViewById(R.id.macAddressInput)).getText().toString();
+
+            // Try to connect with the given MAC address
+            //this.establishConnection();
 
             // Refresh the start button visibility
-            start.setVisibility(Core.MAC != null && !Core.MAC.equals("") ? View.VISIBLE : View.GONE);
+            start.setVisibility(Bluetooth.MAC != null && !Bluetooth.MAC.equals("") ? View.VISIBLE : View.GONE);
         });
         builder.setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
 
         // Return the dialog
         return builder.create();
     }
+
+    // Function to establish a connection with the receiver. The context provided is simply for error catching
+    private void establishConnection() {
+
+        try {
+            // Try to set the receiver based on the MAC address entered
+            Bluetooth.device = Bluetooth.btAdapter.getRemoteDevice(Bluetooth.MAC);
+
+            // Well known SPP UUID
+            BluetoothSocket btSocket = Bluetooth.device.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
+
+            // Make sure that discovery is off, as its fairly resource intensive
+            Bluetooth.btAdapter.cancelDiscovery();
+
+            new Bluetooth().new SSP(btSocket);
+
+        } catch (Exception e) {
+            CatchError.caughtError(this, e.getMessage(), Arrays.toString(e.getStackTrace()));
+        }
+
+    }
+
 }
