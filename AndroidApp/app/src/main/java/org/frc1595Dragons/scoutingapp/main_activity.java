@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.json.JSONException;
+
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -69,9 +71,13 @@ public class main_activity extends AppCompatActivity {
             if (!userInput.equals("")) {
                 // When the teamNumber entered is valid, we can set the teamNumber to the entered value, and then start the data collection activity
                 try {
+                    Bluetooth.setMatchData(Bluetooth.test);
                     data_collection.teamNumber = Integer.parseInt(userInput);
                 } catch (NumberFormatException e) {
                     dialog.cancel();
+                } catch (JSONException e) {
+                    CatchError.caughtError(this, e.getMessage(), Arrays.toString(e.getStackTrace()));
+                    return;
                 }
                 this.startActivity(new Intent(main_activity.this, data_collection.class));
             }

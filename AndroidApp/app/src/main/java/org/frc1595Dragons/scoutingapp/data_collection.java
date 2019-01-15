@@ -1,12 +1,12 @@
 package org.frc1595Dragons.scoutingapp;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -43,10 +43,33 @@ public class data_collection extends AppCompatActivity {
 
         // First, add the autonomous section header
         contentView.addView(this.generateTextView("Autonomous:", 20));
+        //int ids = 0;
+
+        // Now add all the autonomous stuff
+        for (Match.Autonomous autonomous : Bluetooth.matchData.autonomousData) {
+            switch (autonomous.datatype) {
+                case Text:
+                    break;
+                case Number:
+                    break;
+                case Boolean:
+                    CheckBox box = this.generateCheckBox(autonomous.name, 15, Boolean.parseBoolean(autonomous.value.get(0)));
+                    //box.setId(ids);
+                    contentView.addView(box);
+                    Log.d("IsChecked", Boolean.toString(box.isChecked()));
+                    //NodeIDs.add(box.getId());
+                    break;
+                case BooleanGroup:
+                    break;
+            }
+            //ids++;
+        }
 
         contentView.addView(this.generateTextView("TeleOp:", 20));
 
         contentView.addView(this.generateTextView("End game:", 20));
+
+        findViewById(R.id.Cancel).setOnClickListener(listener -> finish());
 
 
     }
@@ -56,8 +79,30 @@ public class data_collection extends AppCompatActivity {
         textView.setText(text);
         textView.setTextSize(size);
         textView.setTextColor(Color.WHITE);
-        textView.setGravity(Gravity.CENTER_VERTICAL);
+        textView.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0,10,0,10);
+        textView.setLayoutParams(params);
+        textView.requestLayout();
         return textView;
+    }
+
+    private CheckBox generateCheckBox(String text, float textSize, boolean isChecked) {
+        CheckBox checkBox = new CheckBox(this);
+        checkBox.setText(text);
+        //checkBox.setButtonDrawable(R.style.customBox);
+        checkBox.setTextSize(textSize);
+        checkBox.setEnabled(true);
+        checkBox.setChecked(true);
+        checkBox.setHighlightColor(Color.LTGRAY);
+        checkBox.setBackgroundColor(Color.GRAY);
+        checkBox.setTextColor(Color.WHITE);
+        checkBox.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0,5,0,5);
+        checkBox.setLayoutParams(params);
+        checkBox.requestLayout();
+        return checkBox;
     }
 
 }

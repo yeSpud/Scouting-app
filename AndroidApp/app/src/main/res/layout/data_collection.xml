@@ -1,35 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/black"
     tools:context="org.frc1595Dragons.scoutingapp.data_collection"
     android:orientation="vertical">
 
     <ScrollView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:descendantFocusability="beforeDescendants"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        android:layout_gravity="center_vertical">
 
         <LinearLayout
             android:id="@+id/content"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center_vertical">
 
+            <!--
             <EditText
                 android:id="@+id/comment"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:background="@color/darkGray"
                 android:fontFamily="@font/arial"
-                android:textColor="@color/white"
-                android:inputType="textMultiLine|textAutoCorrect"
                 android:imeOptions="actionDone"
-                android:text="" />
+                android:inputType="textMultiLine|textAutoCorrect"
+                android:text=""
+                android:textColor="@color/white" />
+                -->
 
 
         </LinearLayout>
@@ -43,16 +46,19 @@
         android:layout_gravity="center_horizontal">
 
         <Button
+            android:id="@+id/Cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Cancel"/>
 
         <Button
+            android:id="@+id/Submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Submit"/>
 
     </LinearLayout>
+
 
 
 </LinearLayout>

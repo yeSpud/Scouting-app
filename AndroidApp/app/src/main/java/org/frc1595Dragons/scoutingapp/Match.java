@@ -3,6 +3,7 @@ package org.frc1595Dragons.scoutingapp;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -18,45 +19,34 @@ public class Match {
     public TeleOp[] teleopData;
     public Endgame[] endgameData;
 
-    public class Autonomous extends MatchBase {
-
-    }
-
-    public class TeleOp extends MatchBase {
-
-    }
-
-    public class Endgame extends MatchBase {
-
-    }
-
-    public static MatchBase[] getMatchData(JSONObject rawData, int size) {
+    public static MatchBase[] getMatchData(JSONObject rawData, int size) throws JSONException {
 
         MatchBase[] fullMatchData = new MatchBase[size];
 
-        int i = 0;
-        while (rawData.keys().hasNext()) {
-            Log.d("Key: ", rawData.keys().next());
 
-            /*
-            JSONArray jsonArray = rawData.getJSONArray(rawData.keys().next());
-            Log.d("Json array", jsonArray.toString());
+        for (int i = 0; i < size; i++) {
+            String key = rawData.keys().next();
+            Log.d("Key", key);
+
+            JSONArray jsonArray = rawData.getJSONArray(key);
+            Log.d("JsonArray", jsonArray.toString());
 
             MatchBase match = new MatchBase();
 
-            match.name = rawData.keys().next();
-            match.datatype = MatchBase.DataType.valueOf(JSONArray.getString(0));
+            match.name = key;
+            match.datatype = MatchBase.DataType.valueOf(jsonArray.getString(0));
 
-            final int endgameArrayValues = jsonArray.length();
-            ArrayList<JSONObject> values = new ArrayList<JSONObject>();
-            for (int k = 1; k < endgameArrayValues; k++) {
-                values.add(jsonArray.get(k));
+            final int jsonArraySize = jsonArray.length();
+            Log.d("JsonArraySize", Integer.toString(jsonArraySize));
+
+            ArrayList<String> values = new ArrayList<>();
+            for (int k = 1; k < jsonArraySize; k++) {
+                values.add(jsonArray.getString(k));
+                Log.d("Value", jsonArray.getString(k));
             }
             match.value = values;
 
             fullMatchData[i] = match;
-            i++;
-            */
 
         }
 
@@ -103,6 +93,18 @@ public class Match {
         }
 
         return endgames;
+    }
+
+    public class Autonomous extends MatchBase {
+
+    }
+
+    public class TeleOp extends MatchBase {
+
+    }
+
+    public class Endgame extends MatchBase {
+
     }
 
 }
