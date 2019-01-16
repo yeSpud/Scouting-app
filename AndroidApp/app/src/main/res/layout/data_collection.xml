@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    android:orientation="vertical"
-    tools:context="org.frc1595Dragons.scoutingapp.data_collection">
+    tools:context=".data_collection">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,8 +20,9 @@
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="?attr/actionBarSize"
             android:layout_gravity="center_vertical"
-            android:background="@color/darkGray"
+            android:background="@color/black"
             android:orientation="vertical">
 
             <!--

@@ -4,10 +4,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -88,7 +90,6 @@ public class data_collection extends AppCompatActivity {
             this.parseData(autonomous);
         }
 
-
         contentView.addView(this.generateTextView("TeleOp:", 20,
                 this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
                         15, 0)));
@@ -108,11 +109,29 @@ public class data_collection extends AppCompatActivity {
             this.parseData(endgame);
         }
 
+
+        contentView.addView(this.generateTextView("Additional feedback:", 20,
+                this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
+                        15,0)));
+
+        final EditText comments = new EditText(this);
+        comments.setBackgroundColor(Color.DKGRAY);
+        comments.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        comments.setInputType(InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE);
+        comments.setInputType(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT);
+        comments.setText("");
+        comments.setTextColor(Color.WHITE);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 70);
+        params.setMargins(0,5,0,10);
+        comments.setLayoutParams(params);
+        contentView.addView(comments);
+
+
         findViewById(R.id.Cancel).setOnClickListener(listener -> finish());
 
         findViewById(R.id.Submit).setOnClickListener(listener -> {
             // Gather all the data
-            String[][] data = new String[Nodes.size()][2];
+            String[][] data = new String[Nodes.size() + 1][2];
             int i = 0;
             for (View view : Nodes) {
                 if (view instanceof CheckBox) {
@@ -125,6 +144,9 @@ public class data_collection extends AppCompatActivity {
                 }
                 i++;
             }
+            data[Nodes.size()][0] = "Comments";
+            data[Nodes.size()][1] = comments.getText().toString();
+
 
             finish();
         });

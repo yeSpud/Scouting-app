@@ -1,16 +1,27 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#FFFFFF</item>
+        <item name="android:textColorTertiary">#FFFFFF</item>
+        <item name="android:textColorPrimaryInverse">#000000</item>
+        <item name="android:textColorSecondaryInverse">#000000</item>
+        <item name="android:textColorTertiaryInverse">#000000</item>
+        <item name="android:textColorPrimaryDisableOnly">#FFFFFF</item>
+        <item name="android:textColorPrimaryInverseDisableOnly">#000000</item>
+        <item name="android:textColorPrimaryNoDisable">#FFFFFF</item>
+        <item name="android:textColorSecondaryNoDisable">#FFFFFF</item>
+        <item name="android:textColorPrimaryInverseNoDisable">#000000</item>
+        <item name="android:textColorSecondaryInverseNoDisable">#000000</item>
+        <item name="android:textColorHint">#FFFFFF</item>
+        <item name="android:textColorHintInverse">#000000</item>
     </style>
 
-    <style name="customBox" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorControlNormal">@color/colorAccent</item>
-        <item name="colorControlActivated">@color/white</item>
+    <style name="customBox" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#818181</item>
+        <item name="colorControlActivated">#FFFFFF</item>
     </style>
 
 </resources>
