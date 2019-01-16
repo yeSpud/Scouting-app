@@ -1,15 +1,26 @@
 package org.frc1595Dragons.scoutingapp;
 
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -19,13 +30,39 @@ import java.util.ArrayList;
  */
 
 // Update this to take the config file sent from the server and dynamically generate data
-// FIXME
 public class data_collection extends AppCompatActivity {
 
     public static int teamNumber;
 
     // Since we cant store the individual widgets, just store their ids for future lookup
-    private ArrayList<Integer> NodeIDs = new ArrayList<>();
+    private ArrayList<View> Nodes = new ArrayList<>();
+
+    private LinearLayout contentView;
+
+    // https://stackoverflow.com/questions/22962075/change-the-text-color-of-numberpicker
+    public static void setNumberPickerTextColor(NumberPicker numberPicker, int color) {
+
+        try {
+            java.lang.reflect.Field selectorWheelPaintField = numberPicker.getClass()
+                    .getDeclaredField("mSelectorWheelPaint");
+            selectorWheelPaintField.setAccessible(true);
+            ((Paint) selectorWheelPaintField.get(numberPicker)).setColor(color);
+        } catch (NoSuchFieldException e) {
+            Log.w("NumberPickerTextColor", e);
+        } catch (IllegalAccessException e) {
+            Log.w("NumberPickerTextColor", e);
+        } catch (IllegalArgumentException e) {
+            Log.w("NumberPickerTextColor", e);
+        }
+
+        final int count = numberPicker.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View child = numberPicker.getChildAt(i);
+            if (child instanceof EditText)
+                ((EditText) child).setTextColor(color);
+        }
+        numberPicker.invalidate();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,72 +74,210 @@ public class data_collection extends AppCompatActivity {
         this.setTitle(getResources().getString(R.string.teamToScout) + data_collection.teamNumber);
 
         // Get the scrollview section of the page to dynamically load the widgets for data collection
-        LinearLayout contentView = findViewById(R.id.content);
+        contentView = findViewById(R.id.content);
 
         // TODO: Generate this page dynamically
 
         // First, add the autonomous section header
-        contentView.addView(this.generateTextView("Autonomous:", 20));
-        //int ids = 0;
+        contentView.addView(this.generateTextView("Autonomous:", 20,
+                this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
+                        0, 0)));
 
         // Now add all the autonomous stuff
         for (Match.Autonomous autonomous : Bluetooth.matchData.autonomousData) {
-            switch (autonomous.datatype) {
-                case Text:
-                    break;
-                case Number:
-                    break;
-                case Boolean:
-                    CheckBox box = this.generateCheckBox(autonomous.name, 15, Boolean.parseBoolean(autonomous.value.get(0)));
-                    //box.setId(ids);
-                    contentView.addView(box);
-                    Log.d("IsChecked", Boolean.toString(box.isChecked()));
-                    //NodeIDs.add(box.getId());
-                    break;
-                case BooleanGroup:
-                    break;
-            }
-            //ids++;
+            this.parseData(autonomous);
         }
 
-        contentView.addView(this.generateTextView("TeleOp:", 20));
 
-        contentView.addView(this.generateTextView("End game:", 20));
+        contentView.addView(this.generateTextView("TeleOp:", 20,
+                this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
+                        15, 0)));
+
+        // Add the stuff for teleop
+        for (Match.TeleOp teleOp : Bluetooth.matchData.teleopData) {
+            this.parseData(teleOp);
+        }
+
+
+        contentView.addView(this.generateTextView("End game:", 20,
+                this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
+                        15, 0)));
+
+        // Add end game stuff
+        for (Match.Endgame endgame : Bluetooth.matchData.endgameData) {
+            this.parseData(endgame);
+        }
 
         findViewById(R.id.Cancel).setOnClickListener(listener -> finish());
+
+        findViewById(R.id.Submit).setOnClickListener(listener -> {
+            // Gather all the data
+            String[][] data = new String[Nodes.size()][2];
+            int i = 0;
+            for (View view : Nodes) {
+                if (view instanceof CheckBox) {
+                    CheckBox box = (CheckBox) view;
+                    Log.d("Adding checkbox", box.getText().toString());
+                    data[i][0] = box.getText().toString();
+                    data[i][1] = box.isChecked() ? "1" : "0";
+                } else {
+                    Log.w("Unrecognized class", view.getClass().getName());
+                }
+                i++;
+            }
+
+            finish();
+        });
 
 
     }
 
-    private TextView generateTextView(String text, float size) {
+    private TextView generateTextView(String text, float size, LinearLayout.LayoutParams layoutParameters) {
+        Log.d("generateTextView text", text);
+        Log.d("generateTextView size", Float.toString(size));
         TextView textView = new TextView(this);
         textView.setText(text);
         textView.setTextSize(size);
         textView.setTextColor(Color.WHITE);
         textView.setGravity(Gravity.CENTER);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0,10,0,10);
-        textView.setLayoutParams(params);
+        textView.setLayoutParams(layoutParameters);
         textView.requestLayout();
         return textView;
     }
 
-    private CheckBox generateCheckBox(String text, float textSize, boolean isChecked) {
+    private LinearLayout generateCheckBox(String text, boolean isChecked, LinearLayout.LayoutParams layoutParameters) {
+        Log.d("generateCheckBox text", text);
+        Log.d("generateCheckBox isChecked", Boolean.toString(isChecked));
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        linearLayout.setGravity(Gravity.CENTER);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
         CheckBox checkBox = new CheckBox(this);
         checkBox.setText(text);
-        //checkBox.setButtonDrawable(R.style.customBox);
-        checkBox.setTextSize(textSize);
-        checkBox.setEnabled(true);
-        checkBox.setChecked(true);
-        checkBox.setHighlightColor(Color.LTGRAY);
-        checkBox.setBackgroundColor(Color.GRAY);
+        checkBox.setTextSize(15);
+        checkBox.setChecked(isChecked);
         checkBox.setTextColor(Color.WHITE);
-        checkBox.setGravity(Gravity.CENTER);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0,5,0,5);
-        checkBox.setLayoutParams(params);
+        checkBox.setLayoutParams(layoutParameters);
         checkBox.requestLayout();
-        return checkBox;
+        Nodes.add(checkBox);
+
+        linearLayout.addView(checkBox);
+        return linearLayout;
+    }
+
+    private EditText generateTextField(String defaultValue, LinearLayout.LayoutParams layoutParameters) {
+        Log.d("generateTextField default value", defaultValue);
+        EditText text = new EditText(this);
+        text.setText(defaultValue);
+        text.setTextSize(15);
+        text.setGravity(Gravity.CENTER);
+        text.setBackgroundColor(Color.DKGRAY);
+        text.setTextColor(Color.WHITE);
+        text.setLayoutParams(layoutParameters);
+        text.requestLayout();
+        Nodes.add(text);
+        return text;
+    }
+
+    private LinearLayout generateNumberPicker(int minValue, int maxValue, int step, int defaultValue, LinearLayout.LayoutParams layoutParameters) {
+        Log.d("generateNumberPicker minValue", Integer.toString(minValue));
+        Log.d("generateNumberPicker maxValue", Integer.toString(maxValue));
+        Log.d("generateNumberPicker step", Integer.toString(step));
+        Log.d("generateNumberPicker defaultValue", Integer.toString(defaultValue));
+
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        linearLayout.setGravity(Gravity.CENTER);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+        NumberPicker spinner = new NumberPicker(this);
+        spinner.setMinValue(minValue);
+        spinner.setMaxValue(maxValue);
+        spinner.setValue(defaultValue);
+        spinner.setLayoutParams(layoutParameters);
+        spinner.setBackgroundColor(Color.DKGRAY);
+        data_collection.setNumberPickerTextColor(spinner, Color.WHITE);
+        Nodes.add(spinner);
+
+        linearLayout.addView(spinner);
+
+        return linearLayout;
+    }
+
+    private RadioButton generateRadioButton(String text, boolean isChecked, LinearLayout.LayoutParams layoutParameters) {
+        Log.d("generateRadioButton text", text);
+        Log.d("generateRadioButton isChecked", Boolean.toString(isChecked));
+        RadioButton button = new RadioButton(this);
+        button.setText(text);
+        button.setTextSize(15);
+        button.setChecked(isChecked);
+        button.setHighlightColor(Color.LTGRAY);
+        button.setBackgroundColor(Color.GRAY);
+        button.setTextColor(Color.WHITE);
+        button.setLayoutParams(layoutParameters);
+        button.requestLayout();
+        Nodes.add(button);
+        return button;
+    }
+
+    private LinearLayout.LayoutParams createLayoutParameters(int width, int marginLeft, int marginTop, int marginRight) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(marginLeft, marginTop, marginRight, 0);
+        return params;
+    }
+
+    private void parseData(MatchBase match) {
+        switch (match.datatype) {
+            case Text:
+                contentView.addView(this.generateTextView(match.name, 17, this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
+                        0, 5, 0)));
+
+                contentView.addView(this.generateTextField(match.value.get(0),
+                        this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
+                                20, 0, 20)));
+                break;
+            case Number:
+                contentView.addView(this.generateTextView(match.name, 17, this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
+                        0, 5, 0)));
+
+                contentView.addView(this.generateNumberPicker(Integer.parseInt(match.value.get(1)),
+                        Integer.parseInt(match.value.get(2)), Integer.parseInt(match.value.get(3)),
+                        Integer.parseInt(match.value.get(0)),
+                        this.createLayoutParameters(LinearLayout.LayoutParams.WRAP_CONTENT,
+                                0, 0, 0)));
+                break;
+            case Boolean:
+                contentView.addView(this.generateCheckBox(match.name, Boolean.parseBoolean(match.value.get(0)),
+                        this.createLayoutParameters(LinearLayout.LayoutParams.WRAP_CONTENT,
+                                0, 5, 0)));
+                break;
+            case BooleanGroup:
+
+                contentView.addView(this.generateTextView(match.name, 17,
+                        this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
+                                0, 5, 0)));
+
+                // Get all the radio buttons in the value
+                RadioGroup group = new RadioGroup(this);
+                try {
+                    JSONObject radioButtons = new JSONObject(match.value.get(0));
+                    while (radioButtons.keys().hasNext()) {
+                        String key = radioButtons.keys().next();
+                        group.addView(this.generateRadioButton(key, Boolean.parseBoolean(radioButtons.get(key).toString()),
+                                this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
+                                        0, 0, 0)));
+                    }
+
+                } catch (JSONException e) {
+                    CatchError.caughtError(this, e.getMessage(), Arrays.toString(e.getStackTrace()));
+                    return;
+                }
+                contentView.addView(group);
+                break;
+        }
     }
 
 }

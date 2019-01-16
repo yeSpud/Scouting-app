@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!-- TODO: Replace constraint layout -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -16,10 +16,10 @@
         android:id="@+id/macAddressInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/arial"
-        android:inputType="textCapCharacters"
         android:autofillHints="xx:xx:xx:xx:xx:xx"
-        android:hint="MAC address">
+        android:fontFamily="@font/arial"
+        android:hint="MAC address"
+        android:inputType="textCapCharacters">
 
 
     </EditText>

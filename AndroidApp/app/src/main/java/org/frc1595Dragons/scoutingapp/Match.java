@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Stephen Ogden on 12/24/18.
@@ -19,17 +20,18 @@ public class Match {
     public TeleOp[] teleopData;
     public Endgame[] endgameData;
 
-    public static MatchBase[] getMatchData(JSONObject rawData, int size) throws JSONException {
+    public static MatchBase[] getMatchData(JSONObject rawData, int size) throws JSONException, NullPointerException {
 
         MatchBase[] fullMatchData = new MatchBase[size];
 
-
+        String[] keys = rawData.names().toString().replace("[", "").replace("]", "").replace("\"", "").split(",");
+        Log.d("Keys", Arrays.toString(keys));
         for (int i = 0; i < size; i++) {
-            String key = rawData.keys().next();
+            String key = keys[i];
             Log.d("Key", key);
 
-            JSONArray jsonArray = rawData.getJSONArray(key);
-            Log.d("JsonArray", jsonArray.toString());
+            JSONArray jsonArray = rawData.optJSONArray(key);
+            Log.d("JsonArray", rawData.getJSONArray(key).toString());
 
             MatchBase match = new MatchBase();
 

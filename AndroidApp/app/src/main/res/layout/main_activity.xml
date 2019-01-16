@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!-- TODO: Replace constraint layout -->
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,24 +11,24 @@
         android:id="@+id/imageView"
         android:layout_width="250dp"
         android:layout_height="105dp"
+        android:contentDescription="@string/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@mipmap/attempt2"
-        tools:layout_editor_absoluteY="0dp"
         tools:ignore="MissingConstraints"
-        android:contentDescription="@string/logo" />
+        tools:layout_editor_absoluteY="0dp" />
 
     <Button
         android:id="@+id/start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="15dp"
         android:background="@drawable/greenbutton"
-        android:text="@string/startScout"
         android:fontFamily="@font/arial"
+        android:text="@string/startScout"
         android:textColor="@color/white"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -40,12 +40,12 @@
         android:id="@+id/settings"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="30dp"
         android:background="@drawable/graybutton"
-        android:text="@string/settings"
         android:fontFamily="@font/arial"
+        android:text="@string/settings"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -54,16 +54,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/settings"
-        android:textColor="@color/white"
         android:layout_marginTop="50dp"
         android:fontFamily="@font/arial"
-        android:text="Build date: 23:14; 1/10/2019"
+        android:text="Build date: 15:19; 1/15/2019"
+        android:textColor="@color/white"
+        android:textSize="15sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:textSize="15sp"/>
-
-
+        app:layout_constraintTop_toBottomOf="@id/settings" />
 
 
 </android.support.constraint.ConstraintLayout>
