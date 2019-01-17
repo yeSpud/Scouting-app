@@ -1,4 +1,4 @@
-package org.frc1595Dragons.scoutingapp;
+package org.frc1595Dragons.scoutingapp.MatchFiles;
 
 import android.util.Log;
 

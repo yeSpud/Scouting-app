@@ -1,9 +1,8 @@
-package org.frc1595Dragons.scoutingapp;
+package org.frc1595Dragons.scoutingapp.Activities;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,11 +17,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import org.frc1595Dragons.scoutingapp.BlueFiles.Bluetooth;
+import org.frc1595Dragons.scoutingapp.MatchFiles.Match;
+import org.frc1595Dragons.scoutingapp.MatchFiles.MatchBase;
+import org.frc1595Dragons.scoutingapp.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 /**
@@ -32,7 +34,7 @@ import java.util.Arrays;
  */
 
 // Update this to take the config file sent from the server and dynamically generate data
-public class data_collection extends AppCompatActivity {
+public class data_collection extends android.support.v7.app.AppCompatActivity {
 
     public static int teamNumber;
 
@@ -42,7 +44,7 @@ public class data_collection extends AppCompatActivity {
     private LinearLayout contentView;
 
     // https://stackoverflow.com/questions/22962075/change-the-text-color-of-numberpicker
-    public static void setNumberPickerTextColor(NumberPicker numberPicker, int color) {
+    public static void setNumberPickerTextColor(CustomNumberPicker numberPicker, int color) {
 
         try {
             java.lang.reflect.Field selectorWheelPaintField = numberPicker.getClass()
@@ -67,7 +69,7 @@ public class data_collection extends AppCompatActivity {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.data_collection);
 
@@ -138,6 +140,21 @@ public class data_collection extends AppCompatActivity {
                     Log.d("Adding checkbox", box.getText().toString());
                     data[i][0] = box.getText().toString();
                     data[i][1] = box.isChecked() ? "1" : "0";
+                } else if (view instanceof CustomNumberPicker) {
+                    CustomNumberPicker picker = (CustomNumberPicker) view;
+                    Log.d("Adding number", picker.getTitle());
+                    data[i][0] = picker.getTitle();
+                    data[i][1] = Integer.toString(picker.getValue());
+                } else if (view instanceof CustomEditText) {
+                    CustomEditText text = (CustomEditText) view;
+                    Log.d("Adding text", text.getTitle());
+                    data[i][0] = text.getTitle();
+                    data[i][1] = text.getText().toString();
+                } else if (view instanceof RadioButton) {
+                    RadioButton button = (RadioButton) view;
+                    Log.d("Adding radio button", button.getText().toString());
+                    data[i][0] = button.getText().toString();
+                    data[i][1] = button.isChecked() ? "1" : "0";
                 } else {
                     Log.w("Unrecognized class", view.getClass().getName());
                 }
@@ -145,7 +162,6 @@ public class data_collection extends AppCompatActivity {
             }
             data[Nodes.size()][0] = "Comments";
             data[Nodes.size()][1] = comments.getText().toString();
-
 
             finish();
         });
@@ -188,10 +204,12 @@ public class data_collection extends AppCompatActivity {
         return linearLayout;
     }
 
-    private EditText generateTextField(String defaultValue, LinearLayout.LayoutParams layoutParameters) {
+    private CustomEditText generateTextField(String title, String defaultValue, LinearLayout.LayoutParams layoutParameters) {
+        Log.d("generateTextField title", title);
         Log.d("generateTextField default value", defaultValue);
-        EditText text = new EditText(this);
+        CustomEditText text = new CustomEditText(this);
         text.setText(defaultValue);
+        text.setTitle(title);
         text.setTextSize(15);
         text.setGravity(Gravity.CENTER);
         text.setBackgroundColor(Color.DKGRAY);
@@ -202,7 +220,8 @@ public class data_collection extends AppCompatActivity {
         return text;
     }
 
-    private LinearLayout generateNumberPicker(int minValue, int maxValue, int step, int defaultValue, LinearLayout.LayoutParams layoutParameters) {
+    private LinearLayout generateNumberPicker(String title, int minValue, int maxValue, int step, int defaultValue, LinearLayout.LayoutParams layoutParameters) {
+        Log.d("generateNumberPicker title", title);
         Log.d("generateNumberPicker minValue", Integer.toString(minValue));
         Log.d("generateNumberPicker maxValue", Integer.toString(maxValue));
         Log.d("generateNumberPicker step", Integer.toString(step));
@@ -214,12 +233,13 @@ public class data_collection extends AppCompatActivity {
         linearLayout.setGravity(Gravity.CENTER);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-        NumberPicker spinner = new NumberPicker(this);
+        CustomNumberPicker spinner = new CustomNumberPicker(this);
         spinner.setMinValue(minValue);
         spinner.setMaxValue(maxValue);
         spinner.setValue(defaultValue);
         spinner.setLayoutParams(layoutParameters);
         spinner.setBackgroundColor(Color.DKGRAY);
+        spinner.setTitle(title);
         data_collection.setNumberPickerTextColor(spinner, Color.WHITE);
         Nodes.add(spinner);
 
@@ -256,7 +276,7 @@ public class data_collection extends AppCompatActivity {
                 contentView.addView(this.generateTextView(match.name, 17, this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
                         0, 5, 0)));
 
-                contentView.addView(this.generateTextField(match.value.get(0),
+                contentView.addView(this.generateTextField(match.name, match.value.get(0),
                         this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
                                 20, 0, 20)));
                 break;
@@ -264,7 +284,7 @@ public class data_collection extends AppCompatActivity {
                 contentView.addView(this.generateTextView(match.name, 17, this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
                         0, 5, 0)));
 
-                contentView.addView(this.generateNumberPicker(Integer.parseInt(match.value.get(1)),
+                contentView.addView(this.generateNumberPicker(match.name, Integer.parseInt(match.value.get(1)),
                         Integer.parseInt(match.value.get(2)), Integer.parseInt(match.value.get(3)),
                         Integer.parseInt(match.value.get(0)),
                         this.createLayoutParameters(LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -293,7 +313,7 @@ public class data_collection extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    CatchError.caughtError(this, e.getMessage(), Arrays.toString(e.getStackTrace()));
+                    new error_activity().new CatchError().Catch(this, e);
                     return;
                 }
                 contentView.addView(group);
@@ -301,5 +321,38 @@ public class data_collection extends AppCompatActivity {
         }
     }
 
+    private class CustomNumberPicker extends NumberPicker {
+
+        private String title;
+
+        public CustomNumberPicker(Context context) {
+            super(context);
+        }
+
+        public String getTitle() {
+            return this.title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+    }
+
+    private class CustomEditText extends android.support.v7.widget.AppCompatEditText {
+
+        private String title;
+
+        public CustomEditText(Context context) {
+            super(context);
+        }
+
+        public String getTitle() {
+            return this.title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+    }
 
 }

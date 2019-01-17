@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     android:orientation="vertical"
-    tools:context=".error_activity">
+    tools:context=".Activities.error_activity">
 
     <ImageView
         android:id="@+id/ErrorImage"
@@ -77,6 +77,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginBottom="25dp"
-        android:text="@string/return_to_start" />
+        android:text="Close app" />
 
 </RelativeLayout>

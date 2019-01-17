@@ -1,19 +1,19 @@
-package org.frc1595Dragons.scoutingapp;
+package org.frc1595Dragons.scoutingapp.Activities;
 
 import android.app.Dialog;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.frc1595Dragons.scoutingapp.BlueFiles.Bluethread;
+import org.frc1595Dragons.scoutingapp.BlueFiles.Bluetooth;
+import org.frc1595Dragons.scoutingapp.R;
 import org.json.JSONException;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 /**
@@ -22,11 +22,11 @@ import java.util.UUID;
  * FRC 1595
  */
 
-public class main_activity extends AppCompatActivity {
+public class main_activity extends android.support.v7.app.AppCompatActivity {
 
     private Button start;
 
-    protected void onCreate(Bundle savedInstance) {
+    protected void onCreate(android.os.Bundle savedInstance) {
         super.onCreate(savedInstance);
 
         // Set the view to the main_activity layout
@@ -76,7 +76,7 @@ public class main_activity extends AppCompatActivity {
                 } catch (NumberFormatException e) {
                     dialog.cancel();
                 } catch (JSONException e) {
-                    CatchError.caughtError(this, e.getMessage(), Arrays.toString(e.getStackTrace()));
+                    new error_activity().new CatchError().Catch(this, e);
                     return;
                 }
                 this.startActivity(new Intent(main_activity.this, data_collection.class));
@@ -131,10 +131,10 @@ public class main_activity extends AppCompatActivity {
             // Make sure that discovery is off, as its fairly resource intensive
             Bluetooth.btAdapter.cancelDiscovery();
 
-            new Bluetooth().new SSP(btSocket);
+            new Bluethread(btSocket).run();
 
         } catch (Exception e) {
-            CatchError.caughtError(this, e.getMessage(), Arrays.toString(e.getStackTrace()));
+            new error_activity().new CatchError().Catch(this, e);
         }
 
     }

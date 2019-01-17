@@ -1,27 +1,14 @@
-package org.frc1595Dragons.scoutingapp;
+package org.frc1595Dragons.scoutingapp.BlueFiles;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
 
+import org.frc1595Dragons.scoutingapp.MatchFiles.Match;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.UUID;
 
 /**
  * Created by Stephen Ogden on 6/23/2018.
@@ -98,31 +85,8 @@ public class Bluetooth {
 
     }
 
-    public class SSP extends Thread {
-
-        public int latency;
-
-        private BufferedReader input;
-        private BufferedWriter output;
-        private BluetoothSocket socket;
-
-        public SSP(BluetoothSocket socket) throws IOException {
-            this.socket = socket;
-            this.socket.connect();
-            this.input = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-            this.output = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
-        }
-
-        public void run() {
-
-            while (this.socket.isConnected() && (!Bluetooth.MAC.equals(""))) {
-
-                // Do whatever it is to communicate with the server
-
-            }
-        }
-
-
+    public static void close() {
+        // TODO: End the connection, close the socket, wipe the data, including MAC
     }
 
 }
