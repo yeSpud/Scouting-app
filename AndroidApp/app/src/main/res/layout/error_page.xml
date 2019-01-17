@@ -1,58 +1,56 @@
-<?xml version="1.0" encoding="utf-8"?><!-- TODO: Replace constraint layout -->
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
+    android:orientation="vertical"
     tools:context=".error_activity">
 
     <ImageView
         android:id="@+id/ErrorImage"
         android:layout_width="wrap_content"
         android:layout_height="85dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
         android:contentDescription="@string/error_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@mipmap/error_icon" />
 
     <TextView
         android:id="@+id/errorType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/ErrorImage"
+        android:layout_centerInParent="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
-        android:layout_weight="1"
         android:fontFamily="@font/arial"
         android:text="@string/type_of_error"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ErrorImage" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/fillStackHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/errorType"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/arial"
         android:text="@string/full_stack_trace"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/errorType" />
+        android:textSize="20sp" />
 
     <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
+        android:layout_above="@id/ReturnButton"
+        android:layout_below="@id/fillStackHeader"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="30dp"
-        android:descendantFocusability="beforeDescendants"
-        android:focusableInTouchMode="true"
-        app:layout_constraintBottom_toTopOf="@id/ReturnButton"
-        app:layout_constraintTop_toBottomOf="@id/fillStackHeader">
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,10 +74,9 @@
         android:id="@+id/ReturnButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
         android:layout_marginBottom="25dp"
-        android:text="@string/return_to_start"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="@string/return_to_start" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

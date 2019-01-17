@@ -33,18 +33,18 @@ public class main_activity extends AppCompatActivity {
         this.setContentView(R.layout.main_activity);
 
         // Find and then add a listener to the MAC address button
-        findViewById(R.id.settings).setOnClickListener((event) -> this.enterMACAddress().show());
+        this.findViewById(R.id.settings).setOnClickListener((event) -> this.enterMACAddress().show());
 
         // Find and then add a listener to the start button
-        start = findViewById(R.id.start);
-        start.setOnClickListener((event) -> this.startScouting().show());
+        this.start = this.findViewById(R.id.start);
+        this.start.setOnClickListener((event) -> this.startScouting().show());
 
     }
 
     protected void onResume() {
         super.onResume();
 
-        start.setVisibility(Bluetooth.MAC != null && !Bluetooth.MAC.equals("") ? View.VISIBLE : View.GONE);
+        this.start.setVisibility(Bluetooth.MAC != null && !Bluetooth.MAC.equals("") ? View.VISIBLE : View.GONE);
 
         // TODO: Check if the connection to the bluetooth server still exists
     }
@@ -110,7 +110,7 @@ public class main_activity extends AppCompatActivity {
             //this.establishConnection();
 
             // Refresh the start button visibility
-            start.setVisibility(Bluetooth.MAC != null && !Bluetooth.MAC.equals("") ? View.VISIBLE : View.GONE);
+            this.start.setVisibility(Bluetooth.MAC != null && !Bluetooth.MAC.equals("") ? View.VISIBLE : View.GONE);
         });
         builder.setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
 

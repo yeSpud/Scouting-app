@@ -69,16 +69,15 @@ public class data_collection extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.data_collection);
+        this.setContentView(R.layout.data_collection);
 
         // For a nice little accessibility feature, we can set the top bar to display the team teamNumber that the user is scouting
         // That way, they don't forget, or scout the wrong team :P
         this.setTitle(getResources().getString(R.string.teamToScout) + data_collection.teamNumber);
 
+
         // Get the scrollview section of the page to dynamically load the widgets for data collection
         contentView = findViewById(R.id.content);
-
-        // TODO: Generate this page dynamically
 
         // First, add the autonomous section header
         contentView.addView(this.generateTextView("Autonomous:", 20,
@@ -112,7 +111,7 @@ public class data_collection extends AppCompatActivity {
 
         contentView.addView(this.generateTextView("Additional feedback:", 20,
                 this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
-                        15,0)));
+                        15, 0)));
 
         final EditText comments = new EditText(this);
         comments.setBackgroundColor(Color.DKGRAY);
@@ -122,7 +121,7 @@ public class data_collection extends AppCompatActivity {
         comments.setText("");
         comments.setTextColor(Color.WHITE);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 70);
-        params.setMargins(0,5,0,10);
+        params.setMargins(0, 5, 0, 10);
         comments.setLayoutParams(params);
         contentView.addView(comments);
 
@@ -301,5 +300,6 @@ public class data_collection extends AppCompatActivity {
                 break;
         }
     }
+
 
 }

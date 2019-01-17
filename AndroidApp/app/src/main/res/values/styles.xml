@@ -19,7 +19,7 @@
         <item name="android:textColorHintInverse">#000000</item>
     </style>
 
-    <style name="customBox" parent="Theme.AppCompat">
+    <style name="customBox" parent="AppTheme">
         <item name="colorControlNormal">#818181</item>
         <item name="colorControlActivated">#FFFFFF</item>
     </style>
