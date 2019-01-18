@@ -2,24 +2,20 @@ package org.frc1595Dragons.scoutingapp.Activities;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import org.frc1595Dragons.scoutingapp.BlueFiles.Bluetooth;
 import org.frc1595Dragons.scoutingapp.MatchFiles.Match;
-import org.frc1595Dragons.scoutingapp.MatchFiles.MatchBase;
 import org.frc1595Dragons.scoutingapp.R;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,8 +28,6 @@ import java.util.ArrayList;
  * FTC 6128 | 7935
  * FRC 1595
  */
-
-// Update this to take the config file sent from the server and dynamically generate data
 public class data_collection extends android.support.v7.app.AppCompatActivity {
 
     public static int teamNumber;
@@ -50,7 +44,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
             java.lang.reflect.Field selectorWheelPaintField = numberPicker.getClass()
                     .getDeclaredField("mSelectorWheelPaint");
             selectorWheelPaintField.setAccessible(true);
-            ((Paint) selectorWheelPaintField.get(numberPicker)).setColor(color);
+            ((android.graphics.Paint) selectorWheelPaintField.get(numberPicker)).setColor(color);
         } catch (NoSuchFieldException e) {
             Log.w("NumberPickerTextColor", e);
         } catch (IllegalAccessException e) {
@@ -117,7 +111,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 
         final EditText comments = new EditText(this);
         comments.setBackgroundColor(Color.DKGRAY);
-        comments.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        comments.setImeOptions(android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
         comments.setInputType(InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE);
         comments.setInputType(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT);
         comments.setText("");
@@ -128,42 +122,52 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
         contentView.addView(comments);
 
 
-        findViewById(R.id.Cancel).setOnClickListener(listener -> finish());
+        findViewById(R.id.Cancel).setOnClickListener(listener -> this.finish());
 
         findViewById(R.id.Submit).setOnClickListener(listener -> {
             // Gather all the data
-            String[][] data = new String[Nodes.size() + 1][2];
-            int i = 0;
+            JSONObject data = new JSONObject();
             for (View view : Nodes) {
-                if (view instanceof CheckBox) {
-                    CheckBox box = (CheckBox) view;
-                    Log.d("Adding checkbox", box.getText().toString());
-                    data[i][0] = box.getText().toString();
-                    data[i][1] = box.isChecked() ? "1" : "0";
-                } else if (view instanceof CustomNumberPicker) {
-                    CustomNumberPicker picker = (CustomNumberPicker) view;
-                    Log.d("Adding number", picker.getTitle());
-                    data[i][0] = picker.getTitle();
-                    data[i][1] = Integer.toString(picker.getValue());
-                } else if (view instanceof CustomEditText) {
-                    CustomEditText text = (CustomEditText) view;
-                    Log.d("Adding text", text.getTitle());
-                    data[i][0] = text.getTitle();
-                    data[i][1] = text.getText().toString();
-                } else if (view instanceof RadioButton) {
-                    RadioButton button = (RadioButton) view;
-                    Log.d("Adding radio button", button.getText().toString());
-                    data[i][0] = button.getText().toString();
-                    data[i][1] = button.isChecked() ? "1" : "0";
-                } else {
-                    Log.w("Unrecognized class", view.getClass().getName());
+                try {
+                    if (view instanceof CheckBox) {
+                        CheckBox box = (CheckBox) view;
+                        Log.d("Adding checkbox", box.getText().toString());
+                        data.putOpt(box.getText().toString(), box.isChecked() ? 1 : 0);
+                    } else if (view instanceof CustomNumberPicker) {
+                        CustomNumberPicker picker = (CustomNumberPicker) view;
+                        Log.d("Adding number", picker.getTitle());
+                        data.putOpt(picker.getTitle(), picker.getValue());
+                    } else if (view instanceof CustomEditText) {
+                        CustomEditText text = (CustomEditText) view;
+                        Log.d("Adding text", text.getTitle());
+                        data.putOpt(text.getTitle(), text.getText().toString());
+                    } else if (view instanceof RadioButton) {
+                        RadioButton button = (RadioButton) view;
+                        Log.d("Adding radio button", button.getText().toString());
+                        data.putOpt(button.getText().toString(), button.isChecked() ? 1 : 0);
+                    } else {
+                        Log.w("Unrecognized class", view.getClass().getName());
+                    }
+                } catch (JSONException jsonError) {
+                    new error_activity().new CatchError().Catch(this, jsonError);
                 }
-                i++;
             }
-            data[Nodes.size()][0] = "Comments";
-            data[Nodes.size()][1] = comments.getText().toString();
+            try {
+                data.putOpt("Comments", comments.getText().toString());
+            } catch (JSONException jsonError) {
+                new error_activity().new CatchError().Catch(this, jsonError);
+            }
 
-            finish();
+
+            Log.d("FullData", data.toString());
+
+            try {
+                Bluetooth.bluetoothConnection.sendData(org.frc1595Dragons.scoutingapp.BlueFiles.Request.Requests.DATA, data);
+            } catch (NullPointerException noConnection) {
+                new error_activity().new CatchError().Catch(this, noConnection);
+            }
+
+            this.finish();
         });
 
 
@@ -270,7 +274,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
         return params;
     }
 
-    private void parseData(MatchBase match) {
+    private void parseData(org.frc1595Dragons.scoutingapp.MatchFiles.MatchBase match) {
         switch (match.datatype) {
             case Text:
                 contentView.addView(this.generateTextView(match.name, 17, this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -321,7 +325,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
         }
     }
 
-    private class CustomNumberPicker extends NumberPicker {
+    private class CustomNumberPicker extends android.widget.NumberPicker {
 
         private String title;
 

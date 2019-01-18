@@ -2,12 +2,7 @@ package org.frc1595Dragons.scoutingapp.MatchFiles;
 
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by Stephen Ogden on 12/24/18.
@@ -20,17 +15,17 @@ public class Match {
     public TeleOp[] teleopData;
     public Endgame[] endgameData;
 
-    public static MatchBase[] getMatchData(JSONObject rawData, int size) throws JSONException, NullPointerException {
+    public static MatchBase[] getMatchData(org.json.JSONObject rawData, int size) throws org.json.JSONException, NullPointerException {
 
         MatchBase[] fullMatchData = new MatchBase[size];
 
         String[] keys = rawData.names().toString().replace("[", "").replace("]", "").replace("\"", "").split(",");
-        Log.d("Keys", Arrays.toString(keys));
+        Log.d("Keys", java.util.Arrays.toString(keys));
         for (int i = 0; i < size; i++) {
             String key = keys[i];
             Log.d("Key", key);
 
-            JSONArray jsonArray = rawData.optJSONArray(key);
+            org.json.JSONArray jsonArray = rawData.optJSONArray(key);
             Log.d("JsonArray", rawData.getJSONArray(key).toString());
 
             MatchBase match = new MatchBase();

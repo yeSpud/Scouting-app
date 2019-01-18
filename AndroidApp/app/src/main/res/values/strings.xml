@@ -7,21 +7,19 @@
     <string name="startScout">Scout new team</string>
     <string name="Cancel">Cancel</string>
     <string name="Submit">Submit</string>
-
-    <string name="macWarning">Please enter a MAC address first!</string>
-    <string name="scoutWarning">Please enter a team number to scout</string>
-    <string name="startScoutButton">Start scouting!</string>
+    <string name="Close">Close app</string>
 
     <string name="teamNumberHeader">Enter team number to scout: </string>
-    <string name="warning">You will need to pair this device to the laptop/server that is going to be receiving the data first!</string>
-    <string name="macAddr">MAC Address of server:</string>
+    <string name="enter_mac_address">Enter MAC address</string>
+    <string name="mac_address">MAC address</string>
 
     <string name="teamToScout">Scouting team: </string>
+    <string name="team_number">Team number</string>
 
-    <string name="commentHeader">Additional comments (Optional)</string>
-
-    <string name="error_EN">Error</string>
+    <string name="error">Error</string>
     <string name="type_of_error">Error message: </string>
     <string name="full_stack_trace">Full stack-trace:</string>
-    <string name="return_to_start">Return to start</string>
+
+    <string name="connected_to_server">Connected to server:</string>
+    <string name="BuildDate">Build date: 10:15; 1/18/2019</string>
 </resources>

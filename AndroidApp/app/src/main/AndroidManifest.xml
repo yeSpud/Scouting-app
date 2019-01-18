@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.frc1595Dragons.scoutingapp">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name="org.frc1595Dragons.scoutingapp.Activities.main_activity"
             android:label="@string/app_name">
@@ -23,7 +26,7 @@
             android:label="@string/teamToScout" />
         <activity
             android:name="org.frc1595Dragons.scoutingapp.Activities.error_activity"
-            android:label="@string/error_EN" />
+            android:label="@string/error" />
     </application>
 
 </manifest>

@@ -11,7 +11,6 @@ import java.io.StringWriter;
  * FTC 6128 | 7935
  * FRC 1595
  */
-
 public class error_activity extends android.support.v7.app.AppCompatActivity {
 
     private static String errorMessage, stackTraceText;
@@ -21,10 +20,10 @@ public class error_activity extends android.support.v7.app.AppCompatActivity {
         this.setContentView(R.layout.error_page);
 
         // Define the errorMessage
-        ((TextView) this.findViewById(R.id.errorType)).setText(errorMessage);
+        ((TextView) this.findViewById(R.id.errorType)).setText(String.format("Error message: %s", error_activity.errorMessage));
 
         // Define the stackTraceText
-        ((TextView) this.findViewById(R.id.stackText)).setText(stackTraceText);
+        ((TextView) this.findViewById(R.id.stackText)).setText(error_activity.stackTraceText);
 
         // Add a listener to the return button
         this.findViewById(R.id.ReturnButton).setOnClickListener(v -> {
@@ -33,21 +32,20 @@ public class error_activity extends android.support.v7.app.AppCompatActivity {
                 // Reset the MAC address of the receiver.
                 org.frc1595Dragons.scoutingapp.BlueFiles.Bluetooth.close();
             } catch (Exception e) {
-                // If there are any other errors, just dump it to the LogCat, (aka ignore it really)
-                android.util.Log.e("Error in error handler", e.getMessage());
+                // If there are any other errors, just ignore them
             }
-            // TODO: Restart app
-            System.exit(0);
+            System.exit(-1);
         });
     }
 
-    public class CatchError {
 
-        public void Catch(android.content.Context context, Throwable e) {
+    class CatchError {
+
+        void Catch(android.content.Context context, Throwable e) {
             StringWriter sw = new StringWriter();
             e.printStackTrace(new java.io.PrintWriter(sw));
-            errorMessage = e.getMessage();
-            stackTraceText = sw.toString();
+            error_activity.errorMessage = e.getLocalizedMessage();
+            error_activity.stackTraceText = sw.toString();
 
             // Start the error activity page
             context.startActivity(new android.content.Intent(context, error_activity.class));

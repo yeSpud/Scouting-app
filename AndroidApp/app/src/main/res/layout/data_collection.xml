@@ -36,14 +36,20 @@
 
         <Button
             android:id="@+id/Cancel"
+            style=""
+            android:fontFamily="@font/arial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/red_button"
             android:text="@string/Cancel" />
 
         <Button
             android:id="@+id/Submit"
+            style=""
+            android:fontFamily="@font/arial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/green_button"
             android:text="@string/Submit" />
 
     </LinearLayout>

@@ -16,7 +16,7 @@
         android:layout_centerInParent="true"
         android:contentDescription="@string/logo"
         android:visibility="visible"
-        app:srcCompat="@mipmap/attempt2" />
+        app:srcCompat="@mipmap/logo" />
 
     <Button
         android:id="@+id/start"
@@ -25,14 +25,13 @@
         android:layout_below="@id/Logo"
         android:layout_centerInParent="true"
         android:layout_marginTop="30dp"
-        android:background="@drawable/greenbutton"
+        android:background="@drawable/green_button"
         android:fontFamily="@font/arial"
         android:paddingStart="5dp"
         android:paddingTop="10dp"
         android:paddingEnd="5dp"
         android:paddingBottom="10dp"
         android:text="@string/startScout"
-        android:textColor="@color/white"
         android:textSize="20sp" />
 
     <Button
@@ -42,10 +41,10 @@
         android:layout_below="@id/start"
         android:layout_centerInParent="true"
         android:layout_marginTop="30dp"
-        android:background="@drawable/graybutton"
         android:fontFamily="@font/arial"
         android:paddingStart="5dp"
         android:paddingTop="10dp"
+        android:background="@drawable/gray_button"
         android:paddingEnd="5dp"
         android:paddingBottom="10dp"
         android:text="@string/settings"
@@ -55,32 +54,22 @@
         android:id="@+id/remoteDeviceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:layout_below="@id/settings"
-        android:layout_marginTop="50dp"
-        android:text="Connected to: "
-        android:textSize="15sp"
-        android:visibility="gone"/>
-
-    <TextView
-        android:id="@+id/latency"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/remoteDeviceName"
-        android:layout_marginTop="10dp"
-        android:text="Current ping: "
-        android:textSize="15sp"
-        android:visibility="gone"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/latency"
         android:layout_centerInParent="true"
         android:layout_marginTop="50dp"
         android:fontFamily="@font/arial"
-        android:text="Build date: 17:20; 1/16/2019"
+        android:text="@string/connected_to_server"
+        android:textSize="15sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/remoteDeviceName"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/arial"
+        android:text="@string/BuildDate"
         android:textSize="12sp" />
 
 

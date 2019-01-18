@@ -11,8 +11,8 @@ public class MatchBase {
     public DataType datatype;
     public java.util.ArrayList<String> value;
 
-    public static enum DataType {
-        Text, Number, Boolean, BooleanGroup;
+    public enum DataType {
+        Text, Number, Boolean, BooleanGroup
     }
 
 }
