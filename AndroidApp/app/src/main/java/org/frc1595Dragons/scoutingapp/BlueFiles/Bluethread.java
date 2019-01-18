@@ -113,6 +113,19 @@ public class Bluethread extends Thread {
             }
 
         }
+
+        // Be sure to close the socket
+        try {
+            output.flush();
+            output.close();
+            blueQueue.clear();
+            input.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     public void sendData(Request.Requests request, JSONObject string) {
