@@ -10,7 +10,6 @@ import org.json.JSONObject;
 
 /**
  * Created by Stephen Ogden on 6/23/2018.
- * FTC 6128 | 7935
  * FRC 1595
  */
 

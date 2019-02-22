@@ -12,7 +12,6 @@ import org.frc1595Dragons.scoutingapp.R;
 
 /**
  * Created by Stephen Ogden on 3/23/17.
- * FTC 6128 | 7935
  * FRC 1595
  */
 public class main_activity extends android.support.v7.app.AppCompatActivity {
@@ -135,7 +134,7 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
             Bluetooth.btAdapter.cancelDiscovery();
 
             Bluetooth.bluetoothConnection = new org.frc1595Dragons.scoutingapp.BlueFiles.Bluethread(btSocket);
-            Bluetooth.bluetoothConnection.run();
+            Bluetooth.bluetoothConnection.start();
 
         } catch (Exception e) {
             new error_activity().new CatchError().Catch(this, e);

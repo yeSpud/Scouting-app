@@ -8,7 +8,6 @@ import java.io.StringWriter;
 
 /**
  * Created by Stephen Ogden on 6/24/18.
- * FTC 6128 | 7935
  * FRC 1595
  */
 public class error_activity extends android.support.v7.app.AppCompatActivity {
