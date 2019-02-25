@@ -39,12 +39,8 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 		// Find and add a listener to the start button
 		StartScouting = this.findViewById(R.id.start);
 		StartScouting.setOnClickListener((event) -> {
-			if (Bluetooth.MAC != null) {
-				if (!Bluetooth.MAC.equals("")) {
-					if (Bluetooth.matchData != null) {
-						this.startScouting().show();
-					}
-				}
+			if (Bluetooth.MAC != null && !Bluetooth.MAC.equals("") && Bluetooth.matchData != null) {
+				this.startScouting().show();
 			}
 		});
 

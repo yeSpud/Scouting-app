@@ -2,12 +2,9 @@ package org.frc1595Dragons.scoutingapp.BlueFiles;
 
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -23,10 +20,6 @@ public class Bluethread extends Thread {
 	private OutputStream output;
 	private BluetoothSocket socket;
 
-	@Deprecated
-	private volatile java.util.Queue<Request> blueQueue = new java.util.LinkedList<>();
-
-
 	public Bluethread(BluetoothSocket socket) throws IOException {
 		this.socket = socket;
 		this.socket.connect();
@@ -37,13 +30,7 @@ public class Bluethread extends Thread {
 
 	public void run() {
 		Log.i("Bluethread", "Running!");
-		// Send a test thing
-		try {
-			this.sendData(new Request(Request.Requests.DATA, new JSONObject("{Test:Foo}")));
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		while (this.socket.isConnected() && (!Bluetooth.MAC.equals(""))) {
+		while (this.socket != null && this.socket.isConnected()) {
 			String in = null;
 			try {
 				// Process input
@@ -87,32 +74,6 @@ public class Bluethread extends Thread {
 					Log.w("Wasn't valid json", in);
 				}
 			}
-
-			// Check if the config is still null
-			if (Bluetooth.matchData == null) {
-				// Request match data
-				this.sendData(new Request(Request.Requests.CONFIG, null));
-			}
-
-			// For processing output, get whatever is in the queue
-			/*
-			if (!blueQueue.isEmpty()) {
-				Log.d("Queue check", "Queue is not empty!");
-				Request request = blueQueue.poll();
-
-				try {
-					if (request.requests.equals(Request.Requests.REQUEST_CLOSE)) {
-						this.close(true);
-					} else {
-						Log.d("Sending data", request.data.toString());
-						this.output.write(String.format("{\"%s\":%s}", request.requests.name(), request.data.toString()).getBytes());
-						this.output.flush();
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			*/
 		}
 
 		// Be sure to close the socket
@@ -160,12 +121,15 @@ public class Bluethread extends Thread {
 
 	public void sendData(Request request) {
 		Log.d("Out", "Sending data");
+		// Check for nulls in the data
+		request.data = request.data == null ? request.data = new JSONObject() : request.data;
 		try {
-			this.output.write(String.format("\"%s\":%s", request.requests.name(), request.data.toString()).getBytes());
+			this.output.write(String.format("{\"%s\":%s}\n", request.requests.name(), request.data.toString()).getBytes());
 			this.output.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			if (!e.toString().equals("java.io.IOException: socket closed")) {
+				e.printStackTrace();
+			}
 		}
-		//blueQueue.add(new Request(request, string));
 	}
 }

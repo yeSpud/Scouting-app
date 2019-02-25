@@ -39,12 +39,8 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 					.getDeclaredField("mSelectorWheelPaint");
 			selectorWheelPaintField.setAccessible(true);
 			((android.graphics.Paint) selectorWheelPaintField.get(numberPicker)).setColor(color);
-		} catch (NoSuchFieldException e) {
-			Log.w("NumberPickerTextColor", e);
-		} catch (IllegalAccessException e) {
-			Log.w("NumberPickerTextColor", e);
-		} catch (IllegalArgumentException e) {
-			Log.w("NumberPickerTextColor", e);
+		} catch (NoSuchFieldException | IllegalAccessException | IllegalArgumentException e) {
+			// Do nothing :P
 		}
 
 		final int count = numberPicker.getChildCount();
