@@ -11,7 +11,7 @@ public class Request {
     Requests requests;
     JSONObject data;
 
-    Request(Requests requests, JSONObject data) {
+    public Request(Requests requests, JSONObject data) {
         this.requests = requests;
         this.data = data;
     }
