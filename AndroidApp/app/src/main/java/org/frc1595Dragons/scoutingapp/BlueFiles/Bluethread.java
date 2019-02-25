@@ -124,13 +124,13 @@ public class Bluethread extends Thread {
     private void close(boolean isRequest) throws IOException {
         Log.d("Bluethread", "Closing");
         if (isRequest) {
-            output.write("Requesting close");
+            this.output.write("Requesting close");
         }
-        output.flush();
-        output.close();
-        blueQueue.clear();
-        input.close();
-        socket.close();
+        this.output.flush();
+        this.output.close();
+        this.blueQueue.clear();
+        this.input.close();
+        this.socket.close();
         Bluetooth.matchData = null;
         Bluetooth.MAC = null;
     }
