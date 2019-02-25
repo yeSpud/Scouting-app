@@ -3,14 +3,15 @@
     <string name="logo">Logo</string>
     <string name="error_icon">Error icon</string>
 
-    <string name="settings">Enter MAC Address</string>
+    <string name="connect">Connect to server</string>
+    <string name="disconnect">Disconnect</string>
     <string name="startScout">Scout new team</string>
     <string name="Cancel">Cancel</string>
     <string name="Submit">Submit</string>
     <string name="Close">Close app</string>
 
     <string name="teamNumberHeader">Enter team number to scout: </string>
-    <string name="enter_mac_address">Enter MAC address</string>
+    <string name="enter_mac_address">Enter MAC address of server</string>
     <string name="mac_address">MAC address</string>
 
     <string name="teamToScout">Scouting team: </string>
@@ -21,5 +22,5 @@
     <string name="full_stack_trace">Full stack-trace:</string>
 
     <string name="connected_to_server">Connected to server:</string>
-    <string name="BuildDate">Build date: 10:15; 1/18/2019</string>
+    <string name="BuildDate">Build date: 20:13; 2/24/2019</string>
 </resources>

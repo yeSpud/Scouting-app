@@ -43,7 +43,7 @@ public class error_activity extends android.support.v7.app.AppCompatActivity {
         void Catch(android.content.Context context, Throwable e) {
             StringWriter sw = new StringWriter();
             e.printStackTrace(new java.io.PrintWriter(sw));
-            error_activity.errorMessage = e.getLocalizedMessage();
+            error_activity.errorMessage = e.toString();
             error_activity.stackTraceText = sw.toString();
 
             // Start the error activity page

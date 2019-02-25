@@ -3,16 +3,11 @@ package org.frc1595Dragons.scoutingapp.BlueFiles;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Created by Stephen Ogden on 1/16/19.
@@ -26,15 +21,15 @@ public class Bluethread extends Thread {
     private BufferedWriter output;
     private BluetoothSocket socket;
 
-    private Queue<Request> blueQueue = new LinkedList<>();
+    private java.util.Queue<Request> blueQueue = new java.util.LinkedList<>();
 
 
     public Bluethread(BluetoothSocket socket) throws IOException {
         this.socket = socket;
         this.socket.connect();
         this.deviceName = socket.getRemoteDevice().getName();
-        this.input = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-        this.output = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+        this.input = new BufferedReader(new java.io.InputStreamReader(this.socket.getInputStream()));
+        this.output = new BufferedWriter(new java.io.OutputStreamWriter(this.socket.getOutputStream()));
     }
 
     public void run() {
@@ -50,37 +45,29 @@ public class Bluethread extends Thread {
 
                 if (in != null && !in.equals("")) {
                     try {
-
                         // Parse the input to a Json object
                         JSONObject object = new JSONObject(in);
                         Log.d("Received object", object.toString());
-
-                        // Check if the Json object is the config data
-                        if (object.has(Request.Requests.CONFIG.name())) {
-                            Log.d("Validated object", "Config");
-
-                            // Load the config in order to dynamically generate the data collection page
-                            JSONObject config = object.getJSONObject(Request.Requests.CONFIG.name());
-                            Bluetooth.setMatchData(config);
-
-                        } else if (object.has(Request.Requests.REQUEST_PING.name())) {
-                            Log.d("Validated object", "Requested ping");
-
-                            // Get the current time of this device in milliseconds
-                            this.sendData(Request.Requests.REQUEST_PING, new JSONObject(Long.toString(System.currentTimeMillis() % 1000)));
-
-                        } else if (object.has(Request.Requests.REQUEST_CLOSE.name())) {
-                            Log.d("Validated object", "Requested closure");
-
-                            // Close the socket/thread
-                            input.close();
-                            output.close();
-                            blueQueue.clear();
-                            socket.close();
-                        } else {
-                            Log.w("Unhandled object header", object.toString());
+                        switch (this.parseRequest(object)) {
+                            case REQUEST_CLOSE:
+                                Log.d("Validated object", "Requested closure");
+                                this.close(false);
+                                break;
+                            case CONFIG:
+                                Log.d("Validated object", "Config");
+                                JSONObject config = object.getJSONObject(Request.Requests.CONFIG.name());
+                                Bluetooth.setMatchData(config);
+                                break;
+                            case REQUEST_PING:
+                                Log.d("Validated object", "Requested ping");
+                                this.sendData(Request.Requests.REQUEST_PING, new JSONObject(Long.toString(System.currentTimeMillis() % 1000)));
+                                break;
+                            case DATA:
+                                Log.d("Validated object", "Its data!");
+                                Log.d("Data-dump", object.optString(Request.Requests.DATA.name()));
+                                break;
                         }
-                    } catch (JSONException e) {
+                    } catch (org.json.JSONException e) {
                         Log.w("Wasn't valid json", in);
                     }
 
@@ -91,15 +78,7 @@ public class Bluethread extends Thread {
                     Request request = blueQueue.poll();
 
                     if (request.requests.equals(Request.Requests.REQUEST_CLOSE)) {
-                        Log.d("Bluethread", "Closing");
-
-                        // Close the socket/thread
-                        output.write("Requesting close");
-                        output.flush();
-                        output.close();
-                        blueQueue.clear();
-                        input.close();
-                        socket.close();
+                        this.close(true);
                     } else {
                         Log.d("Sending data", request.data.toString());
                         output.write(String.format("%s:%s", request.requests.name(), request.data.toString()));
@@ -115,16 +94,45 @@ public class Bluethread extends Thread {
 
         // Be sure to close the socket
         try {
-            output.flush();
-            output.close();
-            blueQueue.clear();
-            input.close();
-            socket.close();
+            this.close(false);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
+    }
+
+    private Request.Requests parseRequest(JSONObject input) {
+        if (input.has(Request.Requests.REQUEST_CLOSE.name())) {
+            return Request.Requests.REQUEST_CLOSE;
+        } else if (input.has(Request.Requests.REQUEST_PING.name())) {
+            return Request.Requests.REQUEST_PING;
+        } else if (input.has(Request.Requests.CONFIG.name())) {
+            return Request.Requests.CONFIG;
+        } else {
+            return Request.Requests.DATA;
+        }
+    }
+
+
+    /**
+     * Close the socket/thread.
+     *
+     * @param isRequest Whether or not to write the close request to the stream.
+     * @throws IOException For when something goes wrong...
+     */
+    private void close(boolean isRequest) throws IOException {
+        Log.d("Bluethread", "Closing");
+        if (isRequest) {
+            output.write("Requesting close");
+        }
+        output.flush();
+        output.close();
+        blueQueue.clear();
+        input.close();
+        socket.close();
+        Bluetooth.matchData = null;
+        Bluetooth.MAC = null;
     }
 
     public void sendData(Request.Requests request, JSONObject string) {

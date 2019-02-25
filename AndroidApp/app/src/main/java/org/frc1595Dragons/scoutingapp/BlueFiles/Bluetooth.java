@@ -1,8 +1,6 @@
 package org.frc1595Dragons.scoutingapp.BlueFiles;
 
 import android.bluetooth.BluetoothAdapter;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import org.frc1595Dragons.scoutingapp.MatchFiles.Match;
@@ -62,7 +60,9 @@ public class Bluetooth {
     public static void close() {
         Bluetooth.matchData = null;
         Bluetooth.MAC = null;
-        Bluetooth.bluetoothConnection.sendData(Request.Requests.REQUEST_CLOSE, null);
+        if (Bluetooth.bluetoothConnection != null && Bluetooth.bluetoothConnection.isAlive()) {
+            Bluetooth.bluetoothConnection.sendData(Request.Requests.REQUEST_CLOSE, null);
+        }
     }
 
     // Function to check if bluetooth is enabled
@@ -75,9 +75,7 @@ public class Bluetooth {
         } catch (Exception NullPointerException) {
             // If its null, one cause is that its just turned off, so try re-enabling it
             // Prompt user to turn on Bluetooth
-            AppCompatActivity activity = new AppCompatActivity();
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            activity.startActivityForResult(enableBtIntent, 1);
+            new android.support.v7.app.AppCompatActivity().startActivityForResult(new android.content.Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 1);
         }
         return isOn;
     }

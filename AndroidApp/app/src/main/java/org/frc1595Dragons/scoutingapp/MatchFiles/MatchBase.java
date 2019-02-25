@@ -2,7 +2,6 @@ package org.frc1595Dragons.scoutingapp.MatchFiles;
 
 /**
  * Created by Stephen Ogden on 12/29/18.
- * FTC 6128 | 7935
  * FRC 1595
  */
 public class MatchBase {

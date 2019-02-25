@@ -5,10 +5,12 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import org.frc1595Dragons.scoutingapp.BlueFiles.Bluetooth;
 import org.frc1595Dragons.scoutingapp.R;
+
+import static java.util.Locale.ENGLISH;
 
 /**
  * Created by Stephen Ogden on 3/23/17.
@@ -16,26 +18,25 @@ import org.frc1595Dragons.scoutingapp.R;
  */
 public class main_activity extends android.support.v7.app.AppCompatActivity {
 
+    android.widget.Button StartScouting, Disconnect;
+
+    android.widget.TextView ServerName;
+
     protected void onCreate(android.os.Bundle savedInstance) {
         super.onCreate(savedInstance);
 
         // Set the view to the main_activity layout
         this.setContentView(R.layout.main_activity);
 
-        // Find and then add a listener to the MAC address button
-        this.findViewById(R.id.settings).setOnClickListener((event) -> this.enterMACAddress().show());
+        // Find and add a listener to the connect button
+        this.findViewById(R.id.connect).setOnClickListener((event) -> this.enterMACAddress().show());
 
-        TextView connectionName = this.findViewById(R.id.remoteDeviceName);
-        if (Bluetooth.bluetoothConnection != null) {
-            connectionName.setText(String.format("Connected to server: %s", Bluetooth.bluetoothConnection.deviceName));
-            connectionName.setVisibility(View.VISIBLE);
-        } else {
-            connectionName.setVisibility(View.GONE);
-        }
+        // Find the server name text view
+        ServerName = this.findViewById(R.id.remoteDeviceName);
 
-        // Find and then add a listener to the start button
-        android.widget.Button start = this.findViewById(R.id.start);
-        start.setOnClickListener((event) -> {
+        // Find and add a listener to the start button
+        StartScouting = this.findViewById(R.id.start);
+        StartScouting.setOnClickListener((event) -> {
             if (Bluetooth.MAC != null) {
                 if (!Bluetooth.MAC.equals("")) {
                     if (Bluetooth.matchData != null) {
@@ -44,6 +45,30 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
                 }
             }
         });
+
+        // Find and add a listener to the disconnect button
+        Disconnect = this.findViewById(R.id.disconnect);
+        Disconnect.setOnClickListener((event) -> {
+            // Disconnect from the server
+            Bluetooth.close();
+
+            // Hide the start and disconnect buttons
+            StartScouting.setVisibility(View.GONE);
+            Disconnect.setVisibility(View.GONE);
+            ServerName.setVisibility(View.GONE);
+        });
+
+        // Set the start button, disconnect button, and server name to be visible if connected
+        if (Bluetooth.bluetoothConnection != null && Bluetooth.bluetoothConnection.isAlive()) {
+            Disconnect.setVisibility(View.VISIBLE);
+            StartScouting.setVisibility(View.VISIBLE);
+            ServerName.setText(String.format(ENGLISH, "Connected to server: %s", Bluetooth.bluetoothConnection.deviceName));
+            ServerName.setVisibility(View.VISIBLE);
+        } else {
+            Disconnect.setVisibility(View.GONE);
+            StartScouting.setVisibility(View.GONE);
+            ServerName.setVisibility(View.GONE);
+        }
 
     }
 
@@ -101,12 +126,17 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 
         // Set the view, along with the positive and negative button actions
         builder.setView(enterMacAddressDialog);
-        builder.setPositiveButton("Save", (dialog, id) -> {
-            Bluetooth.MAC = macAddress.getText().toString();
+        builder.setPositiveButton("Connect", (dialog, id) -> {
+            Bluetooth.MAC = macAddress.getText().toString().toUpperCase();
 
-            // Try to connect with the given MAC address
-            this.establishConnection();
-
+            // Check if the MAC matches a regex
+            if (java.util.regex.Pattern.compile("((\\d|[A-F]){2}:){5}(\\d|[A-F]){2}").matcher(Bluetooth.MAC).matches()) {
+                // Try to connect with the given MAC address
+                this.establishConnection();
+            } else {
+                Toast.makeText(this, "Invalid MAC address", Toast.LENGTH_LONG).show();
+                Bluetooth.MAC = "";
+            }
         });
         builder.setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
 
@@ -116,16 +146,18 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 
     // Function to establish a connection with the receiver. The context provided is simply for error catching
     private void establishConnection() {
-
         try {
-            if (Bluetooth.bluetoothConnection != null) {
-                if (Bluetooth.bluetoothConnection.isAlive()) {
-                    Bluetooth.close();
-                }
+            if (Bluetooth.bluetoothConnection != null && Bluetooth.bluetoothConnection.isAlive()) {
+                Bluetooth.close();
             }
 
             // Try to set the receiver based on the MAC address entered
-            Bluetooth.device = Bluetooth.btAdapter.getRemoteDevice(Bluetooth.MAC);
+            try {
+                Bluetooth.device = Bluetooth.btAdapter.getRemoteDevice(Bluetooth.MAC);
+            } catch (NullPointerException invalidMac) {
+                Toast.makeText(this, "A known error occurred while connecting to the server", Toast.LENGTH_LONG).show();
+                return;
+            }
 
             // Well known SPP UUID
             android.bluetooth.BluetoothSocket btSocket = Bluetooth.device.createRfcommSocketToServiceRecord(java.util.UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
@@ -133,8 +165,15 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
             // Make sure that discovery is off, as its fairly resource intensive
             Bluetooth.btAdapter.cancelDiscovery();
 
+            // Start the bluetooth communication server (Bluethread)
             Bluetooth.bluetoothConnection = new org.frc1595Dragons.scoutingapp.BlueFiles.Bluethread(btSocket);
             Bluetooth.bluetoothConnection.start();
+
+            // Show the start button, disconnect button, and server name to be visible if connected
+            Disconnect.setVisibility(View.VISIBLE);
+            StartScouting.setVisibility(View.VISIBLE);
+            ServerName.setText(String.format(ENGLISH, "Connected to server: %s", Bluetooth.bluetoothConnection.deviceName));
+            ServerName.setVisibility(View.VISIBLE);
 
         } catch (Exception e) {
             new error_activity().new CatchError().Catch(this, e);

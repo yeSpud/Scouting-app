@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 /**
  * Created by Stephen Ogden on 12/24/18.
- * FTC 6128 | 7935
  * FRC 1595
  */
 public class Match {

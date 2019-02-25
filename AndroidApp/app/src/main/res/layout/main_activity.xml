@@ -35,7 +35,7 @@
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/settings"
+        android:id="@+id/connect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/start"
@@ -47,14 +47,30 @@
         android:background="@drawable/gray_button"
         android:paddingEnd="5dp"
         android:paddingBottom="10dp"
-        android:text="@string/settings"
+        android:text="@string/connect"
         android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/disconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/connect"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/arial"
+        android:paddingStart="5dp"
+        android:paddingTop="5dp"
+        android:background="@drawable/red_button"
+        android:paddingEnd="5dp"
+        android:paddingBottom="10dp"
+        android:text="@string/disconnect"
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/remoteDeviceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/settings"
+        android:layout_below="@id/disconnect"
         android:layout_centerInParent="true"
         android:layout_marginTop="50dp"
         android:fontFamily="@font/arial"
