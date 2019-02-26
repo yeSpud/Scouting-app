@@ -60,7 +60,6 @@ public class Bluetooth {
 	}
 
 	public static void close() throws IOException {
-		Bluetooth.matchData = null;
 		Bluetooth.MAC = null;
 		if (Bluetooth.bluetoothConnection != null && Bluetooth.bluetoothConnection.isAlive()) {
 			Bluetooth.bluetoothConnection.close(true);

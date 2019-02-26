@@ -39,7 +39,9 @@ public class Bluethread extends Thread {
 					Log.d("Current in", in);
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				if (!e.toString().equals("java.io.IOException: BufferedReader is closed")) {
+					e.printStackTrace();
+				}
 			}
 
 			if (in != null && !in.equals("")) {
@@ -80,7 +82,9 @@ public class Bluethread extends Thread {
 		try {
 			this.close(false);
 		} catch (IOException e) {
-			e.printStackTrace();
+			if (!e.toString().equals("java.io.IOException: socket closed")) {
+				e.printStackTrace();
+			}
 		}
 
 
@@ -112,7 +116,6 @@ public class Bluethread extends Thread {
 		}
 		this.output.flush();
 		this.output.close();
-		//this.blueQueue.clear();
 		this.input.close();
 		this.socket.close();
 		Bluetooth.matchData = null;

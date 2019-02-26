@@ -33,7 +33,7 @@ public class error_activity extends android.support.v7.app.AppCompatActivity {
             } catch (Exception e) {
                 // If there are any other errors, just ignore them
             }
-            System.exit(-1);
+            System.exit(0);
         });
     }
 

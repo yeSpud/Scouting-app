@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 /**
@@ -129,6 +130,14 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 		findViewById(R.id.Submit).setOnClickListener(listener -> {
 			// Gather all the data
 			JSONObject data = new JSONObject();
+			// Be sure to add the team number
+			try {
+				data.putOpt("Team number", data_collection.teamNumber);
+			} catch (JSONException jsonError) {
+				new error_activity().new CatchError().Catch(this, jsonError);
+			}
+
+			// Add the data from the view
 			for (View view : Nodes) {
 				try {
 					if (view instanceof CheckBox) {
@@ -142,7 +151,13 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 					} else if (view instanceof CustomEditText) {
 						CustomEditText text = (CustomEditText) view;
 						Log.d("Adding text", text.getTitle());
-						data.putOpt(text.getTitle(), text.getText().toString());
+						String str;
+						try {
+							str = Objects.requireNonNull(text.getText()).toString();
+						} catch (NullPointerException NPE) {
+							str  = "";
+						}
+						data.putOpt(text.getTitle(), String.format("%s", str));
 					} else if (view instanceof RadioButton) {
 						RadioButton button = (RadioButton) view;
 						Log.d("Adding radio button", button.getText().toString());
@@ -155,7 +170,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 				}
 			}
 			try {
-				data.putOpt("Comments", comments.getText().toString());
+				data.putOpt("Comments", String.format("%s", comments.getText().toString()));
 			} catch (JSONException jsonError) {
 				new error_activity().new CatchError().Catch(this, jsonError);
 			}

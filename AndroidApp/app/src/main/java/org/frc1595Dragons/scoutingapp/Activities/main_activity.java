@@ -39,8 +39,16 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 		// Find and add a listener to the start button
 		StartScouting = this.findViewById(R.id.start);
 		StartScouting.setOnClickListener((event) -> {
-			if (Bluetooth.MAC != null && !Bluetooth.MAC.equals("") && Bluetooth.matchData != null) {
-				this.startScouting().show();
+			try {
+				if (Bluetooth.MAC != null && !Bluetooth.MAC.equals("") && Bluetooth.matchData != null) {
+					if (Bluetooth.matchData.autonomousData != null && Bluetooth.matchData.teleopData != null && Bluetooth.matchData.endgameData != null) {
+						this.startScouting().show();
+					} else {
+						Toast.makeText(this, "Config still being loaded. Try again in a few seconds.", Toast.LENGTH_LONG).show();
+					}
+				}
+			} catch (NullPointerException NPE) {
+				Toast.makeText(this, "Config still being loaded. Try again in a few seconds.", Toast.LENGTH_LONG).show();
 			}
 		});
 
@@ -50,6 +58,9 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 			// Disconnect from the server
 			try {
 				Bluetooth.close();
+
+				// Due to a Match bug, we need to restart the activity
+				System.exit(0);
 			} catch (IOException e) {
 				new error_activity().new CatchError().Catch(this, e);
 			}
