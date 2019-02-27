@@ -2,6 +2,7 @@ package org.frc1595Dragons.scoutingapp.Activities;
 
 import android.app.Dialog;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -20,9 +21,9 @@ import static java.util.Locale.ENGLISH;
  */
 public class main_activity extends android.support.v7.app.AppCompatActivity {
 
-	android.widget.Button StartScouting, Disconnect;
+	private android.widget.Button StartScouting, Disconnect, Connect;
 
-	android.widget.TextView ServerName;
+	private android.widget.TextView ServerName;
 
 	protected void onCreate(android.os.Bundle savedInstance) {
 		super.onCreate(savedInstance);
@@ -31,14 +32,15 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 		this.setContentView(R.layout.main_activity);
 
 		// Find and add a listener to the connect button
-		this.findViewById(R.id.connect).setOnClickListener((event) -> this.enterMACAddress().show());
+		this.Connect = this.findViewById(R.id.connect);
+		this.Connect.setOnClickListener((event) -> this.enterMACAddress().show());
 
 		// Find the server name text view
-		ServerName = this.findViewById(R.id.remoteDeviceName);
+		this.ServerName = this.findViewById(R.id.remoteDeviceName);
 
 		// Find and add a listener to the start button
-		StartScouting = this.findViewById(R.id.start);
-		StartScouting.setOnClickListener((event) -> {
+		this.StartScouting = this.findViewById(R.id.start);
+		this.StartScouting.setOnClickListener((event) -> {
 			try {
 				if (Bluetooth.MAC != null && !Bluetooth.MAC.equals("") && Bluetooth.matchData != null) {
 					if (Bluetooth.matchData.autonomousData != null && Bluetooth.matchData.teleopData != null && Bluetooth.matchData.endgameData != null) {
@@ -53,14 +55,11 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 		});
 
 		// Find and add a listener to the disconnect button
-		Disconnect = this.findViewById(R.id.disconnect);
-		Disconnect.setOnClickListener((event) -> {
-			// Disconnect from the server
+		this.Disconnect = this.findViewById(R.id.disconnect);
+		this.Disconnect.setOnClickListener((event) -> {
+			// Disconnect from the server and close the app
 			try {
 				Bluetooth.close();
-
-				// Due to a Match bug, we need to restart the activity
-				System.exit(0);
 			} catch (IOException e) {
 				new error_activity().new CatchError().Catch(this, e);
 			}
@@ -73,15 +72,25 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 
 		// Set the start button, disconnect button, and server name to be visible if connected
 		if (Bluetooth.bluetoothConnection != null && Bluetooth.bluetoothConnection.isAlive()) {
-			Disconnect.setVisibility(View.VISIBLE);
-			StartScouting.setVisibility(View.VISIBLE);
-			ServerName.setText(String.format(ENGLISH, "Connected to server: %s", Bluetooth.bluetoothConnection.deviceName));
-			ServerName.setVisibility(View.VISIBLE);
+			this.Disconnect.setVisibility(View.VISIBLE);
+			this.StartScouting.setVisibility(View.VISIBLE);
+			this.ServerName.setText(String.format(ENGLISH, "Connected to server: %s", Bluetooth.bluetoothConnection.deviceName));
+			this.ServerName.setVisibility(View.VISIBLE);
+			this.Connect.setVisibility(View.GONE);
 		} else {
-			Disconnect.setVisibility(View.GONE);
-			StartScouting.setVisibility(View.GONE);
-			ServerName.setVisibility(View.GONE);
+			this.Disconnect.setVisibility(View.GONE);
+			this.StartScouting.setVisibility(View.GONE);
+			this.ServerName.setVisibility(View.GONE);
+			this.Connect.setVisibility(View.VISIBLE);
 		}
+
+		// Make sure bluetooth is enabled
+		boolean bluetoothEnabled = Bluetooth.isBluetoothOn();
+		Log.d("Bluetooth enabled", Boolean.toString(bluetoothEnabled));
+		if (!bluetoothEnabled) {
+			new error_activity().new CatchError().Catch(this, new Exception("Bluetooth is not supported/enabled on this device"));
+		}
+
 
 	}
 
@@ -160,10 +169,6 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 	// Function to establish a connection with the receiver. The context provided is simply for error catching
 	private void establishConnection() {
 		try {
-			if (Bluetooth.bluetoothConnection != null && Bluetooth.bluetoothConnection.isAlive()) {
-				Bluetooth.close();
-			}
-
 			// Try to set the receiver based on the MAC address entered
 			try {
 				Bluetooth.device = Bluetooth.btAdapter.getRemoteDevice(Bluetooth.MAC);
@@ -183,10 +188,11 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 			Bluetooth.bluetoothConnection.start();
 
 			// Show the start button, disconnect button, and server name to be visible if connected
-			Disconnect.setVisibility(View.VISIBLE);
-			StartScouting.setVisibility(View.VISIBLE);
-			ServerName.setText(String.format(ENGLISH, "Connected to server: %s", Bluetooth.bluetoothConnection.deviceName));
-			ServerName.setVisibility(View.VISIBLE);
+			this.Disconnect.setVisibility(View.VISIBLE);
+			this.StartScouting.setVisibility(View.VISIBLE);
+			this.ServerName.setText(String.format(ENGLISH, "Connected to server: %s", Bluetooth.bluetoothConnection.deviceName));
+			this.ServerName.setVisibility(View.VISIBLE);
+			this.Connect.setVisibility(View.GONE);
 
 		} catch (Exception e) {
 			new error_activity().new CatchError().Catch(this, e);

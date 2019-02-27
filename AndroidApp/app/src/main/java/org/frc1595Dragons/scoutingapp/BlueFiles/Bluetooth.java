@@ -1,6 +1,8 @@
 package org.frc1595Dragons.scoutingapp.BlueFiles;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import org.frc1595Dragons.scoutingapp.MatchFiles.Match;
@@ -26,11 +28,6 @@ public class Bluetooth {
 
 	// Bluetooth device (The receiver that the phone connects and sends data to)
 	public static android.bluetooth.BluetoothDevice device;
-
-	Bluetooth() {
-		// Make sure bluetooth is on
-		Log.d("Bluetooth enabled", Boolean.toString(this.isBluetoothOn()));
-	}
 
 	static void setMatchData(JSONObject json) throws org.json.JSONException {
 		Log.d("fullData", json.toString());
@@ -67,17 +64,23 @@ public class Bluetooth {
 	}
 
 	// Function to check if bluetooth is enabled
-	private boolean isBluetoothOn() {
+	public static boolean isBluetoothOn() {
 		// For starters, set it to false, as a fail-safe
 		boolean isOn = false;
+
+		Intent turnOnBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 		try {
 			// Check of the adapter is enabled or not
 			isOn = btAdapter.isEnabled();
 		} catch (Exception NullPointerException) {
 			// If its null, one cause is that its just turned off, so try re-enabling it
 			// Prompt user to turn on Bluetooth
-			new android.support.v7.app.AppCompatActivity().startActivityForResult(new android.content.Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 1);
+			AppCompatActivity activity = new AppCompatActivity();
+			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			activity.startActivityForResult(enableBtIntent, 1);
+			isOn = btAdapter.isEnabled();
 		}
+
 		return isOn;
 	}
 

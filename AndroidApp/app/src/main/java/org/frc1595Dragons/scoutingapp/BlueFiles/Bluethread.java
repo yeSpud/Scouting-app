@@ -118,8 +118,9 @@ public class Bluethread extends Thread {
 		this.output.close();
 		this.input.close();
 		this.socket.close();
-		Bluetooth.matchData = null;
-		Bluetooth.MAC = null;
+
+		// Due to a Match bug, we need to restart the activity
+		System.exit(0);
 	}
 
 	public void sendData(Request request) {
@@ -130,7 +131,7 @@ public class Bluethread extends Thread {
 			this.output.write(String.format("{\"%s\":%s}\n", request.requests.name(), request.data.toString()).getBytes());
 			this.output.flush();
 		} catch (IOException e) {
-			if (!e.toString().equals("java.io.IOException: socket closed")) {
+			if (!e.toString().equals("java.io.IOException: socket closed") || !e.toString().equals("java.io.IOException: Broken pipe")) {
 				e.printStackTrace();
 			}
 		}
