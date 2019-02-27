@@ -33,7 +33,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 	private LinearLayout contentView;
 
 	// https://stackoverflow.com/questions/22962075/change-the-text-color-of-numberpicker
-	public static void setNumberPickerTextColor(CustomNumberPicker numberPicker, int color) {
+	private static void setNumberPickerTextColor(CustomNumberPicker numberPicker, int color) {
 
 		try {
 			java.lang.reflect.Field selectorWheelPaintField = numberPicker.getClass()
@@ -69,7 +69,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 		// First, add the autonomous section header
 		contentView.addView(this.generateTextView("Autonomous:", 20,
 				this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
-						0, 0)));
+						20, 0)));
 
 		// Now add all the autonomous stuff
 		try {
@@ -82,7 +82,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 
 		contentView.addView(this.generateTextView("TeleOp:", 20,
 				this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
-						15, 0)));
+						20, 0)));
 
 		// Add the stuff for teleop
 		try {
@@ -96,7 +96,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 
 		contentView.addView(this.generateTextView("End game:", 20,
 				this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
-						15, 0)));
+						20, 0)));
 
 		// Add end game stuff
 		try {
@@ -110,7 +110,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 
 		contentView.addView(this.generateTextView("Additional feedback:", 20,
 				this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
-						15, 0)));
+						20, 0)));
 
 		final EditText comments = new EditText(this);
 		comments.setBackgroundColor(Color.DKGRAY);
@@ -119,8 +119,8 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 		comments.setInputType(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT);
 		comments.setText("");
 		comments.setTextColor(Color.WHITE);
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 70);
-		params.setMargins(0, 5, 0, 10);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
+		params.setMargins(0, 20, 0, 20);
 		comments.setLayoutParams(params);
 		contentView.addView(comments);
 
@@ -295,32 +295,32 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 		switch (match.datatype) {
 			case Text:
 				contentView.addView(this.generateTextView(match.name, 17, this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
-						0, 5, 0)));
+						0, 10, 0)));
 
 				contentView.addView(this.generateTextField(match.name, match.value.get(0),
 						this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
-								20, 0, 20)));
+								20, 5, 20)));
 				break;
 			case Number:
 				contentView.addView(this.generateTextView(match.name, 17, this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
-						0, 5, 0)));
+						0, 10, 0)));
 
 				contentView.addView(this.generateNumberPicker(match.name, Integer.parseInt(match.value.get(1)),
 						Integer.parseInt(match.value.get(2)), Integer.parseInt(match.value.get(3)),
 						Integer.parseInt(match.value.get(0)),
 						this.createLayoutParameters(LinearLayout.LayoutParams.WRAP_CONTENT,
-								0, 0, 0)));
+								0, 5, 0)));
 				break;
 			case Boolean:
 				contentView.addView(this.generateCheckBox(match.name, Boolean.parseBoolean(match.value.get(0)),
 						this.createLayoutParameters(LinearLayout.LayoutParams.WRAP_CONTENT,
-								0, 5, 0)));
+								0, 10, 0)));
 				break;
 			case BooleanGroup:
 
 				contentView.addView(this.generateTextView(match.name, 17,
 						this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
-								0, 5, 0)));
+								0, 10, 0)));
 
 				// Get all the radio buttons in the value
 				RadioGroup group = new RadioGroup(this);
@@ -330,7 +330,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 						String key = radioButtons.keys().next();
 						group.addView(this.generateRadioButton(key, Boolean.parseBoolean(radioButtons.get(key).toString()),
 								this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
-										0, 0, 0)));
+										0, 5, 0)));
 					}
 
 				} catch (JSONException e) {

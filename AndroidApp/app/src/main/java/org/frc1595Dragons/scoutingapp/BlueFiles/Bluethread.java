@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Calendar;
 
 /**
  * Created by Stephen Ogden on 1/16/19.
@@ -65,7 +66,18 @@ public class Bluethread extends Thread {
 							break;
 						case REQUEST_PING:
 							Log.d("Validated object", "Requested ping");
-							JSONObject data = new JSONObject(String.format("{\"Time\":%s}", (System.currentTimeMillis() % 1000)));
+
+							// Get the time in MS since midnight
+							Calendar c = Calendar.getInstance();
+							long now = c.getTimeInMillis();
+							c.set(Calendar.HOUR_OF_DAY, 0);
+							c.set(Calendar.MINUTE, 0);
+							c.set(Calendar.SECOND, 0);
+							c.set(Calendar.MILLISECOND, 0);
+							long passed = now - c.getTimeInMillis();
+							long secondsPassed = passed / 1000;
+
+							JSONObject data = new JSONObject(String.format("{\"Time\":%s}", secondsPassed));
 							this.sendData(new Request(Request.Requests.REQUEST_PING, data));
 							break;
 						case DATA:
