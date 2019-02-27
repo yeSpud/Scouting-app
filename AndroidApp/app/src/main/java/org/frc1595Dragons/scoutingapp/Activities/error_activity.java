@@ -1,10 +1,8 @@
 package org.frc1595Dragons.scoutingapp.Activities;
 
 import android.widget.TextView;
-
 import org.frc1595Dragons.scoutingapp.R;
 
-import java.io.IOException;
 import java.io.StringWriter;
 
 /**
@@ -34,6 +32,7 @@ public class error_activity extends android.support.v7.app.AppCompatActivity {
 			} catch (Exception ignored) {
 
 			}
+			// Close the app
 			System.exit(0);
 		});
 	}
@@ -41,6 +40,12 @@ public class error_activity extends android.support.v7.app.AppCompatActivity {
 
 	class CatchError {
 
+		/**
+		 * Catch any throwable objects, and launch the error activity page.
+		 *
+		 * @param context - The context of the activity
+		 * @param e       The throwable (error)
+		 */
 		void Catch(android.content.Context context, Throwable e) {
 			StringWriter sw = new StringWriter();
 			e.printStackTrace(new java.io.PrintWriter(sw));

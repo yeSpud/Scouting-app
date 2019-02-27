@@ -17,7 +17,9 @@ import java.io.IOException;
 
 public class Bluetooth {
 
-	// Bluetooth adapter (think of it as the specific microchip on the phone)
+	/**
+	 * Bluetooth adapter (think of it as the specific microchip on the phone).
+	 */
 	public final static BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
 
 	public static String MAC;
@@ -26,9 +28,17 @@ public class Bluetooth {
 
 	public static Bluethread bluetoothConnection;
 
-	// Bluetooth device (The receiver that the phone connects and sends data to)
+	/**
+	 * Bluetooth device (The server that the phone connects and sends data to).
+	 */
 	public static android.bluetooth.BluetoothDevice device;
 
+	/**
+	 * Sets the matchData (config file) based on the JSON that was provided.
+	 *
+	 * @param json The match (config) data to parse.
+	 * @throws org.json.JSONException Will throw a JSONException in the event that some of the JSON is malformed.
+	 */
 	static void setMatchData(JSONObject json) throws org.json.JSONException {
 		Log.d("fullData", json.toString());
 
@@ -46,16 +56,19 @@ public class Bluetooth {
 		Log.d("teleSize", Integer.toString(teleSize));
 		Bluetooth.matchData.teleopData = Match.matchBaseToTeleOp(Match.getMatchData(rawTeleOp, teleSize));
 
-
 		// Get the endgame stuff
 		final JSONObject rawEndgame = json.optJSONObject("Endgame");
 		final int endSize = rawEndgame.length();
 		Log.d("rawEndgame", rawEndgame.toString());
 		Log.d("endSize", Integer.toString(endSize));
 		Bluetooth.matchData.endgameData = Match.matchBaseToEndgame(Match.getMatchData(rawEndgame, endSize));
-
 	}
 
+	/**
+	 * Closes the bluetooth connection.
+	 *
+	 * @throws IOException Will throw an IOException in the event that something goes wrong during the process.
+	 */
 	public static void close() throws IOException {
 		Bluetooth.MAC = null;
 		if (Bluetooth.bluetoothConnection != null && Bluetooth.bluetoothConnection.isAlive()) {
@@ -63,11 +76,15 @@ public class Bluetooth {
 		}
 	}
 
-	// Function to check if bluetooth is enabled
+	/**
+	 * Checks if bluetooth is enabled on this device.
+	 *
+	 * @return Whether or not bluetooth is enabled on this device.
+	 */
 	public static boolean isBluetoothOn() {
-		// For starters, set it to false, as a fail-safe
-		boolean isOn = false;
+		boolean isOn;
 
+		// Intent in case we can request the user to turn on bluetooth.
 		Intent turnOnBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 		try {
 			// Check of the adapter is enabled or not
@@ -76,8 +93,7 @@ public class Bluetooth {
 			// If its null, one cause is that its just turned off, so try re-enabling it
 			// Prompt user to turn on Bluetooth
 			AppCompatActivity activity = new AppCompatActivity();
-			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-			activity.startActivityForResult(enableBtIntent, 1);
+			activity.startActivityForResult(turnOnBluetooth, 1);
 			isOn = btAdapter.isEnabled();
 		}
 

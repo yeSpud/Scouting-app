@@ -21,6 +21,12 @@ public class Bluethread extends Thread {
 	private OutputStream output;
 	private BluetoothSocket socket;
 
+	/**
+	 * Constructor for a new Bluethread object.
+	 *
+	 * @param socket The BluetoothSocket to be used for communication between the server, and this device.
+	 * @throws IOException Throws an IOException in the event that something goes wrong while opening the in and output streams.
+	 */
 	public Bluethread(BluetoothSocket socket) throws IOException {
 		this.socket = socket;
 		this.socket.connect();
@@ -29,6 +35,9 @@ public class Bluethread extends Thread {
 		this.output = this.socket.getOutputStream();
 	}
 
+	/**
+	 * Runs the Bluethread. Sending and receiving data to the server on request.
+	 */
 	public void run() {
 		Log.i("Bluethread", "Running!");
 		while (this.socket != null && this.socket.isConnected()) {
@@ -106,6 +115,12 @@ public class Bluethread extends Thread {
 
 	}
 
+	/**
+	 * Parses a JSON request in order to determine what request was delivered by the server.
+	 *
+	 * @param input The JSON to parse.
+	 * @return The Request send by the server.
+	 */
 	private Request.Requests parseRequest(JSONObject input) {
 		if (input.has(Request.Requests.REQUEST_CLOSE.name())) {
 			return Request.Requests.REQUEST_CLOSE;
@@ -125,7 +140,7 @@ public class Bluethread extends Thread {
 	 * @param isRequest Whether or not to write the close request to the stream.
 	 * @throws IOException For when something goes wrong...
 	 */
-	public void close(boolean isRequest) throws IOException {
+	void close(boolean isRequest) throws IOException {
 		Log.d("Bluethread", "Closing");
 		if (isRequest) {
 			this.sendData(new Request(Request.Requests.REQUEST_CLOSE, null));
@@ -139,6 +154,11 @@ public class Bluethread extends Thread {
 		System.exit(0);
 	}
 
+	/**
+	 * Sends data to the server.
+	 *
+	 * @param request The data request.
+	 */
 	public void sendData(Request request) {
 		Log.d("Out", "Sending data");
 		// Check for nulls in the data

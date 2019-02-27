@@ -6,12 +6,26 @@ package org.frc1595Dragons.scoutingapp.MatchFiles;
  */
 public class MatchBase {
 
-    public String name;
-    public DataType datatype;
-    public java.util.ArrayList<String> value;
+	/**
+	 * The name of the match data.
+	 */
+	public String name;
 
-    public enum DataType {
-        Text, Number, Boolean, BooleanGroup
-    }
+	/**
+	 * The DataType of the match data.
+	 */
+	public DataType datatype;
+
+	/**
+	 * The value of the match data.
+	 */
+	public java.util.ArrayList<String> value;
+
+	/**
+	 * Valid data-types for anything that extends the MatchBase.
+	 */
+	public enum DataType {
+		Text, Number, Boolean, BooleanGroup
+	}
 
 }

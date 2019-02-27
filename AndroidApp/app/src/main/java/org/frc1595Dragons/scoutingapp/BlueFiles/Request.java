@@ -8,19 +8,28 @@ import org.json.JSONObject;
  */
 
 public class Request {
-    Requests requests;
-    JSONObject data;
+	Requests requests;
+	JSONObject data;
 
-    public Request(Requests requests, JSONObject data) {
-        this.requests = requests;
-        this.data = data;
-    }
+	/**
+	 * Construct a new request.
+	 *
+	 * @param requests The type of request to be sent.
+	 * @param data     The JSON data to be send with the request.
+	 */
+	public Request(Requests requests, JSONObject data) {
+		this.requests = requests;
+		this.data = data;
+	}
 
-    public enum Requests {
-        DATA,
-        CONFIG,
-        REQUEST_PING,
-        REQUEST_CLOSE
-    }
+	/**
+	 * Valid request options to be sent.
+	 */
+	public enum Requests {
+		DATA,
+		CONFIG,
+		REQUEST_PING,
+		REQUEST_CLOSE
+	}
 
 }

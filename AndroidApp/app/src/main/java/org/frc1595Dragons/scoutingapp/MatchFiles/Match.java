@@ -2,6 +2,7 @@ package org.frc1595Dragons.scoutingapp.MatchFiles;
 
 import android.util.Log;
 
+import java.lang.NullPointerException;
 import java.util.ArrayList;
 
 /**
@@ -10,97 +11,135 @@ import java.util.ArrayList;
  */
 public class Match {
 
-    public Autonomous[] autonomousData;
-    public TeleOp[] teleopData;
-    public Endgame[] endgameData;
+	/**
+	 * The array of the autonomous data in a match.
+	 */
+	public Autonomous[] autonomousData;
 
-    public static MatchBase[] getMatchData(org.json.JSONObject rawData, int size) throws org.json.JSONException, NullPointerException {
+	/**
+	 * The array of the teleop data in a match.
+	 */
+	public TeleOp[] teleopData;
 
-        MatchBase[] fullMatchData = new MatchBase[size];
+	/**
+	 * The array of the endgame data in a match.
+	 */
+	public Endgame[] endgameData;
 
-        String[] keys = rawData.names().toString().replace("[", "").replace("]", "").replace("\"", "").split(",");
-        Log.d("Keys", java.util.Arrays.toString(keys));
-        for (int i = 0; i < size; i++) {
-            String key = keys[i];
-            Log.d("Key", key);
+	/**
+	 * Gets the match data from a given JSON object.
+	 *
+	 * @param rawData The JSON object data.
+	 * @param size    The size of the data.
+	 * @return The match data. This still needs to be converted to either Autonomous, TeleOp, or Endgame data.
+	 * @throws org.json.JSONException Throws a JSONException if there is an error parsing the JSON data.
+	 * @throws NullPointerException   Throws a NullPointerException if some data is null and shouldn't be.
+	 */
+	public static MatchBase[] getMatchData(org.json.JSONObject rawData, int size) throws org.json.JSONException, NullPointerException {
 
-            org.json.JSONArray jsonArray = rawData.optJSONArray(key);
-            Log.d("JsonArray", rawData.getJSONArray(key).toString());
+		MatchBase[] fullMatchData = new MatchBase[size];
 
-            MatchBase match = new MatchBase();
+		// Replace all the fancy JSON crap.
+		String[] keys = rawData.names().toString().replace("[", "").replace("]", "").replace("\"", "").split(",");
+		Log.d("Keys", java.util.Arrays.toString(keys));
+		for (int i = 0; i < size; i++) {
+			String key = keys[i];
+			Log.d("Key", key);
 
-            match.name = key;
-            match.datatype = MatchBase.DataType.valueOf(jsonArray.getString(0));
+			org.json.JSONArray jsonArray = rawData.optJSONArray(key);
+			Log.d("JsonArray", rawData.getJSONArray(key).toString());
 
-            final int jsonArraySize = jsonArray.length();
-            Log.d("JsonArraySize", Integer.toString(jsonArraySize));
+			MatchBase match = new MatchBase();
 
-            ArrayList<String> values = new ArrayList<>();
-            for (int k = 1; k < jsonArraySize; k++) {
-                values.add(jsonArray.getString(k));
-                Log.d("Value", jsonArray.getString(k));
-            }
-            match.value = values;
+			match.name = key;
+			match.datatype = MatchBase.DataType.valueOf(jsonArray.getString(0));
 
-            fullMatchData[i] = match;
+			final int jsonArraySize = jsonArray.length();
+			Log.d("JsonArraySize", Integer.toString(jsonArraySize));
 
-        }
+			ArrayList<String> values = new ArrayList<>();
+			for (int k = 1; k < jsonArraySize; k++) {
+				values.add(jsonArray.getString(k));
+				Log.d("Value", jsonArray.getString(k));
+			}
+			match.value = values;
 
-        return fullMatchData;
-    }
+			fullMatchData[i] = match;
 
-    public static Autonomous[] matchBaseToAutonomous(MatchBase[] matchBase) {
-        Autonomous[] autonomous = new Autonomous[matchBase.length];
+		}
 
-        for (int i = 0; i < matchBase.length; i++) {
-            Autonomous auto = new Match().new Autonomous();
-            auto.name = "(Autonomous) " + matchBase[i].name;
-            auto.datatype = matchBase[i].datatype;
-            auto.value = matchBase[i].value;
-            autonomous[i] = auto;
-        }
+		return fullMatchData;
+	}
 
-        return autonomous;
-    }
+	/**
+	 * Helper function that converts MatchBase data to Autonomous data.
+	 *
+	 * @param matchBase The MatchBase data to convert.
+	 * @return The resulting Autonomous data.
+	 */
+	public static Autonomous[] matchBaseToAutonomous(MatchBase[] matchBase) {
+		Autonomous[] autonomous = new Autonomous[matchBase.length];
+		for (int i = 0; i < matchBase.length; i++) {
+			Autonomous auto = new Match().new Autonomous();
+			auto.name = "(Autonomous) " + matchBase[i].name;
+			auto.datatype = matchBase[i].datatype;
+			auto.value = matchBase[i].value;
+			autonomous[i] = auto;
+		}
+		return autonomous;
+	}
 
-    public static TeleOp[] matchBaseToTeleOp(MatchBase[] matchBase) {
-        TeleOp[] teleops = new TeleOp[matchBase.length];
+	/**
+	 * Helper function that converts MatchBase data to TeleOp data.
+	 *
+	 * @param matchBase The MatchBase data to convert.
+	 * @return The resulting TeleOp data.
+	 */
+	public static TeleOp[] matchBaseToTeleOp(MatchBase[] matchBase) {
+		TeleOp[] t = new TeleOp[matchBase.length];
+		for (int i = 0; i < matchBase.length; i++) {
+			TeleOp teleop = new Match().new TeleOp();
+			teleop.name = matchBase[i].name;
+			teleop.datatype = matchBase[i].datatype;
+			teleop.value = matchBase[i].value;
+			t[i] = teleop;
+		}
+		return t;
+	}
 
-        for (int i = 0; i < matchBase.length; i++) {
-            TeleOp teleop = new Match().new TeleOp();
-            teleop.name = matchBase[i].name;
-            teleop.datatype = matchBase[i].datatype;
-            teleop.value = matchBase[i].value;
-            teleops[i] = teleop;
-        }
+	/**
+	 * Helper function that converts MatchBase data to Autonomous data.
+	 *
+	 * @param matchBase The MatchBase data to convert.
+	 * @return The resulting Autonomous data.
+	 */
+	public static Endgame[] matchBaseToEndgame(MatchBase[] matchBase) {
+		Endgame[] endgames = new Endgame[matchBase.length];
+		for (int i = 0; i < matchBase.length; i++) {
+			Endgame endgame = new Match().new Endgame();
+			endgame.name = matchBase[i].name;
+			endgame.datatype = matchBase[i].datatype;
+			endgame.value = matchBase[i].value;
+			endgames[i] = endgame;
+		}
+		return endgames;
+	}
 
-        return teleops;
-    }
+	/**
+	 * The Autonomous class that extends the MatchBase class.
+	 */
+	public class Autonomous extends MatchBase {
+	}
 
-    public static Endgame[] matchBaseToEndgame(MatchBase[] matchBase) {
-        Endgame[] endgames = new Endgame[matchBase.length];
+	/**
+	 * The TeleOp class that extends the MatchBase class.
+	 */
+	public class TeleOp extends MatchBase {
+	}
 
-        for (int i = 0; i < matchBase.length; i++) {
-            Endgame endgame = new Match().new Endgame();
-            endgame.name = matchBase[i].name;
-            endgame.datatype = matchBase[i].datatype;
-            endgame.value = matchBase[i].value;
-            endgames[i] = endgame;
-        }
-
-        return endgames;
-    }
-
-    public class Autonomous extends MatchBase {
-
-    }
-
-    public class TeleOp extends MatchBase {
-
-    }
-
-    public class Endgame extends MatchBase {
-
-    }
-
+	/**
+	 * The Endgame class that extends the MatchBase class.
+	 */
+	public class Endgame extends MatchBase {
+	}
 }

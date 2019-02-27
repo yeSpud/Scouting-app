@@ -1,13 +1,12 @@
 package org.frc1595Dragons.scoutingapp.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import org.frc1595Dragons.scoutingapp.BlueFiles.Bluetooth;
 import org.frc1595Dragons.scoutingapp.R;
 
@@ -86,7 +85,7 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 
 		// Make sure bluetooth is enabled
 		boolean bluetoothEnabled = Bluetooth.isBluetoothOn();
-		Log.d("Bluetooth enabled", Boolean.toString(bluetoothEnabled));
+		android.util.Log.d("Bluetooth enabled", Boolean.toString(bluetoothEnabled));
 		if (!bluetoothEnabled) {
 			new error_activity().new CatchError().Catch(this, new Exception("Bluetooth is not supported/enabled on this device"));
 		}
@@ -94,7 +93,11 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 
 	}
 
-	// https://developer.android.com/guide/topics/ui/dialogs#java
+	/**
+	 * Create the popup menu for entering in the team number, in order to start scouting a team.
+	 *
+	 * @return The <a href='https://developer.android.com/guide/topics/ui/dialogs#java'>dialog box</a>.
+	 */
 	private Dialog startScouting() {
 
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -104,7 +107,7 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 
 		// Inflate and set the layout for the dialog
 		// Pass null as the parent view because its going in the dialog layout
-		final View teamNumberDialog = inflater.inflate(R.layout.teamselection, null);
+		@SuppressLint("InflateParams") final View teamNumberDialog = inflater.inflate(R.layout.teamselection, null);
 
 		// Set the view, along with the positive and negative button actions
 		alertDialogBuilder.setView(teamNumberDialog);
@@ -125,11 +128,13 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 
 		// Return the dialog
 		return alertDialogBuilder.create();
-
-
 	}
 
-	// https://developer.android.com/guide/topics/ui/dialogs#java
+	/**
+	 * Create the popup menu for entering in the server's MAC address, in order to connect to that server.
+	 *
+	 * @return The <a href='https://developer.android.com/guide/topics/ui/dialogs#java'>dialog box</a>.
+	 */
 	private Dialog enterMACAddress() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -138,7 +143,7 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 
 		// Inflate and set the layout for the dialog
 		// Pass null as the parent view because its going in the dialog layout
-		final View enterMacAddressDialog = inflater.inflate(R.layout.macaddress, null);
+		@SuppressLint("InflateParams") final View enterMacAddressDialog = inflater.inflate(R.layout.macaddress, null);
 
 		final EditText macAddress = enterMacAddressDialog.findViewById(R.id.macAddressInput);
 
@@ -151,7 +156,7 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 		builder.setPositiveButton("Connect", (dialog, id) -> {
 			Bluetooth.MAC = macAddress.getText().toString().toUpperCase();
 
-			// Check if the MAC matches a regex
+			// Check if the MAC matches a regex (to see if its a valid format)
 			if (java.util.regex.Pattern.compile("((\\d|[A-F]){2}:){5}(\\d|[A-F]){2}").matcher(Bluetooth.MAC).matches()) {
 				// Try to connect with the given MAC address
 				this.establishConnection();
@@ -166,7 +171,9 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 		return builder.create();
 	}
 
-	// Function to establish a connection with the receiver. The context provided is simply for error catching
+	/**
+	 * Establish a connection with the server.
+	 */
 	private void establishConnection() {
 		try {
 			// Try to set the receiver based on the MAC address entered
@@ -183,7 +190,7 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 			// Make sure that discovery is off, as its fairly resource intensive
 			Bluetooth.btAdapter.cancelDiscovery();
 
-			// Start the bluetooth communication server (Bluethread)
+			// Start the bluetooth communication server (SPP / Bluethread.java)
 			Bluetooth.bluetoothConnection = new org.frc1595Dragons.scoutingapp.BlueFiles.Bluethread(btSocket);
 			Bluetooth.bluetoothConnection.start();
 
