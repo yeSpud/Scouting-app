@@ -65,7 +65,8 @@ public class Bluethread extends Thread {
 							break;
 						case REQUEST_PING:
 							Log.d("Validated object", "Requested ping");
-							this.sendData(new Request(Request.Requests.REQUEST_PING, new JSONObject(Long.toString(System.currentTimeMillis() % 1000))));
+							JSONObject data = new JSONObject(String.format("{\"Time\":%s}", (System.currentTimeMillis() % 1000)));
+							this.sendData(new Request(Request.Requests.REQUEST_PING, data));
 							break;
 						case DATA:
 							Log.d("Validated object", "Its data!");
@@ -74,8 +75,11 @@ public class Bluethread extends Thread {
 					}
 				} catch (org.json.JSONException e) {
 					Log.w("Wasn't valid json", in);
+					e.printStackTrace();
 				}
 			}
+
+			Thread.yield();
 		}
 
 		// Be sure to close the socket
