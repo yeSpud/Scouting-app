@@ -93,7 +93,11 @@ public class Bluetooth {
 			// If its null, one cause is that its just turned off, so try re-enabling it
 			// Prompt user to turn on Bluetooth
 			AppCompatActivity activity = new AppCompatActivity();
-			activity.startActivityForResult(turnOnBluetooth, 1);
+			try {
+				activity.startActivityForResult(turnOnBluetooth, 1);
+			} catch (NullPointerException NPE) {
+				return false;
+			}
 			isOn = btAdapter.isEnabled();
 		}
 

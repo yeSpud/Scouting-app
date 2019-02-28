@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import org.frc1595Dragons.scoutingapp.BlueFiles.Bluetooth;
 import org.frc1595Dragons.scoutingapp.R;
 

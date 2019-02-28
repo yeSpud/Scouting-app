@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
 import org.frc1595Dragons.scoutingapp.BlueFiles.Bluetooth;
 import org.frc1595Dragons.scoutingapp.BlueFiles.Request;
 import org.frc1595Dragons.scoutingapp.MatchFiles.Match;
