@@ -20,11 +20,13 @@ public class Bluetooth {
 	/**
 	 * Bluetooth adapter (think of it as the specific microchip on the phone).
 	 */
-	public final static BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+	public static BluetoothAdapter btAdapter;
 
 	public static String MAC;
 
 	public static Match matchData = new Match();
+
+	public static boolean hasMatchData = false;
 
 	public static Bluethread bluetoothConnection;
 
@@ -84,18 +86,17 @@ public class Bluetooth {
 	public static boolean isBluetoothOn() {
 		boolean isOn;
 
-		// Intent in case we can request the user to turn on bluetooth.
-		Intent turnOnBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 		try {
 			// Check of the adapter is enabled or not
-			isOn = btAdapter.isEnabled();
-		} catch (Exception NullPointerException) {
+			Bluetooth.btAdapter = BluetoothAdapter.getDefaultAdapter();
+			isOn = Bluetooth.btAdapter.isEnabled();
+		} catch (Exception e) {
 			// If its null, one cause is that its just turned off, so try re-enabling it
-			// Prompt user to turn on Bluetooth
-			AppCompatActivity activity = new AppCompatActivity();
+			// FIXME
 			try {
-				activity.startActivityForResult(turnOnBluetooth, 1);
-			} catch (NullPointerException NPE) {
+				AppCompatActivity activity = new AppCompatActivity();
+				activity.startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 1);
+			} catch (Exception finalTry) {
 				return false;
 			}
 			isOn = btAdapter.isEnabled();

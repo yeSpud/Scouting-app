@@ -38,9 +38,9 @@ public class Match {
 	public static MatchBase[] getMatchData(org.json.JSONObject rawData, int size) throws org.json.JSONException, NullPointerException {
 
 		MatchBase[] fullMatchData = new MatchBase[size];
-
+		// TODO Test the check for forward and backslashes (/\)
 		// Replace all the fancy JSON crap.
-		String[] keys = rawData.names().toString().replace("[", "").replace("]", "").replace("\"", "").split(",");
+		String[] keys = rawData.names().toString().replace("[", "").replace("]", "").replace("\"", "").replace("/","or").replace("\\","or").split(",");
 		Log.d("Keys", java.util.Arrays.toString(keys));
 		for (int i = 0; i < size; i++) {
 			String key = keys[i];

@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 /**
@@ -93,7 +94,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 		// Add the teleop header
 		contentView.addView(this.generateTextView("TeleOp:", 20,
 				this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
-						40, 0)));
+						100, 0)));
 
 		// Add the stuff for teleop
 		try {
@@ -104,11 +105,11 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 			new error_activity().new CatchError().Catch(this, noConfig);
 		}
 
-
 		// Add the end game header
 		contentView.addView(this.generateTextView("End game:", 20,
 				this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
-						40, 0)));
+						100, 0)));
+
 
 		// Add end game stuff
 		try {
@@ -119,11 +120,10 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 			new error_activity().new CatchError().Catch(this, noConfig);
 		}
 
-
 		// Comment section time
 		contentView.addView(this.generateTextView("Additional feedback:", 20,
 				this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
-						20, 0)));
+						100, 0)));
 
 		// Comments
 		final EditText comments = new EditText(this);
@@ -331,17 +331,14 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 	 * Create and return a RadioButton.
 	 *
 	 * @param text             The text of the RadioButton.
-	 * @param isChecked        Whether or not the RadioButton is checked by default.
 	 * @param layoutParameters The LayoutParameters.
 	 * @return The RadioButton.
 	 */
-	private RadioButton generateRadioButton(String text, boolean isChecked, LinearLayout.LayoutParams layoutParameters) {
+	private RadioButton generateRadioButton(String text, LinearLayout.LayoutParams layoutParameters) {
 		Log.d("text", text);
-		Log.d("isChecked", Boolean.toString(isChecked));
 		RadioButton button = new RadioButton(this);
 		button.setText(text);
 		button.setTextSize(15);
-		button.setChecked(isChecked);
 		button.setHighlightColor(Color.LTGRAY);
 		button.setBackgroundColor(Color.GRAY);
 		button.setTextColor(Color.WHITE);
@@ -407,16 +404,22 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 				RadioGroup group = new RadioGroup(this);
 				try {
 					JSONObject radioButtons = new JSONObject(match.value.get(0));
-					while (radioButtons.keys().hasNext()) {
-						String key = radioButtons.keys().next();
-						group.addView(this.generateRadioButton(key, Boolean.parseBoolean(radioButtons.get(key).toString()),
-								this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
-										0, 5, 0)));
+					Log.d("Radio buttons", radioButtons.toString());
+					Iterator<String> keys = radioButtons.keys();
+					while (keys.hasNext()) {
+						String key = keys.next();
+						RadioButton button = this.generateRadioButton(key, this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
+								0, 5, 0));
+						group.addView(button);
+						if (Boolean.parseBoolean(radioButtons.optString(key))) {
+							group.check(button.getId());
+						}
 					}
 				} catch (JSONException e) {
 					new error_activity().new CatchError().Catch(this, e);
 					return;
 				}
+
 				contentView.addView(group);
 				break;
 		}

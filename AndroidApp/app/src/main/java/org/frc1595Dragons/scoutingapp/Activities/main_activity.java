@@ -43,14 +43,14 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 		this.StartScouting.setOnClickListener((event) -> {
 			try {
 				if (Bluetooth.MAC != null && !Bluetooth.MAC.equals("") && Bluetooth.matchData != null) {
-					if (Bluetooth.matchData.autonomousData != null && Bluetooth.matchData.teleopData != null && Bluetooth.matchData.endgameData != null) {
+					if (Bluetooth.hasMatchData) {
 						this.startScouting().show();
 					} else {
 						Toast.makeText(this, "Config still being loaded. Try again in a few seconds.", Toast.LENGTH_LONG).show();
 					}
 				}
 			} catch (NullPointerException NPE) {
-				Toast.makeText(this, "Config still being loaded. Try again in a few seconds.", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "Config still needs to be sent. Try again in a few seconds.", Toast.LENGTH_LONG).show();
 			}
 		});
 
