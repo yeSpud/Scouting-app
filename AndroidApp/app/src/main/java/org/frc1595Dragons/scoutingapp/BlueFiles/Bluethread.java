@@ -2,6 +2,7 @@ package org.frc1595Dragons.scoutingapp.BlueFiles;
 
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -72,6 +73,7 @@ public class Bluethread extends Thread {
 							Log.d("Validated object", "Config");
 							JSONObject config = object.getJSONObject(Request.Requests.CONFIG.name());
 							Bluetooth.setMatchData(config);
+							Bluetooth.hasMatchData = true;
 							break;
 						case REQUEST_PING:
 							Log.d("Validated object", "Requested ping");
@@ -111,8 +113,6 @@ public class Bluethread extends Thread {
 				e.printStackTrace();
 			}
 		}
-
-
 	}
 
 	/**

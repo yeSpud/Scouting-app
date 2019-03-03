@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import org.frc1595Dragons.scoutingapp.Activities.main_activity;
 import org.frc1595Dragons.scoutingapp.MatchFiles.Match;
+import org.frc1595Dragons.scoutingapp.MatchFiles.MatchBase;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -20,11 +22,13 @@ public class Bluetooth {
 	/**
 	 * Bluetooth adapter (think of it as the specific microchip on the phone).
 	 */
-	public final static BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+	public static BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
 
 	public static String MAC;
 
 	public static Match matchData = new Match();
+
+	public static boolean hasMatchData = false;
 
 	public static Bluethread bluetoothConnection;
 
@@ -82,26 +86,12 @@ public class Bluetooth {
 	 * @return Whether or not bluetooth is enabled on this device.
 	 */
 	public static boolean isBluetoothOn() {
-		boolean isOn;
-
-		// Intent in case we can request the user to turn on bluetooth.
-		Intent turnOnBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 		try {
 			// Check of the adapter is enabled or not
-			isOn = btAdapter.isEnabled();
-		} catch (Exception NullPointerException) {
-			// If its null, one cause is that its just turned off, so try re-enabling it
-			// Prompt user to turn on Bluetooth
-			AppCompatActivity activity = new AppCompatActivity();
-			try {
-				activity.startActivityForResult(turnOnBluetooth, 1);
-			} catch (NullPointerException NPE) {
-				return false;
-			}
-			isOn = btAdapter.isEnabled();
+			return Bluetooth.btAdapter.isEnabled();
+		} catch (Exception e) {
+			return false;
 		}
-
-		return isOn;
 	}
 
 }

@@ -3,11 +3,11 @@ package org.frc1595Dragons.scoutingapp.Activities;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import org.frc1595Dragons.scoutingapp.BlueFiles.Bluetooth;
 import org.frc1595Dragons.scoutingapp.R;
 
@@ -19,7 +19,7 @@ import static java.util.Locale.ENGLISH;
  * Created by Stephen Ogden on 3/23/17.
  * FRC 1595
  */
-public class main_activity extends android.support.v7.app.AppCompatActivity {
+public class main_activity extends AppCompatActivity {
 
 	private android.widget.Button StartScouting, Disconnect, Connect;
 
@@ -43,14 +43,14 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 		this.StartScouting.setOnClickListener((event) -> {
 			try {
 				if (Bluetooth.MAC != null && !Bluetooth.MAC.equals("") && Bluetooth.matchData != null) {
-					if (Bluetooth.matchData.autonomousData != null && Bluetooth.matchData.teleopData != null && Bluetooth.matchData.endgameData != null) {
+					if (Bluetooth.hasMatchData) {
 						this.startScouting().show();
 					} else {
 						Toast.makeText(this, "Config still being loaded. Try again in a few seconds.", Toast.LENGTH_LONG).show();
 					}
 				}
 			} catch (NullPointerException NPE) {
-				Toast.makeText(this, "Config still being loaded. Try again in a few seconds.", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "Config still needs to be sent. Try again in a few seconds.", Toast.LENGTH_LONG).show();
 			}
 		});
 
@@ -88,10 +88,9 @@ public class main_activity extends android.support.v7.app.AppCompatActivity {
 		boolean bluetoothEnabled = Bluetooth.isBluetoothOn();
 		android.util.Log.d("Bluetooth enabled", Boolean.toString(bluetoothEnabled));
 		if (!bluetoothEnabled) {
-			new error_activity().new CatchError().Catch(this, new Exception("Bluetooth is not supported/enabled on this device"));
+			Toast.makeText(this, "Bluetooth is not currently enabled. Please enable Bluetooth and restart the app.", Toast.LENGTH_LONG).show();
+			this.Connect.setVisibility(View.GONE);
 		}
-
-
 	}
 
 	/**

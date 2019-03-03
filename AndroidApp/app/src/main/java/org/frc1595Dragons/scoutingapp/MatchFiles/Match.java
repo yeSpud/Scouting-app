@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.lang.NullPointerException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Stephen Ogden on 12/24/18.
@@ -32,42 +33,37 @@ public class Match {
 	 * @param rawData The JSON object data.
 	 * @param size    The size of the data.
 	 * @return The match data. This still needs to be converted to either Autonomous, TeleOp, or Endgame data.
-	 * @throws org.json.JSONException Throws a JSONException if there is an error parsing the JSON data.
-	 * @throws NullPointerException   Throws a NullPointerException if some data is null and shouldn't be.
 	 */
-	public static MatchBase[] getMatchData(org.json.JSONObject rawData, int size) throws org.json.JSONException, NullPointerException {
+	public static MatchBase[] getMatchData(org.json.JSONObject rawData, int size) {
 
 		MatchBase[] fullMatchData = new MatchBase[size];
 
-		// Replace all the fancy JSON crap.
-		String[] keys = rawData.names().toString().replace("[", "").replace("]", "").replace("\"", "").split(",");
-		Log.d("Keys", java.util.Arrays.toString(keys));
-		for (int i = 0; i < size; i++) {
-			String key = keys[i];
+		// Get and iterate over the keys in the data
+		Iterator<String> keys = rawData.keys();
+		int i = 0;
+		while (keys.hasNext()) {
+			String key = keys.next().replace("\\", "");
 			Log.d("Key", key);
 
 			org.json.JSONArray jsonArray = rawData.optJSONArray(key);
-			Log.d("JsonArray", rawData.getJSONArray(key).toString());
+			Log.d("JsonArray", jsonArray.toString());
 
 			MatchBase match = new MatchBase();
 
 			match.name = key;
-			match.datatype = MatchBase.DataType.valueOf(jsonArray.getString(0));
-
-			final int jsonArraySize = jsonArray.length();
-			Log.d("JsonArraySize", Integer.toString(jsonArraySize));
+			match.datatype = MatchBase.DataType.valueOf(jsonArray.optString(0).replace("\\", ""));
 
 			ArrayList<String> values = new ArrayList<>();
-			for (int k = 1; k < jsonArraySize; k++) {
-				values.add(jsonArray.getString(k));
-				Log.d("Value", jsonArray.getString(k));
+			for (int k = 1; k < jsonArray.length(); k++) {
+				String ad = jsonArray.optString(k).replace("\\", "");
+				Log.d("Adding value", ad);
+				values.add(ad);
 			}
 			match.value = values;
 
 			fullMatchData[i] = match;
-
+			i++;
 		}
-
 		return fullMatchData;
 	}
 
@@ -99,6 +95,7 @@ public class Match {
 		TeleOp[] t = new TeleOp[matchBase.length];
 		for (int i = 0; i < matchBase.length; i++) {
 			TeleOp teleop = new Match().new TeleOp();
+			Log.d("TeleOpName", matchBase[i].name);
 			teleop.name = matchBase[i].name;
 			teleop.datatype = matchBase[i].datatype;
 			teleop.value = matchBase[i].value;
