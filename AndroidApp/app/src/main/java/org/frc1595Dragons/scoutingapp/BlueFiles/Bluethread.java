@@ -113,8 +113,6 @@ public class Bluethread extends Thread {
 				e.printStackTrace();
 			}
 		}
-
-
 	}
 
 	/**

@@ -7,6 +7,7 @@ import android.util.Log;
 
 import org.frc1595Dragons.scoutingapp.Activities.main_activity;
 import org.frc1595Dragons.scoutingapp.MatchFiles.Match;
+import org.frc1595Dragons.scoutingapp.MatchFiles.MatchBase;
 import org.json.JSONObject;
 
 import java.io.IOException;
