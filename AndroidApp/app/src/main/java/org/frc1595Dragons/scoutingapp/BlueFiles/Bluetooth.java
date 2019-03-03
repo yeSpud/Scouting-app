@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import org.frc1595Dragons.scoutingapp.Activities.main_activity;
 import org.frc1595Dragons.scoutingapp.MatchFiles.Match;
 import org.json.JSONObject;
 
@@ -20,7 +21,7 @@ public class Bluetooth {
 	/**
 	 * Bluetooth adapter (think of it as the specific microchip on the phone).
 	 */
-	public static BluetoothAdapter btAdapter;
+	public static BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
 
 	public static String MAC;
 
@@ -84,25 +85,12 @@ public class Bluetooth {
 	 * @return Whether or not bluetooth is enabled on this device.
 	 */
 	public static boolean isBluetoothOn() {
-		boolean isOn;
-
 		try {
 			// Check of the adapter is enabled or not
-			Bluetooth.btAdapter = BluetoothAdapter.getDefaultAdapter();
-			isOn = Bluetooth.btAdapter.isEnabled();
+			return Bluetooth.btAdapter.isEnabled();
 		} catch (Exception e) {
-			// If its null, one cause is that its just turned off, so try re-enabling it
-			// FIXME
-			try {
-				AppCompatActivity activity = new AppCompatActivity();
-				activity.startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 1);
-			} catch (Exception finalTry) {
-				return false;
-			}
-			isOn = btAdapter.isEnabled();
+			return false;
 		}
-
-		return isOn;
 	}
 
 }
