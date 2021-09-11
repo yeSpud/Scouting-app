@@ -1,7 +1,7 @@
-package org.frc1595Dragons.scoutingapp.Activities;
+package org.dragons.scoutingapp.Activities;
 
 import android.widget.TextView;
-import org.frc1595Dragons.scoutingapp.R;
+import org.dragons.scoutingapp.R;
 
 import java.io.StringWriter;
 
@@ -28,7 +28,7 @@ public class error_activity extends android.support.v7.app.AppCompatActivity {
 			data_collection.teamNumber = 0;
 			// Reset the MAC address of the receiver.
 			try {
-				org.frc1595Dragons.scoutingapp.BlueFiles.Bluetooth.close();
+				org.dragons.scoutingapp.BlueFiles.Bluetooth.close();
 			} catch (Exception ignored) {
 
 			}

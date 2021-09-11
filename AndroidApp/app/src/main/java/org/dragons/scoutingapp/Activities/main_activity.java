@@ -1,4 +1,4 @@
-package org.frc1595Dragons.scoutingapp.Activities;
+package org.dragons.scoutingapp.Activities;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import org.frc1595Dragons.scoutingapp.BlueFiles.Bluetooth;
-import org.frc1595Dragons.scoutingapp.R;
+import org.dragons.scoutingapp.BlueFiles.Bluetooth;
+import org.dragons.scoutingapp.R;
 
 import java.io.IOException;
 
@@ -191,7 +191,7 @@ public class main_activity extends AppCompatActivity {
 			Bluetooth.btAdapter.cancelDiscovery();
 
 			// Start the bluetooth communication server (SPP / Bluethread.java)
-			Bluetooth.bluetoothConnection = new org.frc1595Dragons.scoutingapp.BlueFiles.Bluethread(btSocket);
+			Bluetooth.bluetoothConnection = new org.dragons.scoutingapp.BlueFiles.Bluethread(btSocket);
 			Bluetooth.bluetoothConnection.start();
 
 			// Show the start button, disconnect button, and server name to be visible if connected

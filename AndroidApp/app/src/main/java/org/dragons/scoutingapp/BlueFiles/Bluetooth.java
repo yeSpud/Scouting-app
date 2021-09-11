@@ -1,13 +1,9 @@
-package org.frc1595Dragons.scoutingapp.BlueFiles;
+package org.dragons.scoutingapp.BlueFiles;
 
 import android.bluetooth.BluetoothAdapter;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import org.frc1595Dragons.scoutingapp.Activities.main_activity;
-import org.frc1595Dragons.scoutingapp.MatchFiles.Match;
-import org.frc1595Dragons.scoutingapp.MatchFiles.MatchBase;
+import org.dragons.scoutingapp.MatchFiles.Match;
 import org.json.JSONObject;
 
 import java.io.IOException;

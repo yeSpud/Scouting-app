@@ -1,4 +1,4 @@
-package org.frc1595Dragons.scoutingapp.BlueFiles;
+package org.dragons.scoutingapp.BlueFiles;
 
 import org.json.JSONObject;
 

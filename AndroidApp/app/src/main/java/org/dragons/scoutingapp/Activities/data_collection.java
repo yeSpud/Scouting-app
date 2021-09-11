@@ -1,4 +1,4 @@
-package org.frc1595Dragons.scoutingapp.Activities;
+package org.dragons.scoutingapp.Activities;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
-import org.frc1595Dragons.scoutingapp.BlueFiles.Bluetooth;
-import org.frc1595Dragons.scoutingapp.BlueFiles.Request;
-import org.frc1595Dragons.scoutingapp.MatchFiles.Match;
-import org.frc1595Dragons.scoutingapp.R;
+import org.dragons.scoutingapp.BlueFiles.Bluetooth;
+import org.dragons.scoutingapp.BlueFiles.Request;
+import org.dragons.scoutingapp.MatchFiles.Match;
+import org.dragons.scoutingapp.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -368,7 +368,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 	 *
 	 * @param match The match data (from the config file).
 	 */
-	private void parseData(org.frc1595Dragons.scoutingapp.MatchFiles.MatchBase match) {
+	private void parseData(org.dragons.scoutingapp.MatchFiles.MatchBase match) {
 		switch (match.datatype) {
 			case Text:
 				// Create the text input field (TextView and TextField).

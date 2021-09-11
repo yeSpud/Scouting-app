@@ -1,8 +1,7 @@
-package org.frc1595Dragons.scoutingapp.MatchFiles;
+package org.dragons.scoutingapp.MatchFiles;
 
 import android.util.Log;
 
-import java.lang.NullPointerException;
 import java.util.ArrayList;
 import java.util.Iterator;
 

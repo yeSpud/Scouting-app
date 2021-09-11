@@ -1,8 +1,8 @@
-package org.frc1595Dragons.scoutingapp.BlueFiles;
+package org.dragons.scoutingapp.BlueFiles;
 
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
-import org.json.JSONException;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
