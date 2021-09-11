@@ -1,49 +1,54 @@
-package org.dragons.scoutingapp.Activities;
+package org.dragons.scoutingapp.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.bluetooth.BluetoothAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import org.dragons.scoutingapp.BlueFiles.Bluetooth;
+
+import org.dragons.scoutingapp.bluefiles.BlueThread;
 import org.dragons.scoutingapp.R;
+import org.dragons.scoutingapp.databinding.MainActivityBinding;
 
 import java.io.IOException;
-
-import static java.util.Locale.ENGLISH;
 
 /**
  * Created by Stephen Ogden on 3/23/17.
  * FRC 1595
  */
-public class main_activity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
-	private android.widget.Button StartScouting, Disconnect, Connect;
-
-	private android.widget.TextView ServerName;
+	/**
+	 * Documentation
+	 */
+	MainActivityBinding binder;
 
 	protected void onCreate(android.os.Bundle savedInstance) {
 		super.onCreate(savedInstance);
 
-		// Set the view to the main_activity layout
-		this.setContentView(R.layout.main_activity);
+		this.binder = MainActivityBinding.inflate(this.getLayoutInflater());
 
-		// Find and add a listener to the connect button
-		this.Connect = this.findViewById(R.id.connect);
-		this.Connect.setOnClickListener((event) -> this.enterMACAddress().show());
+		// Make sure bluetooth is enabled - TODO Make this launch an intent to enable bluetooth if not enabled.
+		boolean bluetoothEnabled = BluetoothAdapter.getDefaultAdapter().isEnabled();
+		android.util.Log.d("Bluetooth enabled", Boolean.toString(bluetoothEnabled));
+		if (!bluetoothEnabled) {
+			Toast.makeText(this, "Bluetooth is not currently enabled. Please enable Bluetooth and restart the app.", Toast.LENGTH_LONG).show();
+			//this.binder.connect.setVisibility(View.GONE);
+		}
 
-		// Find the server name text view
-		this.ServerName = this.findViewById(R.id.remoteDeviceName);
+		//this.binder.connect.setOnClickListener((event) -> this.enterMACAddress().show());
 
 		// Find and add a listener to the start button
-		this.StartScouting = this.findViewById(R.id.start);
-		this.StartScouting.setOnClickListener((event) -> {
+		/*
+		this.binder.start.setOnClickListener((event) -> {
 			try {
-				if (Bluetooth.MAC != null && !Bluetooth.MAC.equals("") && Bluetooth.matchData != null) {
-					if (Bluetooth.hasMatchData) {
+				if (!BlueThread.INSTANCE.getMACAddress().equals("")) {
+					if (BlueThread.INSTANCE.getHasMatchData()) {
 						this.startScouting().show();
 					} else {
 						Toast.makeText(this, "Config still being loaded. Try again in a few seconds.", Toast.LENGTH_LONG).show();
@@ -55,42 +60,35 @@ public class main_activity extends AppCompatActivity {
 		});
 
 		// Find and add a listener to the disconnect button
-		this.Disconnect = this.findViewById(R.id.disconnect);
-		this.Disconnect.setOnClickListener((event) -> {
+		this.binder.disconnect.setOnClickListener((event) -> {
+
 			// Disconnect from the server and close the app
 			try {
-				Bluetooth.close();
+				BlueThread.INSTANCE.close(true);
 			} catch (IOException e) {
-				new error_activity().new CatchError().Catch(this, e);
+				new ErrorActivity().new CatchError().Catch(this, e);
 			}
 
+			/*
 			// Hide the start and disconnect buttons
-			StartScouting.setVisibility(View.GONE);
-			Disconnect.setVisibility(View.GONE);
-			ServerName.setVisibility(View.GONE);
-		});
+			this.binder.start.setVisibility(View.GONE);
+			this.binder.disconnect.setVisibility(View.GONE);
+			this.binder.remoteDeviceName.setVisibility(View.GONE);
+			 */
+		//});
 
 		// Set the start button, disconnect button, and server name to be visible if connected
-		if (Bluetooth.bluetoothConnection != null && Bluetooth.bluetoothConnection.isAlive()) {
-			this.Disconnect.setVisibility(View.VISIBLE);
-			this.StartScouting.setVisibility(View.VISIBLE);
-			this.ServerName.setText(String.format(ENGLISH, "Connected to server: %s", Bluetooth.bluetoothConnection.deviceName));
-			this.ServerName.setVisibility(View.VISIBLE);
-			this.Connect.setVisibility(View.GONE);
+		/*
+		if (BlueThread.INSTANCE.getRunning()) {
+			this.binder.disconnect.setVisibility(View.VISIBLE);
+			this.binder.start.setVisibility(View.VISIBLE);
+			this.binder.connect.setVisibility(View.GONE);
 		} else {
-			this.Disconnect.setVisibility(View.GONE);
-			this.StartScouting.setVisibility(View.GONE);
-			this.ServerName.setVisibility(View.GONE);
-			this.Connect.setVisibility(View.VISIBLE);
+			this.binder.disconnect.setVisibility(View.GONE);
+			this.binder.start.setVisibility(View.GONE);
+			this.binder.connect.setVisibility(View.VISIBLE);
 		}
-
-		// Make sure bluetooth is enabled
-		boolean bluetoothEnabled = Bluetooth.isBluetoothOn();
-		android.util.Log.d("Bluetooth enabled", Boolean.toString(bluetoothEnabled));
-		if (!bluetoothEnabled) {
-			Toast.makeText(this, "Bluetooth is not currently enabled. Please enable Bluetooth and restart the app.", Toast.LENGTH_LONG).show();
-			this.Connect.setVisibility(View.GONE);
-		}
+		 */
 	}
 
 	/**
@@ -117,11 +115,11 @@ public class main_activity extends AppCompatActivity {
 			if (!userInput.equals("")) {
 				// When the teamNumber entered is valid, we can set the teamNumber to the entered value, and then start the data collection activity
 				try {
-					data_collection.teamNumber = Integer.parseInt(userInput);
+					DataCollection.teamNumber = Integer.parseInt(userInput);
 				} catch (NumberFormatException e) {
 					dialog.cancel();
 				}
-				this.startActivity(new android.content.Intent(main_activity.this, data_collection.class));
+				this.startActivity(new android.content.Intent(MainActivity.this, DataCollection.class));
 			}
 		});
 		alertDialogBuilder.setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
@@ -147,22 +145,23 @@ public class main_activity extends AppCompatActivity {
 
 		final EditText macAddress = enterMacAddressDialog.findViewById(R.id.macAddressInput);
 
-		if (Bluetooth.MAC != null) {
-			macAddress.setText(Bluetooth.MAC);
+		if (!BlueThread.INSTANCE.getMACAddress().equals("")) {
+			macAddress.setText(BlueThread.INSTANCE.getMACAddress());
 		}
 
 		// Set the view, along with the positive and negative button actions
 		builder.setView(enterMacAddressDialog);
 		builder.setPositiveButton("Connect", (dialog, id) -> {
-			Bluetooth.MAC = macAddress.getText().toString().toUpperCase();
+			String MACAddress = macAddress.getText().toString().toUpperCase();
 
 			// Check if the MAC matches a regex (to see if its a valid format)
-			if (java.util.regex.Pattern.compile("((\\d|[A-F]){2}:){5}(\\d|[A-F]){2}").matcher(Bluetooth.MAC).matches()) {
+			if (java.util.regex.Pattern.compile("((\\d|[A-F]){2}:){5}(\\d|[A-F]){2}").matcher(MACAddress).matches()) {
 				// Try to connect with the given MAC address
-				this.establishConnection();
+				//this.establishConnection(MACAddress);
+				BlueThread.INSTANCE.start(MACAddress);
+
 			} else {
 				Toast.makeText(this, "Invalid MAC address", Toast.LENGTH_LONG).show();
-				Bluetooth.MAC = "";
 			}
 		});
 		builder.setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
@@ -171,39 +170,26 @@ public class main_activity extends AppCompatActivity {
 		return builder.create();
 	}
 
-	/**
+	/*
 	 * Establish a connection with the server.
 	 */
-	private void establishConnection() {
+	/*
+	private void establishConnection(String macAddress) {
 		try {
-			// Try to set the receiver based on the MAC address entered
-			try {
-				Bluetooth.device = Bluetooth.btAdapter.getRemoteDevice(Bluetooth.MAC);
-			} catch (NullPointerException invalidMac) {
-				Toast.makeText(this, "A known error occurred while connecting to the server", Toast.LENGTH_LONG).show();
-				return;
-			}
-
-			// Well known SPP UUID
-			android.bluetooth.BluetoothSocket btSocket = Bluetooth.device.createRfcommSocketToServiceRecord(java.util.UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
-
-			// Make sure that discovery is off, as its fairly resource intensive
-			Bluetooth.btAdapter.cancelDiscovery();
-
-			// Start the bluetooth communication server (SPP / Bluethread.java)
-			Bluetooth.bluetoothConnection = new org.dragons.scoutingapp.BlueFiles.Bluethread(btSocket);
-			Bluetooth.bluetoothConnection.start();
-
 			// Show the start button, disconnect button, and server name to be visible if connected
-			this.Disconnect.setVisibility(View.VISIBLE);
-			this.StartScouting.setVisibility(View.VISIBLE);
-			this.ServerName.setText(String.format(ENGLISH, "Connected to server: %s", Bluetooth.bluetoothConnection.deviceName));
-			this.ServerName.setVisibility(View.VISIBLE);
-			this.Connect.setVisibility(View.GONE);
+			/*
+			this.binder.disconnect.setVisibility(View.VISIBLE);
+			this.binder.start.setVisibility(View.VISIBLE);
+			this.binder.remoteDeviceName.setText(String.format(ENGLISH, "Connected to server: %s",
+					BlueThread.INSTANCE.getRemoteDeviceName()));
+			this.binder.remoteDeviceName.setVisibility(View.VISIBLE);
+			this.binder.connect.setVisibility(View.GONE);
+
 
 		} catch (Exception e) {
 			new error_activity().new CatchError().Catch(this, e);
 		}
 	}
+	 */
 
 }

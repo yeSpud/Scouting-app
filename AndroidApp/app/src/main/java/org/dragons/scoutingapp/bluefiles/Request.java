@@ -1,4 +1,4 @@
-package org.dragons.scoutingapp.BlueFiles;
+package org.dragons.scoutingapp.bluefiles;
 
 import org.json.JSONObject;
 
@@ -17,6 +17,7 @@ public class Request {
 	 * @param requests The type of request to be sent.
 	 * @param data     The JSON data to be send with the request.
 	 */
+	@org.jetbrains.annotations.Contract(pure = true)
 	public Request(Requests requests, JSONObject data) {
 		this.requests = requests;
 		this.data = data;

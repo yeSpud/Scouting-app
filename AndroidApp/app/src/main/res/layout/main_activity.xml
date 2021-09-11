@@ -1,92 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/black"
-                android:orientation="vertical"
-                tools:context=".Activities.main_activity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-	<ImageView
-			android:id="@+id/Logo"
-			android:layout_width="250dp"
-			android:layout_height="105dp"
-			android:layout_alignParentTop="true"
-			android:layout_centerInParent="true"
-			android:contentDescription="@string/logo"
-			android:visibility="visible"
-			app:srcCompat="@mipmap/logo"/>
+    <data>
+        <variable name="activity" type="org.dragons.scoutingapp.activities.MainActivity" />
+        <import type="android.bluetooth.BluetoothAdapter" />
+        <import type="android.view.View" />
+        <variable name="bluethread" type="org.dragons.scoutingapp.bluefiles.BlueThread" />
+    </data>
 
-	<Button
-			android:id="@+id/start"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/Logo"
-			android:layout_centerInParent="true"
-			android:layout_marginTop="30dp"
-			android:background="@drawable/green_button"
-			android:fontFamily="@font/arial"
-			android:paddingStart="5dp"
-			android:paddingTop="10dp"
-			android:paddingEnd="5dp"
-			android:paddingBottom="10dp"
-			android:text="@string/startScout"
-			android:textSize="20sp"/>
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:orientation="vertical"
+        tools:context=".activities.MainActivity">
 
-	<Button
-			android:id="@+id/connect"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/start"
-			android:layout_centerInParent="true"
-			android:layout_marginTop="30dp"
-			android:fontFamily="@font/arial"
-			android:paddingStart="5dp"
-			android:paddingTop="10dp"
-			android:background="@drawable/gray_button"
-			android:paddingEnd="5dp"
-			android:paddingBottom="10dp"
-			android:text="@string/connect"
-			android:textSize="20sp"/>
+        <ImageView
+            android:id="@+id/Logo"
+            android:layout_width="250dp"
+            android:layout_height="105dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/logo"
+            android:visibility="visible"
+            app:srcCompat="@mipmap/logo" />
 
-	<Button
-			android:id="@+id/disconnect"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/connect"
-			android:layout_centerInParent="true"
-			android:layout_marginTop="30dp"
-			android:fontFamily="@font/arial"
-			android:paddingStart="5dp"
-			android:paddingTop="10dp"
-			android:background="@drawable/red_button"
-			android:paddingEnd="5dp"
-			android:paddingBottom="10dp"
-			android:text="@string/disconnect"
-			android:textSize="20sp"/>
+        <Button
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Logo"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/green_button"
+            android:fontFamily="@font/arial"
+            android:paddingStart="5dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="10dp"
+            android:visibility="@{(BluetoothAdapter.getDefaultAdapter().isEnabled &amp;&amp; bluethread.INSTANCE.running) ? View.VISIBLE : View.GONE}"
+            android:text="@string/startScout"
+            android:textSize="20sp" />
 
-	<TextView
-			android:id="@+id/remoteDeviceName"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/disconnect"
-			android:layout_centerInParent="true"
-			android:layout_marginTop="50dp"
-			android:fontFamily="@font/arial"
-			android:text="@string/connected_to_server"
-			android:textSize="15sp"
-			android:visibility="gone"/>
+        <Button
+            android:id="@+id/connect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/start"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/gray_button"
+            android:fontFamily="@font/arial"
+            android:paddingStart="5dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="10dp"
+            android:visibility="@{(BluetoothAdapter.getDefaultAdapter().isEnabled &amp;&amp; !bluethread.INSTANCE.running) ? View.VISIBLE : View.GONE}"
+            android:text="@string/connect"
+            android:textSize="20sp" />
 
-	<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/remoteDeviceName"
-			android:layout_centerInParent="true"
-			android:layout_marginTop="50dp"
-			android:fontFamily="@font/arial"
-			android:text="@string/BuildDate"
-			android:textSize="12sp"/>
+        <Button
+            android:id="@+id/disconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/connect"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/red_button"
+            android:fontFamily="@font/arial"
+            android:paddingStart="5dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="10dp"
+            android:visibility="@{(BluetoothAdapter.getDefaultAdapter().isEnabled &amp;&amp; bluethread.INSTANCE.running) ? View.VISIBLE : View.GONE}"
+            android:text="@string/disconnect"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/remoteDeviceName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/disconnect"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/arial"
+            android:text="@{@string/connected_to_server(bluethread.INSTANCE.MACAddress)}"
+            android:textSize="15sp"
+            android:visibility='@{bluethread.INSTANCE.MACAddress.equals("") ? View.GONE : View.VISIBLE}' />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/remoteDeviceName"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/arial"
+            android:text="@string/BuildDate"
+            android:textSize="12sp" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

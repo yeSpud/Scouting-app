@@ -1,4 +1,4 @@
-package org.dragons.scoutingapp.Activities;
+package org.dragons.scoutingapp.activities;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
-import org.dragons.scoutingapp.BlueFiles.Bluetooth;
-import org.dragons.scoutingapp.BlueFiles.Request;
+import org.dragons.scoutingapp.bluefiles.BlueThread;
+import org.dragons.scoutingapp.bluefiles.Request;
 import org.dragons.scoutingapp.MatchFiles.Match;
 import org.dragons.scoutingapp.R;
 import org.json.JSONException;
@@ -24,7 +24,7 @@ import java.util.Iterator;
  * Created by Stephen Ogden on 5/27/17.
  * FRC 1595
  */
-public class data_collection extends android.support.v7.app.AppCompatActivity {
+public class DataCollection extends androidx.appcompat.app.AppCompatActivity {
 
 	/**
 	 * Variable for the team number.
@@ -71,7 +71,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 
 		// For a nice little accessibility feature, we can set the top bar to display the team teamNumber that the user is scouting
 		// That way, they don't forget, or scout the wrong team :P
-		this.setTitle(getResources().getString(R.string.teamToScout) + data_collection.teamNumber);
+		this.setTitle(getResources().getString(R.string.teamToScout) + DataCollection.teamNumber);
 
 
 		// Get the scrollview section of the page to dynamically load the widgets for data collection
@@ -84,11 +84,11 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 
 		// Now add all the autonomous stuff
 		try {
-			for (Match.Autonomous autonomous : Bluetooth.matchData.autonomousData) {
+			for (Match.Autonomous autonomous : BlueThread.INSTANCE.getMatchData().autonomousData) {
 				this.parseData(autonomous);
 			}
 		} catch (NullPointerException noConfig) {
-			new error_activity().new CatchError().Catch(this, noConfig);
+			new ErrorActivity().new CatchError().Catch(this, noConfig);
 		}
 
 		// Add the teleop header
@@ -98,11 +98,11 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 
 		// Add the stuff for teleop
 		try {
-			for (Match.TeleOp teleOp : Bluetooth.matchData.teleopData) {
+			for (Match.TeleOp teleOp : BlueThread.INSTANCE.getMatchData().teleopData) {
 				this.parseData(teleOp);
 			}
 		} catch (NullPointerException noConfig) {
-			new error_activity().new CatchError().Catch(this, noConfig);
+			new ErrorActivity().new CatchError().Catch(this, noConfig);
 		}
 
 		// Add the end game header
@@ -113,11 +113,11 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 
 		// Add end game stuff
 		try {
-			for (Match.Endgame endgame : Bluetooth.matchData.endgameData) {
+			for (Match.Endgame endgame : BlueThread.INSTANCE.getMatchData().endgameData) {
 				this.parseData(endgame);
 			}
 		} catch (NullPointerException noConfig) {
-			new error_activity().new CatchError().Catch(this, noConfig);
+			new ErrorActivity().new CatchError().Catch(this, noConfig);
 		}
 
 		// Comment section time
@@ -148,9 +148,9 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 			JSONObject data = new JSONObject();
 			// Be sure to add the team number
 			try {
-				data.putOpt("Team number", data_collection.teamNumber);
+				data.putOpt("Team number", DataCollection.teamNumber);
 			} catch (JSONException jsonError) {
-				new error_activity().new CatchError().Catch(this, jsonError);
+				new ErrorActivity().new CatchError().Catch(this, jsonError);
 			}
 
 			// Get the data from the view
@@ -182,23 +182,23 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 						Log.w("Unrecognized class", view.getClass().getName());
 					}
 				} catch (JSONException jsonError) {
-					new error_activity().new CatchError().Catch(this, jsonError);
+					new ErrorActivity().new CatchError().Catch(this, jsonError);
 				}
 			}
 			try {
 				// Don't forget to add the comments!
 				data.putOpt("Comments", String.format("%s", comments.getText().toString().replace(",", "，").replace(":", ";")));
 			} catch (JSONException jsonError) {
-				new error_activity().new CatchError().Catch(this, jsonError);
+				new ErrorActivity().new CatchError().Catch(this, jsonError);
 			}
 
 
 			Log.d("FullData", data.toString());
 
 			try {
-				Bluetooth.bluetoothConnection.sendData(new Request(Request.Requests.DATA, data));
+				BlueThread.INSTANCE.sendData(new Request(Request.Requests.DATA, data));
 			} catch (NullPointerException noConnection) {
-				new error_activity().new CatchError().Catch(this, noConnection);
+				new ErrorActivity().new CatchError().Catch(this, noConnection);
 			}
 
 			this.finish();
@@ -319,7 +319,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 		spinner.setLayoutParams(layoutParameters);
 		spinner.setBackgroundColor(Color.DKGRAY);
 		spinner.setTitle(title);
-		data_collection.setNumberPickerTextColor(spinner);
+		DataCollection.setNumberPickerTextColor(spinner);
 		Nodes.add(spinner);
 
 		// Add the custom NumberPicker to the LinearLayout, and return the LinearLayout.
@@ -416,7 +416,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 						}
 					}
 				} catch (JSONException e) {
-					new error_activity().new CatchError().Catch(this, e);
+					new ErrorActivity().new CatchError().Catch(this, e);
 					return;
 				}
 
@@ -463,7 +463,7 @@ public class data_collection extends android.support.v7.app.AppCompatActivity {
 	/**
 	 * A custom EditText class that takes the standard EditText and adds a title object to it for backend identification.
 	 */
-	private class CustomEditText extends android.support.v7.widget.AppCompatEditText {
+	private class CustomEditText extends androidx.appcompat.widget.AppCompatEditText {
 
 		private String title;
 

@@ -4,7 +4,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/black"
-                tools:context=".Activities.data_collection">
+                tools:context=".activities.DataCollection">
 
 	<ScrollView
 			android:layout_width="match_parent"

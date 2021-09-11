@@ -21,6 +21,6 @@
 	<string name="type_of_error">Error message:</string>
 	<string name="full_stack_trace">Full stack-trace:</string>
 
-	<string name="connected_to_server">Connected to server:</string>
+	<string name="connected_to_server">Connected to server: %1$s</string>
 	<string name="BuildDate">Build date: 23:10; 3/2/2019</string>
 </resources>
