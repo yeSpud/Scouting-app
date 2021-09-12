@@ -3,10 +3,15 @@ package org.dragons.scoutingapp.activities;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -35,29 +40,26 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstance);
 
 		this.binder = DataBindingUtil.setContentView(this, R.layout.main_activity);
+		this.binder.setActivity(new MainActivityViewModel(this.getApplication()));
 
-		this.binder.connect.setOnClickListener((event) -> this.enterMACAddress().show());
+		this.binder.connect.setOnClickListener((event) -> this.startActivity(new Intent(this, EnterMACAddress.class)));
 
 		// Find and add a listener to the start button
 		this.binder.start.setOnClickListener((event) -> {
-			try {
-				if (!BlueThread.INSTANCE.getMACAddress().equals("")) {
-					if (BlueThread.INSTANCE.getHasMatchData()) {
-						this.startScouting().show();
-					} else {
-						Toast.makeText(this, "Config still being loaded. Try again in a few seconds.", Toast.LENGTH_LONG).show();
-					}
+			if (BlueThread.INSTANCE.getRunning()) {
+				if (BlueThread.INSTANCE.getHasMatchData()) {
+					this.startScouting().show();
+				} else {
+					Toast.makeText(this, "Config still being loaded. Try again in a few seconds.",
+							Toast.LENGTH_LONG).show();
 				}
-			} catch (NullPointerException NPE) {
-				Toast.makeText(this, "Config still needs to be sent. Try again in a few seconds.", Toast.LENGTH_LONG).show();
 			}
 		});
 
 		// Find and add a listener to the disconnect button
 		this.binder.disconnect.setOnClickListener((event) -> {
-
-				// Disconnect from the server and close the app
 				try {
+					// Disconnect from the server and close the app
 					BlueThread.INSTANCE.close(true);
 				} catch (IOException e) {
 					this.log("Could not close connection to bluethread server! " + e.getCause());
@@ -68,7 +70,17 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onResume() {
+		Log.v("onResume", "Called onResume");
 		super.onResume();
+
+		this.binder.consoleView.removeAllViews();
+
+		this.log("Checking permissions...");
+		if (!this.binder.getActivity().checkPermissions(this)) {
+			this.log("Missing critical permissions (probably bluetooth)");
+			return;
+		}
+		this.log("Correct permissions found");
 
 		this.log("Checking if bluetooth is enabled...");
 		if (BluetoothAdapter.getDefaultAdapter().isEnabled()) {
@@ -79,8 +91,10 @@ public class MainActivity extends Activity {
 		}
 
 		this.log("Asking user to turn on bluetooth...");
-		// TODO
+		Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		this.startActivityForResult(enableBtIntent, BluetoothAdapter.STATE_ON);
 
+		Log.v("onResume", "Finished onResume");
 	}
 
 	/**
@@ -88,14 +102,35 @@ public class MainActivity extends Activity {
 	 *
 	 * @param message
 	 */
-	private void log(String message) {
-
-		TextView textView = new TextView(this);
+	void log(String message) {
+		TextView textView = new TextView(this.getApplication());
 		textView.setText(message);
 		textView.setTextSize(12);
-		textView.setTextColor(this.getResources().getColor(R.color.white));
-
+		textView.setTextColor(this.getApplication().getResources().getColor(R.color.white));
 		this.binder.consoleView.addView(textView);
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+		if (requestCode == this.hashCode()) {
+			for (int grantResult : grantResults) {
+				if (grantResult == PackageManager.PERMISSION_DENIED) { this.finish(); }
+			}
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == BluetoothAdapter.STATE_ON) {
+
+			if (resultCode == RESULT_OK) {
+				this.onResume();
+			}
+		}
 	}
 
 	/**
@@ -103,6 +138,7 @@ public class MainActivity extends Activity {
 	 *
 	 * @return The <a href='https://developer.android.com/guide/topics/ui/dialogs#java'>dialog box</a>.
 	 */
+	@NonNull
 	private Dialog startScouting() {
 
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -120,60 +156,26 @@ public class MainActivity extends Activity {
 
 			String userInput = ((EditText) teamNumberDialog.findViewById(R.id.editTextDialogUserInput)).getText().toString();
 			if (!userInput.equals("")) {
+
+				int teamNumber = 0;
+
 				// When the teamNumber entered is valid, we can set the teamNumber to the entered value, and then start the data collection activity
 				try {
-					DataCollection.teamNumber = Integer.parseInt(userInput);
+					teamNumber = Integer.parseInt(userInput);
 				} catch (NumberFormatException e) {
+					// TODO Log error
 					dialog.cancel();
 				}
-				this.startActivity(new android.content.Intent(MainActivity.this, DataCollection.class));
+
+				Intent collectionIntent = new Intent(this, DataCollection.class);
+				collectionIntent.putExtra("Team number", teamNumber);
+
+				this.startActivity(collectionIntent);
 			}
 		});
 		alertDialogBuilder.setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
 
 		// Return the dialog
 		return alertDialogBuilder.create();
-	}
-
-	/**
-	 * Create the popup menu for entering in the server's MAC address, in order to connect to that server.
-	 *
-	 * @return The <a href='https://developer.android.com/guide/topics/ui/dialogs#java'>dialog box</a>.
-	 */
-	private Dialog enterMACAddress() { // TODO Move this to its own class (and integrate a QR code reader).
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-		// Get the layout inflater
-		LayoutInflater inflater = this.getLayoutInflater();
-
-		// Inflate and set the layout for the dialog
-		// Pass null as the parent view because its going in the dialog layout
-		@SuppressLint("InflateParams") final View enterMacAddressDialog = inflater.inflate(R.layout.macaddress, null);
-
-		final EditText macAddress = enterMacAddressDialog.findViewById(R.id.macAddressInput);
-
-		if (!BlueThread.INSTANCE.getMACAddress().equals("")) {
-			macAddress.setText(BlueThread.INSTANCE.getMACAddress());
-		}
-
-		// Set the view, along with the positive and negative button actions
-		builder.setView(enterMacAddressDialog);
-		builder.setPositiveButton("Connect", (dialog, id) -> {
-			String MACAddress = macAddress.getText().toString().toUpperCase();
-
-			// Check if the MAC matches a regex (to see if its a valid format)
-			if (java.util.regex.Pattern.compile("((\\d|[A-F]){2}:){5}(\\d|[A-F]){2}").matcher(MACAddress).matches()) {
-				// Try to connect with the given MAC address
-				//this.establishConnection(MACAddress);
-				BlueThread.INSTANCE.start(MACAddress);
-
-			} else {
-				Toast.makeText(this, "Invalid MAC address", Toast.LENGTH_LONG).show();
-			}
-		});
-		builder.setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
-
-		// Return the dialog
-		return builder.create();
 	}
 }

@@ -6,7 +6,7 @@
     <data>
         <import type="android.bluetooth.BluetoothAdapter" />
         <import type="android.view.View" />
-        <variable name="activity" type="org.dragons.scoutingapp.activities.MainActivity" />
+        <variable name="activity" type="org.dragons.scoutingapp.activities.MainActivityViewModel" />
         <variable name="bluethread" type="org.dragons.scoutingapp.bluefiles.BlueThread" />
     </data>
 

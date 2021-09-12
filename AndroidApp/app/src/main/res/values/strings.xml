@@ -3,24 +3,23 @@
 	<string name="logo">Logo</string>
 	<string name="error_icon">Error icon</string>
 
-	<string name="connect">Connect to server</string>
+	<string name="connect_to_server">Connect to server</string>
 	<string name="disconnect">Disconnect and close</string>
 	<string name="startScout">Scout new team</string>
-	<string name="Cancel">Cancel</string>
 	<string name="Submit">Submit</string>
 	<string name="Close">Close app</string>
 
 	<string name="teamNumberHeader">Enter team number to scout:</string>
+
+	<!-- EnterMACAddress dialog -->
 	<string name="enter_mac_address">Enter MAC address of server</string>
 	<string name="mac_address">MAC address</string>
+	<string name="connect">Connect</string>
+	<string name="scan_qr">Scan from QR code</string>
+	<string name="cancel">Cancel</string>
 
 	<string name="teamToScout">Scouting team:</string>
 	<string name="team_number">Team number</string>
 
-	<string name="error">Error</string>
-	<string name="type_of_error">Error message:</string>
-	<string name="full_stack_trace">Full stack-trace:</string>
-
 	<string name="connected_to_server">Connected to server: %1$s</string>
-	<string name="BuildDate">Build date: 23:10; 3/2/2019</string>
 </resources>

@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import androidx.annotation.NonNull;
+
+import org.dragons.scoutingapp.MatchFiles.MatchBase;
 import org.dragons.scoutingapp.bluefiles.BlueThread;
 import org.dragons.scoutingapp.bluefiles.Request;
 import org.dragons.scoutingapp.MatchFiles.Match;
@@ -17,6 +20,7 @@ import org.dragons.scoutingapp.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -26,11 +30,6 @@ import java.util.Iterator;
  * FRC 1595
  */
 public class DataCollection extends Activity {
-
-	/**
-	 * Variable for the team number.
-	 */
-	static int teamNumber;
 
 	/**
 	 * Since we cant store the individual widgets, just store their ids for future lookup.
@@ -49,8 +48,7 @@ public class DataCollection extends Activity {
 	private static void setNumberPickerTextColor(CustomNumberPicker numberPicker) {
 
 		try {
-			java.lang.reflect.Field selectorWheelPaintField = numberPicker.getClass()
-					.getDeclaredField("mSelectorWheelPaint");
+			Field selectorWheelPaintField = numberPicker.getClass().getDeclaredField("mSelectorWheelPaint");
 			selectorWheelPaintField.setAccessible(true);
 			((android.graphics.Paint) selectorWheelPaintField.get(numberPicker)).setColor(Color.WHITE);
 		} catch (NoSuchFieldException | IllegalAccessException | IllegalArgumentException ignored) {
@@ -70,16 +68,18 @@ public class DataCollection extends Activity {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.data_collection);
 
+		int teamNumber = this.getIntent().getIntExtra("Team number", 0);
+
 		// For a nice little accessibility feature, we can set the top bar to display the team teamNumber that the user is scouting
 		// That way, they don't forget, or scout the wrong team :P
-		this.setTitle(getResources().getString(R.string.teamToScout) + DataCollection.teamNumber);
+		this.setTitle(getResources().getString(R.string.teamToScout) + teamNumber); // TODO Resource placeholder
 
 
 		// Get the scrollview section of the page to dynamically load the widgets for data collection
-		contentView = findViewById(R.id.content);
+		this.contentView = findViewById(R.id.content);
 
 		// First, add the autonomous section header
-		contentView.addView(this.generateTextView("Autonomous:", 20,
+		this.contentView.addView(this.generateTextView("Autonomous:", 20,
 				this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
 						20, 0)));
 
@@ -94,7 +94,7 @@ public class DataCollection extends Activity {
 		}
 
 		// Add the teleop header
-		contentView.addView(this.generateTextView("TeleOp:", 20,
+		this.contentView.addView(this.generateTextView("TeleOp:", 20,
 				this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
 						100, 0)));
 
@@ -108,7 +108,7 @@ public class DataCollection extends Activity {
 		}
 
 		// Add the end game header
-		contentView.addView(this.generateTextView("End game:", 20,
+		this.contentView.addView(this.generateTextView("End game:", 20,
 				this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
 						100, 0)));
 
@@ -123,7 +123,7 @@ public class DataCollection extends Activity {
 		}
 
 		// Comment section time
-		contentView.addView(this.generateTextView("Additional feedback:", 20,
+		this.contentView.addView(this.generateTextView("Additional feedback:", 20,
 				this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
 						100, 0)));
 
@@ -150,7 +150,7 @@ public class DataCollection extends Activity {
 			JSONObject data = new JSONObject();
 			// Be sure to add the team number
 			try {
-				data.putOpt("Team number", DataCollection.teamNumber);
+				data.putOpt("Team number", teamNumber);
 			} catch (JSONException jsonError) {
 				// TODO
 			}
@@ -370,7 +370,7 @@ public class DataCollection extends Activity {
 	 *
 	 * @param match The match data (from the config file).
 	 */
-	private void parseData(org.dragons.scoutingapp.MatchFiles.MatchBase match) {
+	private void parseData(@NonNull MatchBase match) {
 		switch (match.datatype) {
 			case Text:
 				// Create the text input field (TextView and TextField).

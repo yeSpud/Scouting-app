@@ -2,9 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.dragons.scoutingapp">
 
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" android:required="true" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="true"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" android:required="true" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:required="true" />
+    <uses-permission android:name="android.permission.CAMERA" android:required="false" />
+    <uses-permission android:name="android.permission.SYSTEM_CAMERA" android:required="false" />
 
     <application
         android:allowBackup="false"
@@ -14,18 +17,15 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="org.dragons.scoutingapp.activities.MainActivity"
-            android:label="@string/app_name"
-            android:exported="true">
+            android:name=".activities.MainActivity" android:label="@string/app_name" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="org.dragons.scoutingapp.activities.DataCollection"
-            android:label="@string/teamToScout" />
+        <activity android:name=".activities.EnterMACAddress" android:label="@string/enter_mac_address" />
+        <activity android:name=".activities.DataCollection" android:label="@string/teamToScout" />
     </application>
 
 </manifest>

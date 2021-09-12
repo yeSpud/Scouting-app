@@ -93,7 +93,8 @@ object BlueThread : Thread() {
 	}
 
 	/**
-	 * Runs the Bluethread. Sending and receiving data to the server on request.
+	 * Documentation
+	 * Comments
 	 */
 	override fun run() {
 		Log.i("Bluethread", "Running bluethread...")
@@ -103,6 +104,7 @@ object BlueThread : Thread() {
 			val readInput: String = this.readInput()
 
 			if (readInput != "") {
+
 				// Parse the input to a Json object
 				val jsonObject: JSONObject = try {
 					JSONObject(readInput)
