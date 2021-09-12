@@ -3,33 +3,29 @@
     package="org.dragons.scoutingapp">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
 
     <application
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/launcher_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/launcher_icon_round"
         android:theme="@style/AppTheme">
+
         <activity
             android:name="org.dragons.scoutingapp.activities.MainActivity"
             android:label="@string/app_name"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
+
         <activity
             android:name="org.dragons.scoutingapp.activities.DataCollection"
             android:label="@string/teamToScout" />
-        <activity
-            android:name="org.dragons.scoutingapp.activities.ErrorActivity"
-            android:label="@string/error" />
-            -->
     </application>
 
 </manifest>

@@ -1,14 +1,16 @@
 package org.dragons.scoutingapp.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.bluetooth.BluetoothAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.dragons.scoutingapp.bluefiles.BlueThread;
@@ -17,11 +19,12 @@ import org.dragons.scoutingapp.databinding.MainActivityBinding;
 
 import java.io.IOException;
 
+
 /**
  * Created by Stephen Ogden on 3/23/17.
  * FRC 1595
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
 	/**
 	 * Documentation
@@ -31,20 +34,11 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(android.os.Bundle savedInstance) {
 		super.onCreate(savedInstance);
 
-		this.binder = MainActivityBinding.inflate(this.getLayoutInflater());
+		this.binder = DataBindingUtil.setContentView(this, R.layout.main_activity);
 
-		// Make sure bluetooth is enabled - TODO Make this launch an intent to enable bluetooth if not enabled.
-		boolean bluetoothEnabled = BluetoothAdapter.getDefaultAdapter().isEnabled();
-		android.util.Log.d("Bluetooth enabled", Boolean.toString(bluetoothEnabled));
-		if (!bluetoothEnabled) {
-			Toast.makeText(this, "Bluetooth is not currently enabled. Please enable Bluetooth and restart the app.", Toast.LENGTH_LONG).show();
-			//this.binder.connect.setVisibility(View.GONE);
-		}
-
-		//this.binder.connect.setOnClickListener((event) -> this.enterMACAddress().show());
+		this.binder.connect.setOnClickListener((event) -> this.enterMACAddress().show());
 
 		// Find and add a listener to the start button
-		/*
 		this.binder.start.setOnClickListener((event) -> {
 			try {
 				if (!BlueThread.INSTANCE.getMACAddress().equals("")) {
@@ -62,33 +56,46 @@ public class MainActivity extends AppCompatActivity {
 		// Find and add a listener to the disconnect button
 		this.binder.disconnect.setOnClickListener((event) -> {
 
-			// Disconnect from the server and close the app
-			try {
-				BlueThread.INSTANCE.close(true);
-			} catch (IOException e) {
-				new ErrorActivity().new CatchError().Catch(this, e);
+				// Disconnect from the server and close the app
+				try {
+					BlueThread.INSTANCE.close(true);
+				} catch (IOException e) {
+					this.log("Could not close connection to bluethread server! " + e.getCause());
+				}
 			}
+		);
+	}
 
-			/*
-			// Hide the start and disconnect buttons
-			this.binder.start.setVisibility(View.GONE);
-			this.binder.disconnect.setVisibility(View.GONE);
-			this.binder.remoteDeviceName.setVisibility(View.GONE);
-			 */
-		//});
+	@Override
+	protected void onResume() {
+		super.onResume();
 
-		// Set the start button, disconnect button, and server name to be visible if connected
-		/*
-		if (BlueThread.INSTANCE.getRunning()) {
-			this.binder.disconnect.setVisibility(View.VISIBLE);
-			this.binder.start.setVisibility(View.VISIBLE);
-			this.binder.connect.setVisibility(View.GONE);
+		this.log("Checking if bluetooth is enabled...");
+		if (BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+			this.log("Bluetooth is enabled");
+			return;
 		} else {
-			this.binder.disconnect.setVisibility(View.GONE);
-			this.binder.start.setVisibility(View.GONE);
-			this.binder.connect.setVisibility(View.VISIBLE);
+			this.log("Bluetooth is disabled");
 		}
-		 */
+
+		this.log("Asking user to turn on bluetooth...");
+		// TODO
+
+	}
+
+	/**
+	 * Documentation
+	 *
+	 * @param message
+	 */
+	private void log(String message) {
+
+		TextView textView = new TextView(this);
+		textView.setText(message);
+		textView.setTextSize(12);
+		textView.setTextColor(this.getResources().getColor(R.color.white));
+
+		this.binder.consoleView.addView(textView);
 	}
 
 	/**
@@ -133,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 	 *
 	 * @return The <a href='https://developer.android.com/guide/topics/ui/dialogs#java'>dialog box</a>.
 	 */
-	private Dialog enterMACAddress() {
+	private Dialog enterMACAddress() { // TODO Move this to its own class (and integrate a QR code reader).
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 		// Get the layout inflater
@@ -169,27 +176,4 @@ public class MainActivity extends AppCompatActivity {
 		// Return the dialog
 		return builder.create();
 	}
-
-	/*
-	 * Establish a connection with the server.
-	 */
-	/*
-	private void establishConnection(String macAddress) {
-		try {
-			// Show the start button, disconnect button, and server name to be visible if connected
-			/*
-			this.binder.disconnect.setVisibility(View.VISIBLE);
-			this.binder.start.setVisibility(View.VISIBLE);
-			this.binder.remoteDeviceName.setText(String.format(ENGLISH, "Connected to server: %s",
-					BlueThread.INSTANCE.getRemoteDeviceName()));
-			this.binder.remoteDeviceName.setVisibility(View.VISIBLE);
-			this.binder.connect.setVisibility(View.GONE);
-
-
-		} catch (Exception e) {
-			new error_activity().new CatchError().Catch(this, e);
-		}
-	}
-	 */
-
 }

@@ -1,5 +1,6 @@
 package org.dragons.scoutingapp.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.InputType;
@@ -24,7 +25,7 @@ import java.util.Iterator;
  * Created by Stephen Ogden on 5/27/17.
  * FRC 1595
  */
-public class DataCollection extends androidx.appcompat.app.AppCompatActivity {
+public class DataCollection extends Activity {
 
 	/**
 	 * Variable for the team number.
@@ -88,7 +89,8 @@ public class DataCollection extends androidx.appcompat.app.AppCompatActivity {
 				this.parseData(autonomous);
 			}
 		} catch (NullPointerException noConfig) {
-			new ErrorActivity().new CatchError().Catch(this, noConfig);
+			// TODO
+
 		}
 
 		// Add the teleop header
@@ -102,7 +104,7 @@ public class DataCollection extends androidx.appcompat.app.AppCompatActivity {
 				this.parseData(teleOp);
 			}
 		} catch (NullPointerException noConfig) {
-			new ErrorActivity().new CatchError().Catch(this, noConfig);
+			// TODO
 		}
 
 		// Add the end game header
@@ -117,7 +119,7 @@ public class DataCollection extends androidx.appcompat.app.AppCompatActivity {
 				this.parseData(endgame);
 			}
 		} catch (NullPointerException noConfig) {
-			new ErrorActivity().new CatchError().Catch(this, noConfig);
+			// TODO
 		}
 
 		// Comment section time
@@ -150,7 +152,7 @@ public class DataCollection extends androidx.appcompat.app.AppCompatActivity {
 			try {
 				data.putOpt("Team number", DataCollection.teamNumber);
 			} catch (JSONException jsonError) {
-				new ErrorActivity().new CatchError().Catch(this, jsonError);
+				// TODO
 			}
 
 			// Get the data from the view
@@ -182,14 +184,14 @@ public class DataCollection extends androidx.appcompat.app.AppCompatActivity {
 						Log.w("Unrecognized class", view.getClass().getName());
 					}
 				} catch (JSONException jsonError) {
-					new ErrorActivity().new CatchError().Catch(this, jsonError);
+					// TODO
 				}
 			}
 			try {
 				// Don't forget to add the comments!
 				data.putOpt("Comments", String.format("%s", comments.getText().toString().replace(",", "，").replace(":", ";")));
 			} catch (JSONException jsonError) {
-				new ErrorActivity().new CatchError().Catch(this, jsonError);
+				// TODO
 			}
 
 
@@ -198,7 +200,7 @@ public class DataCollection extends androidx.appcompat.app.AppCompatActivity {
 			try {
 				BlueThread.INSTANCE.sendData(new Request(Request.Requests.DATA, data));
 			} catch (NullPointerException noConnection) {
-				new ErrorActivity().new CatchError().Catch(this, noConnection);
+				// TODO
 			}
 
 			this.finish();
@@ -416,7 +418,7 @@ public class DataCollection extends androidx.appcompat.app.AppCompatActivity {
 						}
 					}
 				} catch (JSONException e) {
-					new ErrorActivity().new CatchError().Catch(this, e);
+					// TODO
 					return;
 				}
 

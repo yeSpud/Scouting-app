@@ -273,9 +273,6 @@ object BlueThread : Thread() {
 		this.output.close()
 		this.input.close()
 		this.bluetoothSocket.close()
-
-		// Due to a Match bug, we need to restart the activity
-		//exitProcess(0) // FIXME
 	}
 
 	/**
