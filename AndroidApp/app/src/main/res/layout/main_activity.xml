@@ -42,7 +42,7 @@
             android:paddingBottom="10dp"
             android:text="@string/startScout"
             android:textSize="20sp"
-            android:visibility="@{(BluetoothAdapter.getDefaultAdapter().isEnabled &amp;&amp; bluethread.INSTANCE.running) ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{activity.connected ? View.VISIBLE : View.GONE}" />
 
         <Button
             android:id="@+id/connect"
@@ -59,7 +59,7 @@
             android:paddingBottom="10dp"
             android:text="@string/connect"
             android:textSize="20sp"
-            android:visibility="@{(BluetoothAdapter.getDefaultAdapter().isEnabled &amp;&amp; !bluethread.INSTANCE.running) ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{(activity.ready &amp;&amp; !activity.connected) ? View.VISIBLE : View.GONE}" />
 
         <Button
             android:id="@+id/disconnect"
@@ -76,17 +76,18 @@
             android:paddingBottom="10dp"
             android:text="@string/disconnect"
             android:textSize="20sp"
-            android:visibility="@{(BluetoothAdapter.getDefaultAdapter().isEnabled &amp;&amp; bluethread.INSTANCE.running) ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{activity.connected ? View.VISIBLE : View.GONE}" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/disconnect"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="10dp"
-            android:background="@color/darkGray">
+            android:layout_marginBottom="10dp"
+            android:background="@color/darkGray"
+            tools:ignore="SpeakableTextPresentCheck">
 
             <LinearLayout
                 android:id="@+id/consoleView"

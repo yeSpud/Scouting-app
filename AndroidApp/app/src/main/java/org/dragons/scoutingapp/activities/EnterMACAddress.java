@@ -37,7 +37,7 @@ public class EnterMACAddress extends Activity implements ZXingScannerView.Result
 			String macAddress = binder.macAddressInput.getText().toString().toUpperCase(java.util.Locale.US);
 
 			if (BluetoothAdapter.checkBluetoothAddress(macAddress)) {
-				BlueThread.INSTANCE.start(macAddress);
+				BlueThread.INSTANCE.start(macAddress, this);
 				this.finish();
 			} else {
 				binder.macAddressInput.startAnimation(this.shake);

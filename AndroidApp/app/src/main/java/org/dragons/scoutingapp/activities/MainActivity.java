@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstance);
 
 		this.binder = DataBindingUtil.setContentView(this, R.layout.main_activity);
-		this.binder.setActivity(new MainActivityViewModel(this.getApplication()));
+		this.binder.setActivity(new MainActivityViewModel());
 
 		this.binder.connect.setOnClickListener((event) -> this.startActivity(new Intent(this, EnterMACAddress.class)));
 
@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
 		// Find and add a listener to the disconnect button
 		this.binder.disconnect.setOnClickListener((event) -> {
 				try {
-					// Disconnect from the server and close the app
+					// Disconnect from the server
 					BlueThread.INSTANCE.close(true);
 				} catch (IOException e) {
 					this.log("Could not close connection to bluethread server! " + e.getCause());
@@ -75,24 +75,7 @@ public class MainActivity extends Activity {
 
 		this.binder.consoleView.removeAllViews();
 
-		this.log("Checking permissions...");
-		if (!this.binder.getActivity().checkPermissions(this)) {
-			this.log("Missing critical permissions (probably bluetooth)");
-			return;
-		}
-		this.log("Correct permissions found");
-
-		this.log("Checking if bluetooth is enabled...");
-		if (BluetoothAdapter.getDefaultAdapter().isEnabled()) {
-			this.log("Bluetooth is enabled");
-			return;
-		} else {
-			this.log("Bluetooth is disabled");
-		}
-
-		this.log("Asking user to turn on bluetooth...");
-		Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-		this.startActivityForResult(enableBtIntent, BluetoothAdapter.STATE_ON);
+		this.binder.getActivity().setupCoroutine(this).start();
 
 		Log.v("onResume", "Finished onResume");
 	}

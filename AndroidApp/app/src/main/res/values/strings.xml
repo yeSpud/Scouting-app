@@ -4,7 +4,7 @@
 	<string name="error_icon">Error icon</string>
 
 	<string name="connect_to_server">Connect to server</string>
-	<string name="disconnect">Disconnect and close</string>
+	<string name="disconnect">Disconnect</string>
 	<string name="startScout">Scout new team</string>
 	<string name="Submit">Submit</string>
 	<string name="Close">Close app</string>

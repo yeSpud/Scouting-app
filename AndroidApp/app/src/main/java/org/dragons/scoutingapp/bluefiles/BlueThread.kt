@@ -1,8 +1,11 @@
 package org.dragons.scoutingapp.bluefiles
 
+import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothSocket
+import android.content.Context
 import android.util.Log
 import org.dragons.scoutingapp.MatchFiles.Match
 import org.json.JSONObject
@@ -69,20 +72,20 @@ object BlueThread : Thread() {
 	 * Documentation
 	 * @param MACAddress
 	 */
-	fun start(MACAddress: String) {
+	fun start(MACAddress: String, activity: Activity) {
 
 		this.MACAddress = MACAddress
 
-		val bluetoothAdapter: BluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+		val bluetoothManager: BluetoothManager = activity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
 
-		val remoteDevice: BluetoothDevice = bluetoothAdapter.getRemoteDevice(this.MACAddress)
+		val remoteDevice: BluetoothDevice = bluetoothManager.adapter.getRemoteDevice(this.MACAddress)
 
 		// Well known SPP UUID
 		this.bluetoothSocket = remoteDevice.createRfcommSocketToServiceRecord(UUID.
 		fromString("00001101-0000-1000-8000-00805F9B34FB"))
 
 		// Make sure that discovery is off, as its fairly resource intensive
-		bluetoothAdapter.cancelDiscovery()
+		bluetoothManager.adapter.cancelDiscovery()
 
 		this.bluetoothSocket.connect()
 		this.remoteDeviceName = this.bluetoothSocket.remoteDevice.name
