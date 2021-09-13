@@ -5,9 +5,7 @@ import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothSocket
 import android.content.Context
-import android.os.Build
 import android.util.Log
-import org.dragons.scoutingapp.BuildConfig
 import org.dragons.scoutingapp.MatchFiles.MatchData
 import org.dragons.scoutingapp.R
 import org.json.JSONObject
@@ -25,12 +23,6 @@ import kotlin.Throws
  * FRC 1595
  */
 object BlueThread : Thread() {
-
-	/**
-	 * Documentation
-	 */
-	lateinit var MACAddress: String
-		private set
 
 	/**
 	 * Documentation
@@ -65,6 +57,11 @@ object BlueThread : Thread() {
 	/**
 	 * Documentation
 	 */
+	private lateinit var MACAddress: String
+
+	/**
+	 * Documentation
+	 */
 	private var bluetoothSocket: BluetoothSocket? = null
 
 	/**
@@ -92,6 +89,28 @@ object BlueThread : Thread() {
 			}
 			activity.getString(R.string.debug_match_data) -> {
 				// TODO hard code name, match data, and running.
+				this.remoteDeviceName = "DEBUG SERVER"
+				this.setMatchData(JSONObject("{ \"Autonomous\" : { \"Crosses HAB line\" : " +
+						"[\"Boolean\", false], \"Number of hatch panels placed on cargo ship\" : " +
+						"[\"Number\", 0, 0, 10, 1], \"Number of hatch panels placed on rocket\" : " +
+						"[\"Number\", 0, 0, 6, 1], \"Number of hatch panels dropped\" : " +
+						"[\"Number\", 0, 0, 20, 1], \"Number of cargo placed in cargo ship\" : " +
+						"[\"Number\", 0, 0, 10, 1], \"Number of cargo placed in rocket\" : " +
+						"[\"Number\", 0,0,6,1], \"Number of cargo dropped/popped\" : " +
+						"[\"Number\", 0, 0, 20, 1] }, \"TeleOp\" : " +
+						"{ \"Number of hatch panels placed on cargo ship\" : " +
+						"[\"Number\", 0, 0, 10, 1], \"Number of hatch panels placed on rocket\" : " +
+						"[\"Number\", 0, 0, 6, 1], \"Number of hatch panels dropped\" : " +
+						"[\"Number\", 0, 0, 20, 1], \"Number of cargo placed in cargo ship\" : " +
+						"[\"Number\", 0, 0, 10, 1], \"Number of cargo placed in rocket\" : " +
+						"[\"Number\", 0,0,6,1], \"Number of cargo dropped/popped\" : " +
+						"[\"Number\", 0, 0, 20, 1] }, \"Endgame\" : { \"HAB Actions\" : " +
+						"[\"BooleanGroup\", { \"Robot doesn\'t return to HAB\" : true, " +
+						"\"Robot climbs on level 1\" : false, \"Robot climbs on level 2\" : " +
+						"false, \"Robot climbs on level 3\" : false }], " +
+						"\"Assists 1 other robot in climb\": [\"Boolean\", false], " +
+						"\"Assists 2 other robots in climb\": [\"Boolean\", false] } }"))
+				this.running = true
 			}
 			else -> {
 
@@ -102,9 +121,8 @@ object BlueThread : Thread() {
 					bluetoothManager.adapter.getRemoteDevice(this.MACAddress)
 
 				// Well known SPP UUID
-				this.bluetoothSocket = remoteDevice.createRfcommSocketToServiceRecord(
-					UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
-				)
+				this.bluetoothSocket = remoteDevice.
+				createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"))
 
 				// Make sure that discovery is off, as its fairly resource intensive
 				bluetoothManager.adapter.cancelDiscovery()

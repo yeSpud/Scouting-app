@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.dragons.scoutingapp.bluefiles.BlueThread;
 import org.dragons.scoutingapp.R;
 import org.dragons.scoutingapp.databinding.MainActivityBinding;
 
@@ -38,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
 		this.binder = DataBindingUtil.setContentView(this, R.layout.main_activity);
 		this.binder.setActivity(new MainActivityViewModel());
 		this.binder.setLifecycleOwner(this);
+
+		try {
+			this.getSupportActionBar().hide();
+		} catch (NullPointerException nullPointerException) {
+			Log.w("onCreate", "App has no action bar", nullPointerException);
+		}
 
 		this.binder.connect.setOnClickListener(view -> this.startActivity(new Intent(this, EnterMACAddress.class)));
 

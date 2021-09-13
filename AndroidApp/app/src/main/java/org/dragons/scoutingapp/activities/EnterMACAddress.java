@@ -1,12 +1,12 @@
 package org.dragons.scoutingapp.activities;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.google.zxing.Result;
@@ -21,7 +21,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  * Created by Stephen Ogden on 9/11/21.
  * FRC 1595
  */
-public class EnterMACAddress extends Activity implements ZXingScannerView.ResultHandler {
+public class EnterMACAddress extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
 	private Animation shake;
 
@@ -30,8 +30,9 @@ public class EnterMACAddress extends Activity implements ZXingScannerView.Result
 		super.onCreate(savedInstance);
 
 		final MacaddressBinding binder = DataBindingUtil.setContentView(this, R.layout.macaddress);
-
+		this.setTitle(R.string.enter_mac_address);
 		this.shake = AnimationUtils.loadAnimation(this, R.anim.skake);
+
 
 		binder.debugConnected.setOnClickListener(view -> {
 			BlueThread.INSTANCE.start(this.getResources().getString(R.string.debug_connected), this);
