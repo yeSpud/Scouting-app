@@ -7,7 +7,7 @@ import org.json.JSONObject;
  * FRC 1595
  */
 
-public class Request {
+public class BlueThreadRequest {
 	Requests requests;
 	JSONObject data;
 
@@ -18,7 +18,7 @@ public class Request {
 	 * @param data     The JSON data to be send with the request.
 	 */
 	@org.jetbrains.annotations.Contract(pure = true)
-	public Request(Requests requests, JSONObject data) {
+	public BlueThreadRequest(Requests requests, JSONObject data) {
 		this.requests = requests;
 		this.data = data;
 	}

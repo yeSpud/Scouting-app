@@ -1,15 +1,17 @@
 package org.dragons.scoutingapp.bluefiles
 
 import android.app.Activity
-import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothSocket
 import android.content.Context
+import android.os.Build
 import android.util.Log
-import org.dragons.scoutingapp.MatchFiles.Match
+import org.dragons.scoutingapp.BuildConfig
+import org.dragons.scoutingapp.MatchFiles.MatchData
+import org.dragons.scoutingapp.R
 import org.json.JSONObject
-import org.dragons.scoutingapp.bluefiles.Request.Requests
+import org.dragons.scoutingapp.bluefiles.BlueThreadRequest.Requests
 import org.json.JSONException
 import java.io.BufferedReader
 import java.io.IOException
@@ -17,7 +19,6 @@ import java.io.InputStreamReader
 import java.io.OutputStream
 import java.util.*
 import kotlin.Throws
-import kotlin.system.exitProcess
 
 /**
  * Created by Stephen Ogden on 1/16/19.
@@ -34,23 +35,8 @@ object BlueThread : Thread() {
 	/**
 	 * Documentation
 	 */
-	private lateinit var bluetoothSocket: BluetoothSocket
-
-	/**
-	 * Documentation
-	 */
 	lateinit var remoteDeviceName: String
 		private set
-
-	/**
-	 * Documentation
-	 */
-	private lateinit var input: BufferedReader
-
-	/**
-	 * Documentation
-	 */
-	private lateinit var output: OutputStream
 
 	/**
 	 * Documentation
@@ -61,12 +47,35 @@ object BlueThread : Thread() {
 	/**
 	 * Documentation
 	 */
-	var hasMatchData: Boolean = false
+	var autonomous: MatchData? = null
+		private set
 
 	/**
 	 * Documentation
 	 */
-	val matchData: Match = Match()
+	var teleOp: MatchData? = null
+		private set
+
+	/**
+	 * Documentation
+	 */
+	var endgame: MatchData? = null
+		private set
+
+	/**
+	 * Documentation
+	 */
+	private var bluetoothSocket: BluetoothSocket? = null
+
+	/**
+	 * Documentation
+	 */
+	private var input: BufferedReader? = null
+
+	/**
+	 * Documentation
+	 */
+	private var output: OutputStream? = null
 
 	/**
 	 * Documentation
@@ -76,23 +85,38 @@ object BlueThread : Thread() {
 
 		this.MACAddress = MACAddress
 
-		val bluetoothManager: BluetoothManager = activity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+		when (this.MACAddress) {
+			activity.getString(R.string.debug_connected) -> {
+				this.remoteDeviceName = "DEBUG SERVER"
+				this.running = true
+			}
+			activity.getString(R.string.debug_match_data) -> {
+				// TODO hard code name, match data, and running.
+			}
+			else -> {
 
-		val remoteDevice: BluetoothDevice = bluetoothManager.adapter.getRemoteDevice(this.MACAddress)
+				val bluetoothManager: BluetoothManager =
+					activity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
 
-		// Well known SPP UUID
-		this.bluetoothSocket = remoteDevice.createRfcommSocketToServiceRecord(UUID.
-		fromString("00001101-0000-1000-8000-00805F9B34FB"))
+				val remoteDevice: BluetoothDevice =
+					bluetoothManager.adapter.getRemoteDevice(this.MACAddress)
 
-		// Make sure that discovery is off, as its fairly resource intensive
-		bluetoothManager.adapter.cancelDiscovery()
+				// Well known SPP UUID
+				this.bluetoothSocket = remoteDevice.createRfcommSocketToServiceRecord(
+					UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
+				)
 
-		this.bluetoothSocket.connect()
-		this.remoteDeviceName = this.bluetoothSocket.remoteDevice.name
-		this.input = BufferedReader(InputStreamReader(this.bluetoothSocket.inputStream))
-		this.output = this.bluetoothSocket.outputStream
+				// Make sure that discovery is off, as its fairly resource intensive
+				bluetoothManager.adapter.cancelDiscovery()
 
-		this.start()
+				this.bluetoothSocket!!.connect()
+				this.remoteDeviceName = this.bluetoothSocket!!.remoteDevice.name
+				this.input = BufferedReader(InputStreamReader(this.bluetoothSocket!!.inputStream))
+				this.output = this.bluetoothSocket!!.outputStream
+
+				this.start()
+			}
+		}
 	}
 
 	/**
@@ -102,29 +126,33 @@ object BlueThread : Thread() {
 	override fun run() {
 		Log.i("Bluethread", "Running bluethread...")
 		this.running = true
-		while (this.bluetoothSocket.isConnected) {
+		while (this.bluetoothSocket!!.isConnected) {
 
 			val readInput: String = this.readInput()
 
 			if (readInput != "") {
+				try {
 
-				// Parse the input to a Json object
-				val jsonObject: JSONObject = try {
-					JSONObject(readInput)
+					// Parse the input to a Json object
+					val jsonObject = JSONObject(readInput)
+
+					Log.d("Received object", jsonObject.toString())
+					when (this.parseRequest(jsonObject)) {
+						Requests.REQUEST_CLOSE -> this.close(false)
+						Requests.CONFIG -> {
+							val config: JSONObject = jsonObject.getJSONObject(Requests.CONFIG.name)
+							this.setMatchData(config)
+						}
+						Requests.REQUEST_PING -> this.requestPing()
+						Requests.DATA -> {
+							Log.d("Validated object", "Its data!")
+							Log.d("Data-dump", jsonObject.optString(Requests.DATA.name))
+						}
+					}
 				} catch (e: JSONException) {
 					Log.e("BlueThread", "Json is invalid: $readInput", e)
-					continue
-				}
-
-				Log.d("Received object", jsonObject.toString())
-				when (this.parseRequest(jsonObject)) {
-					Requests.REQUEST_CLOSE -> this.requestClosed()
-					Requests.CONFIG -> this.requestConfig(jsonObject)
-					Requests.REQUEST_PING -> this.requestPing()
-					Requests.DATA -> {
-						Log.d("Validated object", "Its data!")
-						Log.d("Data-dump", jsonObject.optString(Requests.DATA.name))
-					}
+				} catch (IOException: IOException) {
+					// TODO
 				}
 			}
 
@@ -162,37 +190,12 @@ object BlueThread : Thread() {
 		val passed = now - c.timeInMillis
 		val secondsPassed = passed / 1000
 		val data = JSONObject(String.format("{\"Time\":%s}", secondsPassed))
-		this.sendData(Request(Requests.REQUEST_PING, data))
-	}
-
-	/**
-	 * Documentation
-	 * Comments
-	 *
-	 * @param jsonObject
-	 */
-	private fun requestConfig(jsonObject: JSONObject) {
-		Log.d("Validated object", "Config")
-		try {
-			val config = jsonObject.getJSONObject(Requests.CONFIG.name)
-			this.setMatchData(config)
-			this.hasMatchData = true
-		} catch (JSONException: JSONException) {
-			JSONException.printStackTrace()
-		}
-	}
-
-	/**
-	 * Documentation
-	 * Comments
-	 */
-	private fun requestClosed() {
-		Log.d("Validated object", "Requested closure")
-		try {
-			this.close(false)
-		} catch (e: IOException) {
-			e.printStackTrace()
-		}
+		this.sendData(
+			BlueThreadRequest(
+				Requests.REQUEST_PING,
+				data
+			)
+		)
 	}
 
 	/**
@@ -203,11 +206,9 @@ object BlueThread : Thread() {
 	private fun readInput(): String {
 
 		var line = ""
-
 		try {
-
-			if (this.input.ready()) {
-				line = this.input.readLine()
+			if (this.input!!.ready()) {
+				line = this.input!!.readLine()
 				Log.d("readInput","Read input: $line")
 			}
 		} catch (IOException: IOException) {
@@ -222,29 +223,30 @@ object BlueThread : Thread() {
 	 *
 	 * @param json
 	 */
-	fun setMatchData(json: JSONObject) {
+	@Throws(JSONException::class)
+	private fun setMatchData(json: JSONObject) {
 		Log.d("fullData", json.toString())
 
 		// Get the autonomous stuff
-		val rawAutonomous = json.optJSONObject("Autonomous")
-		val autoSize = rawAutonomous.length() ?: 0
+		val rawAutonomous: JSONObject = json.getJSONObject("Autonomous")
+		val autoSize = rawAutonomous.length()
 		Log.d("rawAutonomous", rawAutonomous.toString())
 		Log.d("rawAutonomousSize", autoSize.toString())
-		this.matchData.autonomousData = Match.matchBaseToAutonomous(Match.getMatchData(rawAutonomous, autoSize))
+		this.autonomous = MatchData(rawAutonomous, autoSize)
 
 		// Get the teleop stuff
-		val rawTeleOp = json.optJSONObject("TeleOp")
+		val rawTeleOp: JSONObject = json.getJSONObject("TeleOp")
 		val teleSize = rawTeleOp.length()
 		Log.d("rawTeleOp", rawTeleOp.toString())
 		Log.d("teleSize", teleSize.toString())
-		this.matchData.teleopData = Match.matchBaseToTeleOp(Match.getMatchData(rawTeleOp, teleSize))
+		this.teleOp = MatchData(rawTeleOp, teleSize)
 
 		// Get the endgame stuff
-		val rawEndgame = json.optJSONObject("Endgame")
+		val rawEndgame:JSONObject = json.getJSONObject("Endgame")
 		val endSize = rawEndgame.length()
 		Log.d("rawEndgame", rawEndgame.toString())
 		Log.d("endSize", endSize.toString())
-		this.matchData.endgameData = Match.matchBaseToEndgame(Match.getMatchData(rawEndgame, endSize))
+		this.endgame = MatchData(rawEndgame, endSize)
 	}
 
 	/**
@@ -264,38 +266,47 @@ object BlueThread : Thread() {
 
 	/**
 	 * Close the socket/thread.
-	 *
+	 * Documentation
+	 * Comments
 	 * @param isRequest Whether or not to write the close request to the stream.
-	 * @throws IOException For when something goes wrong...
 	 */
-	@Throws(IOException::class)
 	fun close(isRequest: Boolean) {
-		Log.d("Bluethread", "Closing")
-		if (isRequest) {
-			this.sendData(Request(Requests.REQUEST_CLOSE, null))
+		Log.i("Bluethread.close", "Closing bluethread...")
+		if (isRequest) { this.sendData(BlueThreadRequest(Requests.REQUEST_CLOSE, null)) }
+		try {
+			if (this.output != null) {
+				this.output!!.flush()
+				this.output!!.close()
+			}
+			if (this.input != null) { this.input!!.close() }
+			if (this.bluetoothSocket != null) { this.bluetoothSocket!!.close() }
+			this.running = false
+		} catch (IOException : IOException) {
+			Log.e("BlueThread.close", "Unable to close bluethread", IOException)
 		}
-		this.output.flush()
-		this.output.close()
-		this.input.close()
-		this.bluetoothSocket.close()
 	}
 
 	/**
 	 * Sends data to the server.
 	 *
-	 * @param request The data request.
+	 * @param blueThreadRequest The data request.
 	 */
-	fun sendData(request: Request) {
-		Log.d("Bluethread", "Sending data")
+	fun sendData(blueThreadRequest: BlueThreadRequest) {
+		Log.v("sendData", "Sending data...")
 
 		// Check for nulls in the data
-		request.data = if (request.data == null) JSONObject().also { request.data = it } else request.data
+		blueThreadRequest.data = if (blueThreadRequest.data == null) JSONObject().also { blueThreadRequest.data = it } else blueThreadRequest.data
 		try {
-			this.output.write("{\"${request.requests.name}\":${request.data}}\n".toByteArray())
-			this.output.flush()
+			if (this.output == null) {
+				return
+			}
+			this.output!!.write("{\"${blueThreadRequest.requests.name}\":${blueThreadRequest.data}}\n".toByteArray())
+			this.output!!.flush()
 		} catch (e: IOException) {
-			if (e.toString() != "java.io.IOException: socket closed" || e.toString() != "java.io.IOException: Broken pipe") { // FIXME
-				e.printStackTrace()
+			if (e.toString() == "java.io.IOException: socket closed" || e.toString() == "java.io.IOException: Broken pipe") {
+				Log.w("sendData", "Unable to send data as the connection was closed.")
+			} else {
+				Log.e("sendData", "Unable to send data", e)
 			}
 		}
 	}

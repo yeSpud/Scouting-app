@@ -1,10 +1,10 @@
 package org.dragons.scoutingapp.MatchFiles;
 
 /**
- * Created by Stephen Ogden on 12/29/18.
- * FRC 1595
+ * Created by Stephen Ogden on 9/12/21.
+ * FRC 1595.
  */
-public class MatchBase {
+public class DataEntry {
 
 	/**
 	 * The name of the match data.
@@ -19,13 +19,32 @@ public class MatchBase {
 	/**
 	 * The value of the match data.
 	 */
-	public java.util.ArrayList<String> value;
+	public String[] values;
 
 	/**
 	 * Valid data-types for anything that extends the MatchBase.
 	 */
 	public enum DataType {
-		Text, Number, Boolean, BooleanGroup
+
+		/**
+		 * Documentation
+		 */
+		Text,
+
+		/**
+		 * Documentation
+		 */
+		Number,
+
+		/**
+		 * Documentation
+		 */
+		Boolean,
+
+		/**
+		 * Documentation
+		 */
+		BooleanGroup
 	}
 
 }

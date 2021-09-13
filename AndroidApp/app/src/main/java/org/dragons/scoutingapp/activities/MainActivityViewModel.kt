@@ -1,8 +1,6 @@
 package org.dragons.scoutingapp.activities
 
 import android.Manifest
-import org.dragons.scoutingapp.bluefiles.BlueThread.running
-import org.dragons.scoutingapp.bluefiles.BlueThread.remoteDeviceName
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.LiveData
 import android.bluetooth.BluetoothAdapter
@@ -20,12 +18,24 @@ import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import org.dragons.scoutingapp.bluefiles.BlueThread
 
 /**
  * Created by Stephen Ogden on 9/12/21.
  * FRC 1595.
  */
 class MainActivityViewModel : ViewModel() {
+
+	/**
+	 * Documentation
+	 */
+	private val _matchDataReady: MutableLiveData<Boolean> = MutableLiveData() // TODO Add listener for when match data is ready!
+
+	/**
+	 * Documentation
+	 */
+	val matchDataReady: LiveData<Boolean>
+		get() = this._matchDataReady
 
 	/**
 	 * Documentation
@@ -43,15 +53,15 @@ class MainActivityViewModel : ViewModel() {
 	/**
 	 * Documentation
 	 */
-	private val _ready: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+	private val _readyToConnect: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
 	/**
 	 * Documentation
 	 *
 	 * @return
 	 */
-	val ready : LiveData<Boolean>
-		get() = this._ready
+	val readyToConnect : LiveData<Boolean>
+		get() = this._readyToConnect
 
 	/**
 	 * Documentation
@@ -83,14 +93,23 @@ class MainActivityViewModel : ViewModel() {
 			activity.log("Bluetooth is enabled")
 
 			activity.log("Checking if already connected to device...")
-			if (running) {
-				activity.log("Connected to $remoteDeviceName")
+			if (BlueThread.running) {
+				activity.log("Connected to ${BlueThread.remoteDeviceName}")
 				this@MainActivityViewModel._connected.value = true
+
+				activity.log("Checking matchdata...")
+				if (BlueThread.autonomous != null || BlueThread.teleOp != null || BlueThread.endgame != null) {
+					activity.log("Ready to scout!")
+					this@MainActivityViewModel._matchDataReady.value = true
+				} else {
+					activity.log("Awaiting match data...")
+					this@MainActivityViewModel._matchDataReady.value = false
+				}
 			} else {
 				activity.log("Not yet connected")
 				this@MainActivityViewModel._connected.value = false
 			}
-			this@MainActivityViewModel._ready.value = true
+			this@MainActivityViewModel._readyToConnect.value = true
 
 			Log.v("setupCoroutine", "Finished coroutine")
 		}
@@ -131,5 +150,14 @@ class MainActivityViewModel : ViewModel() {
 			return false
 		}
 		return true
+	}
+
+	/**
+	 * Documentation
+	 */
+	fun disconnect(activity: MainActivity) {
+		activity.log("Disconnecting from ${BlueThread.remoteDeviceName}")
+		BlueThread.close(true)
+		this._connected.value = false
 	}
 }

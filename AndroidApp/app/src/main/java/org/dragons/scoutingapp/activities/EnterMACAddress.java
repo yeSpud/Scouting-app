@@ -33,6 +33,16 @@ public class EnterMACAddress extends Activity implements ZXingScannerView.Result
 
 		this.shake = AnimationUtils.loadAnimation(this, R.anim.skake);
 
+		binder.debugConnected.setOnClickListener(view -> {
+			BlueThread.INSTANCE.start(this.getResources().getString(R.string.debug_connected), this);
+			this.finish();
+		});
+
+		binder.debugMatchData.setOnClickListener(view -> {
+			BlueThread.INSTANCE.start(this.getResources().getString(R.string.debug_match_data), this);
+			this.finish();
+		});
+
 		binder.connect.setOnClickListener(view -> {
 			String macAddress = binder.macAddressInput.getText().toString().toUpperCase(java.util.Locale.US);
 

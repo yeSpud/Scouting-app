@@ -42,7 +42,7 @@
             android:paddingBottom="10dp"
             android:text="@string/startScout"
             android:textSize="20sp"
-            android:visibility="@{activity.connected ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{activity.matchDataReady ? View.VISIBLE : View.GONE}" />
 
         <Button
             android:id="@+id/connect"
@@ -59,7 +59,7 @@
             android:paddingBottom="10dp"
             android:text="@string/connect"
             android:textSize="20sp"
-            android:visibility="@{(activity.ready &amp;&amp; !activity.connected) ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{(activity.readyToConnect &amp;&amp; !activity.connected) ? View.VISIBLE : View.GONE}" />
 
         <Button
             android:id="@+id/disconnect"

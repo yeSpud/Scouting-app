@@ -1,11 +1,11 @@
 package org.dragons.scoutingapp.activities;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.bluetooth.BluetoothAdapter;
@@ -16,65 +16,45 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.dragons.scoutingapp.bluefiles.BlueThread;
 import org.dragons.scoutingapp.R;
 import org.dragons.scoutingapp.databinding.MainActivityBinding;
 
-import java.io.IOException;
-
-
 /**
  * Created by Stephen Ogden on 3/23/17.
  * FRC 1595
  */
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
 	/**
 	 * Documentation
 	 */
 	MainActivityBinding binder;
 
-	protected void onCreate(android.os.Bundle savedInstance) {
+	protected void onCreate(android.os.Bundle savedInstance) { // Comments
 		super.onCreate(savedInstance);
 
 		this.binder = DataBindingUtil.setContentView(this, R.layout.main_activity);
 		this.binder.setActivity(new MainActivityViewModel());
+		this.binder.setLifecycleOwner(this);
 
-		this.binder.connect.setOnClickListener((event) -> this.startActivity(new Intent(this, EnterMACAddress.class)));
+		this.binder.connect.setOnClickListener(view -> this.startActivity(new Intent(this, EnterMACAddress.class)));
 
 		// Find and add a listener to the start button
-		this.binder.start.setOnClickListener((event) -> {
-			if (BlueThread.INSTANCE.getRunning()) {
-				if (BlueThread.INSTANCE.getHasMatchData()) {
-					this.startScouting().show();
-				} else {
-					Toast.makeText(this, "Config still being loaded. Try again in a few seconds.",
-							Toast.LENGTH_LONG).show();
-				}
-			}
-		});
+		this.binder.start.setOnClickListener(view -> this.startScouting().show());
 
 		// Find and add a listener to the disconnect button
-		this.binder.disconnect.setOnClickListener((event) -> {
-				try {
-					// Disconnect from the server
-					BlueThread.INSTANCE.close(true);
-				} catch (IOException e) {
-					this.log("Could not close connection to bluethread server! " + e.getCause());
-				}
-			}
-		);
+		// Disconnect from the server
+		this.binder.disconnect.setOnClickListener(view -> this.binder.getActivity().disconnect(this));
 	}
 
 	@Override
-	protected void onResume() {
+	protected void onResume() { // Comments
 		Log.v("onResume", "Called onResume");
 		super.onResume();
 
 		this.binder.consoleView.removeAllViews();
-
 		this.binder.getActivity().setupCoroutine(this).start();
 
 		Log.v("onResume", "Finished onResume");
@@ -95,7 +75,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults); // Comments
 
 		if (requestCode == this.hashCode()) {
 			for (int grantResult : grantResults) {
@@ -105,7 +85,7 @@ public class MainActivity extends Activity {
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) { // Comments
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (requestCode == BluetoothAdapter.STATE_ON) {

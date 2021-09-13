@@ -14,7 +14,10 @@
 	<!-- EnterMACAddress dialog -->
 	<string name="enter_mac_address">Enter MAC address of server</string>
 	<string name="mac_address">MAC address</string>
+	<string name="connection_warning">Be sure this device is already paired to what its connecting to!</string>
 	<string name="connect">Connect</string>
+	<string name="debug_connected">DEBUG CONNECTED</string>
+	<string name="debug_match_data">DEBUG MATCH DATA</string>
 	<string name="scan_qr">Scan from QR code</string>
 	<string name="cancel">Cancel</string>
 

@@ -12,10 +12,9 @@ import android.widget.*;
 
 import androidx.annotation.NonNull;
 
-import org.dragons.scoutingapp.MatchFiles.MatchBase;
+import org.dragons.scoutingapp.MatchFiles.DataEntry;
 import org.dragons.scoutingapp.bluefiles.BlueThread;
-import org.dragons.scoutingapp.bluefiles.Request;
-import org.dragons.scoutingapp.MatchFiles.Match;
+import org.dragons.scoutingapp.bluefiles.BlueThreadRequest;
 import org.dragons.scoutingapp.R;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,8 +84,8 @@ public class DataCollection extends Activity {
 
 		// Now add all the autonomous stuff
 		try {
-			for (Match.Autonomous autonomous : BlueThread.INSTANCE.getMatchData().autonomousData) {
-				this.parseData(autonomous);
+			for (DataEntry autonomousData : BlueThread.INSTANCE.getAutonomous().dataEntries) {
+				this.parseData(autonomousData);
 			}
 		} catch (NullPointerException noConfig) {
 			// TODO
@@ -100,8 +99,8 @@ public class DataCollection extends Activity {
 
 		// Add the stuff for teleop
 		try {
-			for (Match.TeleOp teleOp : BlueThread.INSTANCE.getMatchData().teleopData) {
-				this.parseData(teleOp);
+			for (DataEntry teleopData : BlueThread.INSTANCE.getTeleOp().dataEntries) {
+				this.parseData(teleopData);
 			}
 		} catch (NullPointerException noConfig) {
 			// TODO
@@ -115,8 +114,8 @@ public class DataCollection extends Activity {
 
 		// Add end game stuff
 		try {
-			for (Match.Endgame endgame : BlueThread.INSTANCE.getMatchData().endgameData) {
-				this.parseData(endgame);
+			for (DataEntry endgameData : BlueThread.INSTANCE.getEndgame().dataEntries) {
+				this.parseData(endgameData);
 			}
 		} catch (NullPointerException noConfig) {
 			// TODO
@@ -198,7 +197,7 @@ public class DataCollection extends Activity {
 			Log.d("FullData", data.toString());
 
 			try {
-				BlueThread.INSTANCE.sendData(new Request(Request.Requests.DATA, data));
+				BlueThread.INSTANCE.sendData(new BlueThreadRequest(BlueThreadRequest.Requests.DATA, data));
 			} catch (NullPointerException noConnection) {
 				// TODO
 			}
@@ -370,13 +369,13 @@ public class DataCollection extends Activity {
 	 *
 	 * @param match The match data (from the config file).
 	 */
-	private void parseData(@NonNull MatchBase match) {
+	private void parseData(@NonNull DataEntry match) {
 		switch (match.datatype) {
 			case Text:
 				// Create the text input field (TextView and TextField).
 				contentView.addView(this.generateTextView(match.name, 17, this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
 						0, 15, 0)));
-				contentView.addView(this.generateTextField(match.name, match.value.get(0),
+				contentView.addView(this.generateTextField(match.name, match.values[0],
 						this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
 								20, 5, 20)));
 				break;
@@ -384,15 +383,15 @@ public class DataCollection extends Activity {
 				// Create the number input field (TextView and NumberPicker).
 				contentView.addView(this.generateTextView(match.name, 17, this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
 						0, 15, 0)));
-				contentView.addView(this.generateNumberPicker(match.name, Integer.parseInt(match.value.get(1)),
-						Integer.parseInt(match.value.get(2)), Integer.parseInt(match.value.get(3)),
-						Integer.parseInt(match.value.get(0)),
+				contentView.addView(this.generateNumberPicker(match.name, Integer.parseInt(match.values[1]),
+						Integer.parseInt(match.values[2]), Integer.parseInt(match.values[3]),
+						Integer.parseInt(match.values[0]),
 						this.createLayoutParameters(LinearLayout.LayoutParams.WRAP_CONTENT,
 								0, 5, 0)));
 				break;
 			case Boolean:
 				// Create the boolean input field (CheckBox)/
-				contentView.addView(this.generateCheckBox(match.name, Boolean.parseBoolean(match.value.get(0)),
+				contentView.addView(this.generateCheckBox(match.name, Boolean.parseBoolean(match.values[0]),
 						this.createLayoutParameters(LinearLayout.LayoutParams.WRAP_CONTENT,
 								0, 15, 0)));
 				break;
@@ -405,7 +404,7 @@ public class DataCollection extends Activity {
 				// Get all the radio buttons in the value.
 				RadioGroup group = new RadioGroup(this);
 				try {
-					JSONObject radioButtons = new JSONObject(match.value.get(0));
+					JSONObject radioButtons = new JSONObject(match.values[0]);
 					Log.d("Radio buttons", radioButtons.toString());
 					Iterator<String> keys = radioButtons.keys();
 					while (keys.hasNext()) {
