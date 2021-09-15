@@ -1,50 +1,29 @@
 package org.dragons.scoutingapp.MatchFiles;
 
+import org.jetbrains.annotations.Contract;
+
 /**
- * Created by Stephen Ogden on 9/12/21.
+ * Created by Stephen Ogden on 9/14/21.
  * FRC 1595.
  */
-public class DataEntry {
+public class DataEntry<T> {
 
 	/**
-	 * The name of the match data.
+	 * Documentation
 	 */
-	public String name;
+	public final String name;
 
 	/**
-	 * The DataType of the match data.
+	 * Documentation
 	 */
-	public DataType datatype;
+	public T value;
 
 	/**
-	 * The value of the match data.
+	 * Documentation
+	 * @param name
 	 */
-	public String[] values;
-
-	/**
-	 * Valid data-types for anything that extends the MatchBase.
-	 */
-	public enum DataType {
-
-		/**
-		 * Documentation
-		 */
-		Text,
-
-		/**
-		 * Documentation
-		 */
-		Number,
-
-		/**
-		 * Documentation
-		 */
-		Boolean,
-
-		/**
-		 * Documentation
-		 */
-		BooleanGroup
+	@Contract(pure = true)
+	public DataEntry(String name) {
+		this.name = name;
 	}
-
 }

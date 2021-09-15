@@ -298,6 +298,9 @@ object BlueThread : Thread() {
 			}
 			if (this.input != null) { this.input!!.close() }
 			if (this.bluetoothSocket != null) { this.bluetoothSocket!!.close() }
+			this.autonomous = null
+			this.teleOp = null
+			this.endgame = null
 			this.running = false
 		} catch (IOException : IOException) {
 			Log.e("BlueThread.close", "Unable to close bluethread", IOException)

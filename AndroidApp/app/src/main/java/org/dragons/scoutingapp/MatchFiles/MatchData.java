@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import org.jetbrains.annotations.Contract;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Iterator;
@@ -29,6 +30,7 @@ public class MatchData {
 	@Contract(pure = true)
 	public MatchData(@NonNull JSONObject jsonObject, int numberOfEntries) {
 
+		// Comments
 		this.dataEntries = new DataEntry[numberOfEntries];
 
 		// Get and iterate over the keys in the data
@@ -38,24 +40,55 @@ public class MatchData {
 			String key = keys.next().replace("\\", "");
 			Log.d("Key", key);
 
-			JSONArray jsonArray = jsonObject.optJSONArray(key);
-			Log.d("JsonArray", jsonArray.toString());
+			try {
+				JSONArray jsonArray = jsonObject.getJSONArray(key);
+				Log.d("JsonArray", jsonArray.toString());
 
-			DataEntry dataEntry = new DataEntry();
+				switch (jsonArray.getString(0).replace("\\", "")) {
 
-			dataEntry.name = key;
-			dataEntry.datatype = DataEntry.DataType.valueOf(jsonArray.optString(0).replace("\\", ""));
+					// Comments
+					case "Text":
+						Text text = new Text(key);
+						text.value = jsonArray.getString(1);
+						this.dataEntries[i] = text;
+						break;
 
-			String[] values = new String[jsonArray.length()];
-			for (int j = 1; j < jsonArray.length(); j++) {
-				String value = jsonArray.optString(j).replace("\\", "");
-				Log.d("Adding value", value);
-				values[j] = value;
+					// Comments
+					case "Number":
+						Number number = new Number(key, jsonArray.getInt(2), jsonArray.getInt(3),
+								jsonArray.getInt(4));
+						number.value = jsonArray.getInt(1);
+						this.dataEntries[i] = number;
+						break;
+
+					// Comments
+					case "Boolean":
+						Boolean bool = new Boolean(key);
+						bool.value = jsonArray.getBoolean(1);
+						this.dataEntries[i] = bool;
+						break;
+
+					// Comments
+					case "BooleanGroup":
+						BooleanGroup booleanGroup = new BooleanGroup(key);
+						JSONObject booleanGroupJson = jsonArray.getJSONObject(1);
+						booleanGroup.value = new Boolean[booleanGroupJson.length()];
+						Iterator<String> entries = booleanGroupJson.keys();
+						int j = 0;
+						while (entries.hasNext()) {
+							String entryName = entries.next();
+							Boolean b = new Boolean(entryName);
+							b.value = booleanGroupJson.getBoolean(entryName);
+							booleanGroup.value[j] = b;
+							j++;
+						}
+						this.dataEntries[i] = booleanGroup;
+						break;
+				}
+				i++;
+			} catch (JSONException e) {
+				Log.e("MatchData", "Unable to parse json", e);
 			}
-			dataEntry.values = values;
-
-			this.dataEntries[i] = dataEntry;
-			i++;
 		}
 	}
 }

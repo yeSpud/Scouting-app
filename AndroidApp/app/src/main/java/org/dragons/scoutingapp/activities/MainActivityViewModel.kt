@@ -158,6 +158,7 @@ class MainActivityViewModel : ViewModel() {
 	fun disconnect(activity: MainActivity) {
 		activity.log("Disconnecting from ${BlueThread.remoteDeviceName}")
 		BlueThread.close(true)
+		this._matchDataReady.value = false
 		this._connected.value = false
 	}
 }

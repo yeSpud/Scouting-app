@@ -1,9 +1,6 @@
 package org.dragons.scoutingapp.activities;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
-import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -11,31 +8,42 @@ import android.view.ViewGroup;
 import android.widget.*;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
+import org.dragons.scoutingapp.MatchFiles.Boolean;
+import org.dragons.scoutingapp.MatchFiles.BooleanGroup;
 import org.dragons.scoutingapp.MatchFiles.DataEntry;
+import org.dragons.scoutingapp.MatchFiles.MatchData;
+import org.dragons.scoutingapp.MatchFiles.Number;
+import org.dragons.scoutingapp.MatchFiles.Text;
 import org.dragons.scoutingapp.bluefiles.BlueThread;
-import org.dragons.scoutingapp.bluefiles.BlueThreadRequest;
 import org.dragons.scoutingapp.R;
+import org.dragons.scoutingapp.databinding.DataCollectionBinding;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
-
 
 /**
  * Created by Stephen Ogden on 5/27/17.
  * FRC 1595
  */
-public class DataCollection extends Activity {
+public class DataCollection extends AppCompatActivity {
 
 	/**
 	 * Since we cant store the individual widgets, just store their ids for future lookup.
+	 *
+	 * @deprecated Convert to Array
 	 */
-	private ArrayList<View> Nodes = new ArrayList<>();
+	@Deprecated
+	private ArrayList<View> entries = new ArrayList();
 
-	private LinearLayout contentView;
+	/**
+	 * Documentation
+	 */
+	DataCollectionBinding binder;
 
 	/**
 	 * Changes the color of a provided number picker. See
@@ -44,14 +52,16 @@ public class DataCollection extends Activity {
 	 * @param numberPicker The number picker object.
 	 * @author Simon
 	 */
-	private static void setNumberPickerTextColor(CustomNumberPicker numberPicker) {
+	private static void setNumberPickerTextColor(@NonNull NumberPicker numberPicker) {
 
+		/*
 		try {
 			Field selectorWheelPaintField = numberPicker.getClass().getDeclaredField("mSelectorWheelPaint");
 			selectorWheelPaintField.setAccessible(true);
 			((android.graphics.Paint) selectorWheelPaintField.get(numberPicker)).setColor(Color.WHITE);
 		} catch (NoSuchFieldException | IllegalAccessException | IllegalArgumentException ignored) {
 		}
+		 */
 
 		final int count = numberPicker.getChildCount();
 		for (int i = 0; i < count; i++) {
@@ -65,18 +75,46 @@ public class DataCollection extends Activity {
 	@Override
 	public void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.data_collection);
+
+		this.binder = DataBindingUtil.setContentView(this, R.layout.data_collection);
 
 		int teamNumber = this.getIntent().getIntExtra("Team number", 0);
 
-		// For a nice little accessibility feature, we can set the top bar to display the team teamNumber that the user is scouting
-		// That way, they don't forget, or scout the wrong team :P
-		this.setTitle(getResources().getString(R.string.teamToScout) + teamNumber); // TODO Resource placeholder
+		// For a nice little accessibility feature we can set the top bar to display the team number that the user is scouting.
+		// That way they don't forget, or scout the wrong team.
+		this.setTitle(getResources().getString(R.string.teamToScout, teamNumber));
 
+		// Comments
+		this.binder.cancel.setOnClickListener(view -> this.finish());
 
-		// Get the scrollview section of the page to dynamically load the widgets for data collection
-		this.contentView = findViewById(R.id.content);
+		// Comments
+		if (BlueThread.INSTANCE.getAutonomous() != null) {
+			MatchData autonomousData = BlueThread.INSTANCE.getAutonomous();
 
+			for (DataEntry entry : autonomousData.dataEntries) {
+				this.parseData(entry);
+			}
+		}
+
+		// Comments
+		if (BlueThread.INSTANCE.getTeleOp() != null) {
+			MatchData teleopData = BlueThread.INSTANCE.getTeleOp();
+
+			for (DataEntry entry : teleopData.dataEntries) {
+				this.parseData(entry);
+			}
+		}
+
+		// Comments
+		if (BlueThread.INSTANCE.getEndgame() != null) {
+			MatchData endgameData = BlueThread.INSTANCE.getEndgame();
+
+			for (DataEntry entry : endgameData.dataEntries) {
+				this.parseData(entry);
+			}
+		}
+
+		/*
 		// First, add the autonomous section header
 		this.contentView.addView(this.generateTextView("Autonomous:", 20,
 				this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
@@ -139,10 +177,6 @@ public class DataCollection extends Activity {
 		comments.setLayoutParams(params);
 		contentView.addView(comments);
 
-
-		// Setup the cancel button listener
-		findViewById(R.id.Cancel).setOnClickListener(listener -> this.finish());
-
 		// Setup the submit button listener
 		findViewById(R.id.Submit).setOnClickListener(listener -> {
 			// Gather all the data
@@ -204,19 +238,22 @@ public class DataCollection extends Activity {
 
 			this.finish();
 		});
+		 */
 
 
 	}
 
 	/**
-	 * Generate and return a TextView widget.
+	 * Documentation
 	 *
-	 * @param text             The default text.
-	 * @param size             The size of the font.
-	 * @param layoutParameters The layout parameters.
-	 * @return The resulting TextView widget.
+	 * @param text
+	 * @param size
+	 * @param width
+	 * @param marginLeft
+	 * @param marginTop
+	 * @param marginRight
 	 */
-	private TextView generateTextView(String text, float size, LinearLayout.LayoutParams layoutParameters) {
+	private void generateTextView(String text, float size, int width, int marginLeft, int marginTop, int marginRight) {
 		Log.d("generateTextView text", text);
 		Log.d("generateTextView size", Float.toString(size));
 		TextView textView = new TextView(this);
@@ -224,9 +261,9 @@ public class DataCollection extends Activity {
 		textView.setTextSize(size);
 		textView.setTextColor(Color.WHITE);
 		textView.setGravity(Gravity.CENTER);
-		textView.setLayoutParams(layoutParameters);
+		textView.setLayoutParams(DataCollection.createLayoutParameters(width, marginLeft, marginTop, marginRight));
 		textView.requestLayout();
-		return textView;
+		this.binder.content.addView(textView);
 	}
 
 	/**
@@ -237,9 +274,11 @@ public class DataCollection extends Activity {
 	 * @param layoutParameters The LayoutParameters.
 	 * @return The LinearLayout containing the generated CheckBox.
 	 */
+	@NonNull
+	@Deprecated
 	private LinearLayout generateCheckBox(String text, boolean isChecked, LinearLayout.LayoutParams layoutParameters) {
 		Log.d("generateCheckBox text", text);
-		Log.d("CheckBox isChecked", Boolean.toString(isChecked));
+		Log.d("generateCheckbox", "CheckBox isChecked: " + isChecked);
 
 		// First create the LinearLayout that will house the CheckBox
 		LinearLayout linearLayout = new LinearLayout(this);
@@ -256,7 +295,7 @@ public class DataCollection extends Activity {
 		checkBox.setTextColor(Color.WHITE);
 		checkBox.setLayoutParams(layoutParameters);
 		checkBox.requestLayout();
-		Nodes.add(checkBox);
+		this.entries.add(checkBox);
 
 		// Add the CheckBox to the LinearLayout, and return the LinearLayout
 		linearLayout.addView(checkBox);
@@ -264,31 +303,33 @@ public class DataCollection extends Activity {
 	}
 
 	/**
-	 * Create and return a (custom) EditText widget.
+	 * Create and return a EditText widget.
 	 *
 	 * @param title            The title of the EditText (Not to be shown to the users. This is used for backend identification).
 	 * @param defaultValue     The default text for the EditText.
 	 * @param layoutParameters The LayoutParameters.
 	 * @return The (custom) EditText widget.
 	 */
-	private CustomEditText generateTextField(String title, String defaultValue, LinearLayout.LayoutParams layoutParameters) {
+	@Deprecated
+	@NonNull
+	private EditText generateTextField(String title, String defaultValue, LinearLayout.LayoutParams layoutParameters) {
 		Log.d("generateTextField title", title);
 		Log.d("default value", defaultValue);
-		CustomEditText text = new CustomEditText(this);
+		EditText text = new EditText(this);
 		text.setText(defaultValue);
-		text.setTitle(title);
+		text.setTag(title); // TODO Tag
 		text.setTextSize(15);
 		text.setGravity(Gravity.CENTER);
 		text.setBackgroundColor(Color.DKGRAY);
 		text.setTextColor(Color.WHITE);
 		text.setLayoutParams(layoutParameters);
 		text.requestLayout();
-		Nodes.add(text);
+		this.entries.add(text);
 		return text;
 	}
 
 	/**
-	 * Create and return a (custom) NumberPicker widget that will be housed in a LinearLayout (for centering reasons).
+	 * Create and return a NumberPicker widget that will be housed in a LinearLayout (for centering reasons).
 	 *
 	 * @param title            The title of the NumberPicker (not shown to the user. Used for backend identification).
 	 * @param minValue         The minimum value for the NumberPicker.
@@ -298,6 +339,8 @@ public class DataCollection extends Activity {
 	 * @param layoutParameters The LayoutParameters.
 	 * @return The (custom) NumberPicker, housed inside a LinearLayout.
 	 */
+	@Deprecated
+	@NonNull
 	private LinearLayout generateNumberPicker(String title, int minValue, int maxValue, int step, int defaultValue, LinearLayout.LayoutParams layoutParameters) {
 		Log.d("title", title);
 		Log.d("minValue", Integer.toString(minValue));
@@ -313,15 +356,15 @@ public class DataCollection extends Activity {
 		linearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
 		// Now create the custom NumberPicker
-		CustomNumberPicker spinner = new CustomNumberPicker(this);
+		NumberPicker spinner = new NumberPicker(this);
 		spinner.setMinValue(minValue);
 		spinner.setMaxValue(maxValue);
 		spinner.setValue(defaultValue);
 		spinner.setLayoutParams(layoutParameters);
 		spinner.setBackgroundColor(Color.DKGRAY);
-		spinner.setTitle(title);
+		spinner.setTag(title); // TODO Tag
 		DataCollection.setNumberPickerTextColor(spinner);
-		Nodes.add(spinner);
+		this.entries.add(spinner);
 
 		// Add the custom NumberPicker to the LinearLayout, and return the LinearLayout.
 		linearLayout.addView(spinner);
@@ -335,6 +378,8 @@ public class DataCollection extends Activity {
 	 * @param layoutParameters The LayoutParameters.
 	 * @return The RadioButton.
 	 */
+	@NonNull
+	@Deprecated
 	private RadioButton generateRadioButton(String text, LinearLayout.LayoutParams layoutParameters) {
 		Log.d("text", text);
 		RadioButton button = new RadioButton(this);
@@ -345,7 +390,7 @@ public class DataCollection extends Activity {
 		button.setTextColor(Color.WHITE);
 		button.setLayoutParams(layoutParameters);
 		button.requestLayout();
-		Nodes.add(button);
+		this.entries.add(button);
 		return button;
 	}
 
@@ -358,7 +403,8 @@ public class DataCollection extends Activity {
 	 * @param marginRight The desired right margin of the widget.
 	 * @return The generated LayoutParameters.
 	 */
-	private LinearLayout.LayoutParams createLayoutParameters(int width, int marginLeft, int marginTop, int marginRight) {
+	@NonNull
+	private static LinearLayout.LayoutParams createLayoutParameters(int width, int marginLeft, int marginTop, int marginRight) {
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
 		params.setMargins(marginLeft, marginTop, marginRight, 0);
 		return params;
@@ -370,130 +416,75 @@ public class DataCollection extends Activity {
 	 * @param match The match data (from the config file).
 	 */
 	private void parseData(@NonNull DataEntry match) {
-		switch (match.datatype) {
-			case Text:
-				// Create the text input field (TextView and TextField).
-				contentView.addView(this.generateTextView(match.name, 17, this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
-						0, 15, 0)));
-				contentView.addView(this.generateTextField(match.name, match.values[0],
-						this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
-								20, 5, 20)));
-				break;
-			case Number:
-				// Create the number input field (TextView and NumberPicker).
-				contentView.addView(this.generateTextView(match.name, 17, this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
-						0, 15, 0)));
-				contentView.addView(this.generateNumberPicker(match.name, Integer.parseInt(match.values[1]),
-						Integer.parseInt(match.values[2]), Integer.parseInt(match.values[3]),
-						Integer.parseInt(match.values[0]),
-						this.createLayoutParameters(LinearLayout.LayoutParams.WRAP_CONTENT,
+
+		if (match instanceof Text) {
+
+			Text text = (Text) match;
+
+			// Create the text input field (TextView and TextField).
+			this.generateTextView(text.name, 17, LinearLayout.LayoutParams.MATCH_PARENT,
+					0, 15, 0);
+			this.binder.content.addView(this.generateTextField(text.name, text.value,
+					DataCollection.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
+							20, 5, 20)));
+
+
+		} else if (match instanceof Number) {
+
+			Number number = (Number) match;
+
+			// Create the number input field (TextView and NumberPicker).
+			this.generateTextView(number.name, 17, LinearLayout.LayoutParams.MATCH_PARENT,
+					0, 15, 0);
+
+			try {
+				this.binder.content.addView(this.generateNumberPicker(number.name, number.minimumValue,
+						number.maximumValue, number.stepValue, number.value, DataCollection.
+								createLayoutParameters(LinearLayout.LayoutParams.WRAP_CONTENT,
 								0, 5, 0)));
-				break;
-			case Boolean:
-				// Create the boolean input field (CheckBox)/
-				contentView.addView(this.generateCheckBox(match.name, Boolean.parseBoolean(match.values[0]),
-						this.createLayoutParameters(LinearLayout.LayoutParams.WRAP_CONTENT,
-								0, 15, 0)));
-				break;
-			case BooleanGroup:
-				// Create the boolean group input field (TextView and RadioGroup of RadioButtons)
-				contentView.addView(this.generateTextView(match.name, 17,
-						this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
-								0, 15, 0)));
+			} catch (NumberFormatException e) {
+				Log.e("parseData", "Failed to add view to data collection", e);
+			}
+		} else if (match instanceof Boolean) {
 
-				// Get all the radio buttons in the value.
-				RadioGroup group = new RadioGroup(this);
-				try {
-					JSONObject radioButtons = new JSONObject(match.values[0]);
-					Log.d("Radio buttons", radioButtons.toString());
-					Iterator<String> keys = radioButtons.keys();
-					while (keys.hasNext()) {
-						String key = keys.next();
-						RadioButton button = this.generateRadioButton(key, this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
-								0, 5, 0));
-						group.addView(button);
-						if (Boolean.parseBoolean(radioButtons.optString(key))) {
-							group.check(button.getId());
-						}
+			Boolean bool = (Boolean) match;
+
+			// Create the boolean input field (CheckBox)
+			this.binder.content.addView(this.generateCheckBox(bool.name, bool.value,
+					DataCollection.createLayoutParameters(LinearLayout.LayoutParams.WRAP_CONTENT,
+							0, 15, 0)));
+
+		} else if (match instanceof BooleanGroup) {
+
+			BooleanGroup booleanGroup = (BooleanGroup) match;
+
+			// Create the boolean group input field (TextView and RadioGroup of RadioButtons)
+			this.generateTextView(match.name, 17, LinearLayout.LayoutParams.MATCH_PARENT,
+					0, 15, 0);
+
+			// Get all the radio buttons in the value.
+			/*
+			RadioGroup group = new RadioGroup(this);
+			try {
+				JSONObject radioButtons = new JSONObject(booleanGroup.value[0].name);
+				Log.d("Radio buttons", radioButtons.toString());
+				Iterator<String> keys = radioButtons.keys();
+				while (keys.hasNext()) {
+					String key = keys.next();
+					RadioButton button = this.generateRadioButton(key, DataCollection.
+							createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
+									0, 5, 0));
+					group.addView(button);
+					if (Boolean.parseBoolean(radioButtons.optString(key))) {
+						group.check(button.getId());
 					}
-				} catch (JSONException e) {
-					// TODO
-					return;
 				}
-
-				contentView.addView(group);
-				break;
+			} catch (JSONException | NullPointerException e) {
+				// TODO
+				return;
+			}
+			this.binder.content.addView(group);
+			 */
 		}
 	}
-
-	/**
-	 * A custom NumberPicker class that takes the standard NumberPicker and adds a title object to it for backend identification.
-	 */
-	private class CustomNumberPicker extends NumberPicker {
-
-		private String title;
-
-		/**
-		 * Constructor for the custom NumberPicker.
-		 *
-		 * @param context The application context (usually <code>this</code>).
-		 */
-		public CustomNumberPicker(Context context) {
-			super(context);
-		}
-
-		/**
-		 * Returns the title of the NumberPicker.
-		 *
-		 * @return The title.
-		 */
-		public String getTitle() {
-			return this.title;
-		}
-
-		/**
-		 * Set the title of the NumberPicker.
-		 *
-		 * @param title The title.
-		 */
-		public void setTitle(String title) {
-			this.title = title;
-		}
-	}
-
-	/**
-	 * A custom EditText class that takes the standard EditText and adds a title object to it for backend identification.
-	 */
-	private class CustomEditText extends androidx.appcompat.widget.AppCompatEditText {
-
-		private String title;
-
-		/**
-		 * Constructor for the custom EditText.
-		 *
-		 * @param context The application context (usually <code>this</code>).
-		 */
-		public CustomEditText(Context context) {
-			super(context);
-		}
-
-		/**
-		 * Returns the title of the EditText.
-		 *
-		 * @return The title.
-		 */
-		public String getTitle() {
-			return this.title;
-		}
-
-		/**
-		 * Set the title of the EditText.
-		 *
-		 * @param title The title.
-		 */
-		public void setTitle(String title) {
-			this.title = title;
-		}
-	}
-
 }
