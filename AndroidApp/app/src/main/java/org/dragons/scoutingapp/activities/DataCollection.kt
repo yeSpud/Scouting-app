@@ -19,13 +19,14 @@ import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.core.view.children
 import com.shawnlin.numberpicker.NumberPicker
+import org.dragons.scoutingapp.MatchFiles.Boolean
 import org.dragons.scoutingapp.MatchFiles.DataEntry
 import org.dragons.scoutingapp.MatchFiles.BooleanGroup
 import org.dragons.scoutingapp.MatchFiles.Number
 import org.dragons.scoutingapp.MatchFiles.Text
 import org.dragons.scoutingapp.databinding.DataCollectionBinding
-import org.json.JSONException
 
 /**
  * Created by Stephen Ogden on 5/27/17.
@@ -58,42 +59,51 @@ class DataCollection : AppCompatActivity() {
 		if (BlueThread.autonomous != null) {
 			this.generateTextView("Autonomous", 20f, ViewGroup.LayoutParams.MATCH_PARENT,
 				0, 20, 0)
-			BlueThread.autonomous!!.dataEntries.forEach { it.view = this.parseData(it) }
+			BlueThread.autonomous!!.dataEntries.forEach { it.view = this.setupView(it) }
 		}
 
 		// Comments
 		if (BlueThread.teleOp != null) {
 			this.generateTextView("TeleOp:", 20f, LinearLayout.LayoutParams.MATCH_PARENT,
 				0, 100, 0)
-			BlueThread.teleOp!!.dataEntries.forEach { it.view = this.parseData(it) }
+			BlueThread.teleOp!!.dataEntries.forEach { it.view = this.setupView(it) }
 		}
 
 		// Comments
 		if (BlueThread.endgame != null) {
 			this.generateTextView("End game:", 20f, LinearLayout.LayoutParams.MATCH_PARENT,
 				0, 100, 0)
-			BlueThread.endgame!!.dataEntries.forEach { it.view = this.parseData(it) }
+			BlueThread.endgame!!.dataEntries.forEach { it.view = this.setupView(it) }
 		}
 
 		// Comments
 		this.binder.submit.setOnClickListener {
 
 			// Gather all the data
-			val data = JSONObject()
+			var data = JSONObject()
 
-			// Be sure to add the team number
 			try {
+
+				// Be sure to add the team number
 				data.putOpt("Team number", teamNumber)
-			} catch (jsonError: JSONException) {
-				// TODO
-			}
 
-			// TODO Pares the views and get the options!
-			try {
+				// Comments
+				if (BlueThread.autonomous != null) {
+					data = getSendData(data, BlueThread.autonomous!!.dataEntries)
+				}
+
+				if (BlueThread.teleOp != null) {
+					data = getSendData(data, BlueThread.teleOp!!.dataEntries)
+				}
+
+				if (BlueThread.endgame != null) {
+					data = getSendData(data, BlueThread.endgame!!.dataEntries)
+				}
+
 				// Don't forget to add the comments!
-				data.putOpt("Comments", this.binder.additionalComments.text.toString().
-				replace(",", "，").replace(":", ";"))
-			} catch (jsonError: JSONException) {
+				data.putOpt("Comments", this.binder.additionalComments.text.toString()
+					.replace(",", "，").replace(":", ";"))
+			} catch (NullPointerException : NullPointerException) {
 				// TODO
 			}
 
@@ -129,7 +139,7 @@ class DataCollection : AppCompatActivity() {
 	 *
 	 * @param match The match data (from the config file).
 	 */
-	private fun parseData(match: DataEntry<*>): View? {
+	private fun setupView(match: DataEntry<*, *>): View? {
 		return when (match) {
 
 			// Comments
@@ -144,7 +154,7 @@ class DataCollection : AppCompatActivity() {
 
 				val textField = EditText(this)
 				textField.setText(match.value)
-				textField.tag = title // TODO Tag
+				textField.tag = match.name
 				textField.textSize = TEXT_SIZE
 				textField.gravity = Gravity.CENTER
 				textField.setBackgroundColor(Color.DKGRAY)
@@ -169,7 +179,7 @@ class DataCollection : AppCompatActivity() {
 				val numberPicker = NumberPicker(this)
 				numberPicker.minValue = match.minimumValue
 				numberPicker.maxValue = match.maximumValue
-				numberPicker.value = match.value
+				numberPicker.value = match.value!!
 				numberPicker.minimumWidth = LinearLayout.LayoutParams.MATCH_PARENT
 				numberPicker.textSize = TEXT_SIZE
 				numberPicker.selectedTextColor = Color.WHITE
@@ -178,14 +188,14 @@ class DataCollection : AppCompatActivity() {
 				@SuppressLint("WrongConstant")
 				numberPicker.orientation = NumberPicker.HORIZONTAL
 				numberPicker.layoutParams = layoutParameters
-				numberPicker.tag = title // TODO Tag
+				numberPicker.tag = match.name
 
 				this.binder.content.addView(numberPicker)
 				numberPicker
 			}
 
 			// Comments
-			is org.dragons.scoutingapp.MatchFiles.Boolean -> {
+			is Boolean -> {
 
 				val layoutParameters = createLayoutParameters(LinearLayout.LayoutParams.WRAP_CONTENT,
 					marginLeft = 15, marginTop = 15, gravity = Gravity.START)
@@ -194,7 +204,7 @@ class DataCollection : AppCompatActivity() {
 				val checkBox = CheckBox(this)
 				checkBox.text = match.name
 				checkBox.textSize = TEXT_SIZE
-				checkBox.isChecked = match.value
+				checkBox.isChecked = match.value!!
 				checkBox.setTextColor(Color.WHITE)
 				checkBox.layoutParams = layoutParameters
 				checkBox.requestLayout()
@@ -216,7 +226,7 @@ class DataCollection : AppCompatActivity() {
 				val layoutParameters = createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
 					marginLeft = 5, marginTop = 5)
 				group.layoutParams = layoutParameters
-				for (booleanEntry in match.value) {
+				for (booleanEntry in match.value!!) {
 					val button = RadioButton(this)
 					button.text = booleanEntry.name
 					button.textSize = TEXT_SIZE
@@ -236,6 +246,30 @@ class DataCollection : AppCompatActivity() {
 	}
 
 	companion object {
+
+		/**
+		 * Documentation
+		 *
+		 * @param jsonObject
+		 * @param entries
+		 * @return
+		 */
+		private fun getSendData(jsonObject: JSONObject, entries: Array<DataEntry<*, *>>): JSONObject {
+			entries.forEach {
+				when(it) {
+					is Text -> jsonObject.putOpt(it.view!!.tag as String, it.view!!.text.toString())
+					is Number -> jsonObject.putOpt(it.view!!.tag as String, it.view!!.value)
+					is Boolean -> jsonObject.putOpt(it.view!!.tag as String, it.view!!.isChecked)
+					is BooleanGroup ->  {
+						it.view!!.children.forEach { radioButtonView ->
+							val radioButton = radioButtonView as RadioButton
+							jsonObject.putOpt(radioButton.text.toString(), radioButton.isChecked)
+						}
+					}
+				}
+			}
+			return jsonObject
+		}
 
 		/**
 		 * Create LayoutParameters for margins and widget widths.

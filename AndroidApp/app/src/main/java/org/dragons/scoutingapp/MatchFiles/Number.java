@@ -4,7 +4,7 @@ package org.dragons.scoutingapp.MatchFiles;
  * Created by Stephen Ogden on 9/14/21.
  * FRC 1595.
  */
-public class Number extends DataEntry<Integer> {
+public class Number extends DataEntry<Integer, com.shawnlin.numberpicker.NumberPicker> {
 
 	/**
 	 * Documentation

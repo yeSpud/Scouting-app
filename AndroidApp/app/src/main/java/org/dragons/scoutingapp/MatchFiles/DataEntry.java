@@ -1,15 +1,12 @@
 package org.dragons.scoutingapp.MatchFiles;
 
-import android.view.View;
-
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * Created by Stephen Ogden on 9/14/21.
  * FRC 1595.
  */
-public class DataEntry<T> {
+public class DataEntry<T, V extends android.view.View> {
 
 	/**
 	 * Documentation
@@ -19,19 +16,20 @@ public class DataEntry<T> {
 	/**
 	 * Documentation
 	 */
+	@Nullable
 	public T value;
 
 	/**
 	 * Documentation
 	 */
 	@Nullable
-	public View view;
+	public V view;
 
 	/**
 	 * Documentation
 	 * @param name
 	 */
-	@Contract(pure = true)
+	@org.jetbrains.annotations.Contract(pure = true)
 	public DataEntry(String name) {
 		this.name = name;
 	}
