@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -19,26 +20,16 @@ import org.dragons.scoutingapp.MatchFiles.Number;
 import org.dragons.scoutingapp.MatchFiles.Text;
 import org.dragons.scoutingapp.bluefiles.BlueThread;
 import org.dragons.scoutingapp.R;
+import org.dragons.scoutingapp.bluefiles.BlueThreadRequest;
 import org.dragons.scoutingapp.databinding.DataCollectionBinding;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by Stephen Ogden on 5/27/17.
  * FRC 1595
  */
 public class DataCollection extends AppCompatActivity {
-
-	/**
-	 * Since we cant store the individual widgets, just store their ids for future lookup.
-	 *
-	 * @deprecated Convert to Array
-	 */
-	@Deprecated
-	private ArrayList<View> entries = new ArrayList();
 
 	/**
 	 * Documentation
@@ -76,8 +67,10 @@ public class DataCollection extends AppCompatActivity {
 	public void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		// Comments
 		this.binder = DataBindingUtil.setContentView(this, R.layout.data_collection);
 
+		// Comments
 		int teamNumber = this.getIntent().getIntExtra("Team number", 0);
 
 		// For a nice little accessibility feature we can set the top bar to display the team number that the user is scouting.
@@ -91,8 +84,11 @@ public class DataCollection extends AppCompatActivity {
 		if (BlueThread.INSTANCE.getAutonomous() != null) {
 			MatchData autonomousData = BlueThread.INSTANCE.getAutonomous();
 
-			for (DataEntry entry : autonomousData.dataEntries) {
-				this.parseData(entry);
+			this.generateTextView("Autonomous", 20, ViewGroup.LayoutParams.MATCH_PARENT,
+					0, 20, 0);
+
+			for (int i = 0; i < autonomousData.dataEntries.length; i++) {
+				autonomousData.dataEntries[i].view = this.parseData(autonomousData.dataEntries[i]);
 			}
 		}
 
@@ -100,8 +96,10 @@ public class DataCollection extends AppCompatActivity {
 		if (BlueThread.INSTANCE.getTeleOp() != null) {
 			MatchData teleopData = BlueThread.INSTANCE.getTeleOp();
 
-			for (DataEntry entry : teleopData.dataEntries) {
-				this.parseData(entry);
+			this.generateTextView("TeleOp:", 20, LinearLayout.LayoutParams.MATCH_PARENT,
+					0, 100, 0);
+			for (int i = 0; i < teleopData.dataEntries.length; i++) {
+				teleopData.dataEntries[i].view = this.parseData(teleopData.dataEntries[i]);
 			}
 		}
 
@@ -109,76 +107,16 @@ public class DataCollection extends AppCompatActivity {
 		if (BlueThread.INSTANCE.getEndgame() != null) {
 			MatchData endgameData = BlueThread.INSTANCE.getEndgame();
 
-			for (DataEntry entry : endgameData.dataEntries) {
-				this.parseData(entry);
+			this.generateTextView("End game:", 20, LinearLayout.LayoutParams.MATCH_PARENT,
+					0, 100, 0);
+			for (int i = 0; i < endgameData.dataEntries.length; i++) {
+				endgameData.dataEntries[i].view = this.parseData(endgameData.dataEntries[i]);
 			}
 		}
-
-		/*
-		// First, add the autonomous section header
-		this.contentView.addView(this.generateTextView("Autonomous:", 20,
-				this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
-						20, 0)));
-
-		// Now add all the autonomous stuff
-		try {
-			for (DataEntry autonomousData : BlueThread.INSTANCE.getAutonomous().dataEntries) {
-				this.parseData(autonomousData);
-			}
-		} catch (NullPointerException noConfig) {
-			// TODO
-
-		}
-
-		// Add the teleop header
-		this.contentView.addView(this.generateTextView("TeleOp:", 20,
-				this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
-						100, 0)));
-
-		// Add the stuff for teleop
-		try {
-			for (DataEntry teleopData : BlueThread.INSTANCE.getTeleOp().dataEntries) {
-				this.parseData(teleopData);
-			}
-		} catch (NullPointerException noConfig) {
-			// TODO
-		}
-
-		// Add the end game header
-		this.contentView.addView(this.generateTextView("End game:", 20,
-				this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
-						100, 0)));
-
-
-		// Add end game stuff
-		try {
-			for (DataEntry endgameData : BlueThread.INSTANCE.getEndgame().dataEntries) {
-				this.parseData(endgameData);
-			}
-		} catch (NullPointerException noConfig) {
-			// TODO
-		}
-
-		// Comment section time
-		this.contentView.addView(this.generateTextView("Additional feedback:", 20,
-				this.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT, 0,
-						100, 0)));
 
 		// Comments
-		final EditText comments = new EditText(this);
-		comments.setBackgroundColor(Color.DKGRAY);
-		comments.setImeOptions(android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
-		comments.setInputType(InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE);
-		comments.setInputType(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT);
-		comments.setText("");
-		comments.setTextColor(Color.WHITE);
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
-		params.setMargins(0, 20, 0, 20);
-		comments.setLayoutParams(params);
-		contentView.addView(comments);
+		this.binder.submit.setOnClickListener(view -> {
 
-		// Setup the submit button listener
-		findViewById(R.id.Submit).setOnClickListener(listener -> {
 			// Gather all the data
 			JSONObject data = new JSONObject();
 			// Be sure to add the team number
@@ -188,59 +126,21 @@ public class DataCollection extends AppCompatActivity {
 				// TODO
 			}
 
-			// Get the data from the view
-			for (View view : Nodes) {
-				try {
-					if (view instanceof CheckBox) {
-						CheckBox box = (CheckBox) view;
-						Log.d("Adding checkbox", box.getText().toString());
-						data.putOpt(box.getText().toString(), box.isChecked() ? 1 : 0);
-					} else if (view instanceof CustomNumberPicker) {
-						CustomNumberPicker picker = (CustomNumberPicker) view;
-						Log.d("Adding number", picker.getTitle());
-						data.putOpt(picker.getTitle(), picker.getValue());
-					} else if (view instanceof CustomEditText) {
-						CustomEditText text = (CustomEditText) view;
-						Log.d("Adding text", text.getTitle());
-						String str;
-						try {
-							str = java.util.Objects.requireNonNull(text.getText()).toString().replace(",", "，");
-						} catch (NullPointerException NPE) {
-							str = "";
-						}
-						data.putOpt(text.getTitle(), String.format("%s", str));
-					} else if (view instanceof RadioButton) {
-						RadioButton button = (RadioButton) view;
-						Log.d("Adding radio button", button.getText().toString());
-						data.putOpt(button.getText().toString(), button.isChecked() ? 1 : 0);
-					} else {
-						Log.w("Unrecognized class", view.getClass().getName());
-					}
-				} catch (JSONException jsonError) {
-					// TODO
-				}
-			}
+			// TODO Pares the views and get the options!
+
 			try {
 				// Don't forget to add the comments!
-				data.putOpt("Comments", String.format("%s", comments.getText().toString().replace(",", "，").replace(":", ";")));
+				data.putOpt("Comments", String.format("%s", this.binder.additionalComments.
+						getText().toString().replace(",", "，").
+						replace(":", ";")));
 			} catch (JSONException jsonError) {
 				// TODO
 			}
 
-
 			Log.d("FullData", data.toString());
-
-			try {
-				BlueThread.INSTANCE.sendData(new BlueThreadRequest(BlueThreadRequest.Requests.DATA, data));
-			} catch (NullPointerException noConnection) {
-				// TODO
-			}
-
+			BlueThread.INSTANCE.sendData(new BlueThreadRequest(BlueThreadRequest.Requests.DATA, data));
 			this.finish();
 		});
-		 */
-
-
 	}
 
 	/**
@@ -295,7 +195,6 @@ public class DataCollection extends AppCompatActivity {
 		checkBox.setTextColor(Color.WHITE);
 		checkBox.setLayoutParams(layoutParameters);
 		checkBox.requestLayout();
-		this.entries.add(checkBox);
 
 		// Add the CheckBox to the LinearLayout, and return the LinearLayout
 		linearLayout.addView(checkBox);
@@ -324,7 +223,6 @@ public class DataCollection extends AppCompatActivity {
 		text.setTextColor(Color.WHITE);
 		text.setLayoutParams(layoutParameters);
 		text.requestLayout();
-		this.entries.add(text);
 		return text;
 	}
 
@@ -364,7 +262,6 @@ public class DataCollection extends AppCompatActivity {
 		spinner.setBackgroundColor(Color.DKGRAY);
 		spinner.setTag(title); // TODO Tag
 		DataCollection.setNumberPickerTextColor(spinner);
-		this.entries.add(spinner);
 
 		// Add the custom NumberPicker to the LinearLayout, and return the LinearLayout.
 		linearLayout.addView(spinner);
@@ -386,11 +283,9 @@ public class DataCollection extends AppCompatActivity {
 		button.setText(text);
 		button.setTextSize(15);
 		button.setHighlightColor(Color.LTGRAY);
-		button.setBackgroundColor(Color.GRAY);
 		button.setTextColor(Color.WHITE);
 		button.setLayoutParams(layoutParameters);
 		button.requestLayout();
-		this.entries.add(button);
 		return button;
 	}
 
@@ -415,7 +310,8 @@ public class DataCollection extends AppCompatActivity {
 	 *
 	 * @param match The match data (from the config file).
 	 */
-	private void parseData(@NonNull DataEntry match) {
+	@Nullable
+	private View parseData(@NonNull DataEntry match) {
 
 		if (match instanceof Text) {
 
@@ -424,10 +320,12 @@ public class DataCollection extends AppCompatActivity {
 			// Create the text input field (TextView and TextField).
 			this.generateTextView(text.name, 17, LinearLayout.LayoutParams.MATCH_PARENT,
 					0, 15, 0);
-			this.binder.content.addView(this.generateTextField(text.name, text.value,
-					DataCollection.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
-							20, 5, 20)));
 
+			EditText textField = this.generateTextField(text.name, text.value,
+					DataCollection.createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
+							20, 5, 20));
+			this.binder.content.addView(textField);
+			return textField;
 
 		} else if (match instanceof Number) {
 
@@ -437,22 +335,25 @@ public class DataCollection extends AppCompatActivity {
 			this.generateTextView(number.name, 17, LinearLayout.LayoutParams.MATCH_PARENT,
 					0, 15, 0);
 
-			try {
-				this.binder.content.addView(this.generateNumberPicker(number.name, number.minimumValue,
-						number.maximumValue, number.stepValue, number.value, DataCollection.
-								createLayoutParameters(LinearLayout.LayoutParams.WRAP_CONTENT,
-								0, 5, 0)));
-			} catch (NumberFormatException e) {
-				Log.e("parseData", "Failed to add view to data collection", e);
-			}
+			LinearLayout numberPicker = this.generateNumberPicker(number.name, number.minimumValue,
+					number.maximumValue, number.stepValue, number.value, DataCollection.
+							createLayoutParameters(LinearLayout.LayoutParams.WRAP_CONTENT,
+									0, 5, 0));
+
+			this.binder.content.addView(numberPicker);
+			return numberPicker;
+
 		} else if (match instanceof Boolean) {
 
 			Boolean bool = (Boolean) match;
 
 			// Create the boolean input field (CheckBox)
-			this.binder.content.addView(this.generateCheckBox(bool.name, bool.value,
+			LinearLayout checkbox = this.generateCheckBox(bool.name, bool.value,
 					DataCollection.createLayoutParameters(LinearLayout.LayoutParams.WRAP_CONTENT,
-							0, 15, 0)));
+							0, 15, 0));
+
+			this.binder.content.addView(checkbox);
+			return checkbox;
 
 		} else if (match instanceof BooleanGroup) {
 
@@ -463,28 +364,18 @@ public class DataCollection extends AppCompatActivity {
 					0, 15, 0);
 
 			// Get all the radio buttons in the value.
-			/*
 			RadioGroup group = new RadioGroup(this);
-			try {
-				JSONObject radioButtons = new JSONObject(booleanGroup.value[0].name);
-				Log.d("Radio buttons", radioButtons.toString());
-				Iterator<String> keys = radioButtons.keys();
-				while (keys.hasNext()) {
-					String key = keys.next();
-					RadioButton button = this.generateRadioButton(key, DataCollection.
-							createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
-									0, 5, 0));
-					group.addView(button);
-					if (Boolean.parseBoolean(radioButtons.optString(key))) {
-						group.check(button.getId());
-					}
-				}
-			} catch (JSONException | NullPointerException e) {
-				// TODO
-				return;
+
+			for (Boolean booleanEntry : booleanGroup.value) {
+				RadioButton button = this.generateRadioButton(booleanEntry.name, DataCollection.
+						createLayoutParameters(LinearLayout.LayoutParams.MATCH_PARENT,
+								0, 5, 0));
+				group.addView(button);
 			}
 			this.binder.content.addView(group);
-			 */
+			return group;
 		}
+
+		return null;
 	}
 }

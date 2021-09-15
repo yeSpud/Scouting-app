@@ -9,7 +9,7 @@
 	<string name="Submit">Submit</string>
 	<string name="Close">Close app</string>
 
-	<string name="teamNumberHeader">Enter team number to scout:</string>
+	<string name="connected_to_server">Connected to server: %1$s</string>
 
 	<!-- EnterMACAddress dialog -->
 	<string name="enter_mac_address">Enter MAC address of server</string>
@@ -22,10 +22,11 @@
 	<string name="cancel">Cancel</string>
 
 
+	<!-- Team selection popup -->
+	<string name="teamNumberHeader">Enter team number to scout:</string>
 	<string name="team_number">Team number</string>
-
-	<string name="connected_to_server">Connected to server: %1$s</string>
 
 	<!-- Data Collection -->
 	<string name="teamToScout">Scouting team: %1$d</string>
+	<string name="additional_feedback">Additional Feedback</string>
 </resources>

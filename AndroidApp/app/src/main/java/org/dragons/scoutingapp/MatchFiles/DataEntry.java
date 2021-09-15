@@ -1,6 +1,9 @@
 package org.dragons.scoutingapp.MatchFiles;
 
+import android.view.View;
+
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by Stephen Ogden on 9/14/21.
@@ -17,6 +20,12 @@ public class DataEntry<T> {
 	 * Documentation
 	 */
 	public T value;
+
+	/**
+	 * Documentation
+	 */
+	@Nullable
+	public View view;
 
 	/**
 	 * Documentation
