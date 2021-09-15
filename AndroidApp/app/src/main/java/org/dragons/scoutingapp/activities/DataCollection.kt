@@ -104,7 +104,7 @@ class DataCollection : AppCompatActivity() {
 				data.putOpt("Comments", this.binder.additionalComments.text.toString()
 					.replace(",", "，").replace(":", ";"))
 			} catch (NullPointerException : NullPointerException) {
-				// TODO
+				Log.e("onSubmit", "Unable to get data", NullPointerException)
 			}
 
 			Log.d("FullData", data.toString())
@@ -259,7 +259,7 @@ class DataCollection : AppCompatActivity() {
 				when(it) {
 					is Text -> jsonObject.putOpt(it.view!!.tag as String, it.view!!.text.toString())
 					is Number -> jsonObject.putOpt(it.view!!.tag as String, it.view!!.value)
-					is Boolean -> jsonObject.putOpt(it.view!!.tag as String, it.view!!.isChecked)
+					is Boolean -> jsonObject.putOpt(it.view!!.text.toString(), it.view!!.isChecked)
 					is BooleanGroup ->  {
 						it.view!!.children.forEach { radioButtonView ->
 							val radioButton = radioButtonView as RadioButton
