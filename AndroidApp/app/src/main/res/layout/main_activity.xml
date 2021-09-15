@@ -5,6 +5,7 @@
 
     <data>
         <import type="android.bluetooth.BluetoothAdapter" />
+        <import type="org.dragons.scoutingapp.BuildConfig" />
         <import type="android.view.View" />
         <variable name="activity" type="org.dragons.scoutingapp.activities.MainActivityViewModel" />
         <variable name="bluethread" type="org.dragons.scoutingapp.bluefiles.BlueThread" />
@@ -93,6 +94,7 @@
                 android:id="@+id/consoleView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="@{BuildConfig.DEBUG ? View.VISIBLE : View.GONE}"
                 android:orientation="vertical">
 
             </LinearLayout>

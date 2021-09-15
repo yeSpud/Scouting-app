@@ -9,8 +9,8 @@ android {
         applicationId "org.dragons.scoutingapp"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 6
-        versionName '2.0.1'
+        versionCode 7
+        versionName '3.0'
     }
     buildFeatures {
         dataBinding true
@@ -50,6 +50,7 @@ dependencies {
     implementation "androidx.core:core-ktx:1.6.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'io.github.ShawnLin013:number-picker:2.4.13'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
 }
 repositories {
